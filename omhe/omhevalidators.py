@@ -8,12 +8,12 @@ def bp_validator(omhe_value):
     try:
         if omhe_value.isdigit():
     
-            syst=omhe_value[0:3]
-            dia=omhe_value[3:6]
-            pul=omhe_value[6:9]
-            valdict={'syst':syst,
-                    'dia':dia,
-                    'pul':pul,}
+            _bp_syst=omhe_value[0:3]
+            _bp_dia=omhe_value[3:6]
+            _bp_pul=omhe_value[6:9]
+            valdict={'_bp_syst':_bp_syst,
+                    '_bp_dia':_bp_dia,
+                    '_bp_pul':_bp_pul,}
             return valdict
         
         if omhe_value.__contains__('/'):
@@ -27,34 +27,34 @@ def bp_validator(omhe_value):
         splstr1=omhe_value.split(sys_delin)
         if len(splstr1) !=2:
             raise InvalidValueError, "Invalid bp syntax"
-        syst=splstr1[0]
+        _bp_syst=splstr1[0]
 
-        if syst.isdigit()==False:
+        if _bp_syst.isdigit()==False:
             raise InvalidValueError, "Systolic value is not a number"
         
-        if ( 20 > int(syst)) or (int(syst) > 500):
+        if ( 20 > int(_bp_syst)) or (int(_bp_syst) > 500):
             raise InvalidValueError, "Systolic value is out of range"
         
         
         splstr2=splstr1[1].split('p')
-        dia=splstr2[0]
+        _bp_dia=splstr2[0]
 
-        if dia.isdigit()==False:
+        if _bp_dia.isdigit()==False:
             raise InvalidValueError, "Diastolic value not a number"
-        elif (20 > int(dia)) or (int(dia)> 500):
+        elif (20 > int(_bp_dia)) or (int(_bp_dia)> 500):
             raise InvalidValueError, "Diastolic value out of range"
         valdict={
-                'syst':syst,
-                'dia':dia,
+                '_bp_syst':_bp_syst,
+                '_bp_dia':_bp_dia,
                 }
         if len(splstr2)==2:
             """Get the pulse if provided"""
-            pul=splstr2[1]
-            if pul.isdigit()==False:
+            _bp_pul=splstr2[1]
+            if _bp_pul.isdigit()==False:
                 raise InvalidValueError, "Pulse not a number"
-            elif (10 > int(pul)) or (int(pul) > 500):
+            elif (10 > int(_bp_pul)) or (int(_bp_pul) > 500):
                 raise InvalidValueError, "Pulse value out of range"
-            valdict['pul']=pul
+            valdict['_bp_pul']=_bp_pul
                 
         return valdict
     
@@ -129,7 +129,8 @@ def dt_helper_validator(helper_value):
     else:
         raise InvalidHelperFormatError, "Second is not an integer"
     dt=datetime(year, month, day, hour, minute, second, 0)
-    return {'_ev_dt':dt}
+    return { '_ev_dt': helper_value,
+            }
     
 
 def tz_helper_validator(helper_value):
