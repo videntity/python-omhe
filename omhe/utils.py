@@ -8,7 +8,6 @@ routing={
         '_sndr':"alan",
         '_rcvr':"alan",
         '_subj':"alan",
-         '_api_user':"alan",
         }
 
 
