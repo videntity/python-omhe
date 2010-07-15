@@ -9,7 +9,7 @@ URL="http://127.0.0.1:8000/api/create/"
 routing={
         '_sndr':"alan",
         '_rcvr':"alan",
-        '_subj':"bill",
+        '_subj':"alan",
          '_sec':"3",
         }
 
