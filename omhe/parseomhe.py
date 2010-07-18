@@ -69,7 +69,7 @@ class OMHE:
         """Parse an OMHE message and return a dictonary of its subparts"""
         found=False
         _tags=[]
-        
+	splitdict={}        
         if type(message).__name__!='str' and type(message).__name__!='unicode':
             raise InvalidMessageError, "The message was not a string"
         message=message.lower()
