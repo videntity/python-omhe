@@ -23,7 +23,6 @@ class App:
     pulse_str=""
     omhe_s_d_deliniator="/"
     pulse_deliniator="p"
-            
     def __init__(self, master):
         frame = Frame(master)
         frame2 = Frame(master)
@@ -69,22 +68,23 @@ class App:
         self.button.grid(row=1, column=5)
         
         try:
-            import vypywrap
+            import parseomhe
+            import upload2restcat
             mystate=ACTIVE
         except(ImportError):
             mystate=DISABLED
             print "The Videntity API package was not found. Disabling Videntity Send."
-        self.button = Button(frame, text="SEND VIA VIDENTITY", command=self.sendVidentity, state=mystate)
+        self.button = Button(frame, text="          SEND             ", command=self.sendVidentity, state=mystate)
         self.button.grid(row=2, column=5)
         
-        try:
-            import twitter
-            mystate=ACTIVE
-        except(ImportError):
-            mystate=DISABLED
-            print "The Twitter package was not found. Disabling Twitter Send."
-        self.button = Button(frame, text=" SEND VIA TWITTER  ", command=self.sendTwitter, state=mystate)
-        self.button.grid(row=3, column=5)
+        #try:
+        #    import twitter
+        #    mystate=ACTIVE
+        #except(ImportError):
+        #    mystate=DISABLED
+        #    print "The Twitter package was not found. Disabling Twitter Send."
+        #self.button = Button(frame, text=" SEND VIA TWITTER  ", command=self.sendTwitter, state=mystate)
+        #self.button.grid(row=3, column=5)
         
         self.button = Button(master, text="RESET", fg="red", command=self.reset)
         self.button.grid(row=5, column=2)
@@ -138,40 +138,59 @@ class App:
         
         
     def sendVidentity(self):
+        import parseomhe
+        import upload2restcat
+        
         print "Send via Videntity"
-        print "%s%s%s%s%s%s" %(self.omhe_bp_prefix, self.systolicsb.get(),
+        
+        omhe_str="%s%s%s%s%s%s" %(self.omhe_bp_prefix, self.systolicsb.get(),
                               self.omhe_s_d_deliniator, self.diastolicsb.get(),
                               self.pulse_deliniator,
                               self.pulsesb.get())
-        
-    def sendTwitter(self):
-        print "Send via Twitter"
-        #self.progressbar.set(value=25.0)
-        
-        dm = "%s%s%s%s%s%s" %(self.omhe_bp_prefix, self.systolicsb.get(),
-                              self.omhe_s_d_deliniator, self.diastolicsb.get(),
-                              self.pulse_deliniator,
-                              self.pulsesb.get())
-        print dm
-        try:
-            import twitter
-            api = twitter.Api(username=twitterid, password=twitterpass)
-            print api
-            result = api.PostDirectMessage(twitterreceiver, dm)
-            if result:
-                print "Successfuly sent DM"
-                if public_tweet==True:
-                    try:
-                        api.PostUpdate(dm)
-                    except:
-                        print "Failed to send Tweet"
-                    
-                self.reset()
-            else:
-                print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
-        except:
-            print "There was a problem sending your DM tweet. Please check user, pass and that the reciever is following you."
+        print omhe_str
+        """ Instantaiate an instance of the OMHE class"""
+        o = parseomhe.OMHE()
+        """Parse it if valid, otherwise raise the appropriate  error"""
+        d=o.parse(omhe_str)
+        """Send the OMHE dictonary to RESTCat"""
+        result=upload2restcat.upload_OMHE_2_RESTCat(d, "out.txt")
+        response_code= str(result.getinfo(result.HTTP_CODE, ))
+        print "HTTP Response Code=%s" % (response_code)
+        if response_code=="200":
+            exit(0)    
 
+
+        
+        
+        
+    #def sendTwitter(self):
+    #    print "Send via Twitter"
+    #    #self.progressbar.set(value=25.0)
+    #    
+    #    dm = "%s%s%s%s%s%s" %(self.omhe_bp_prefix, self.systolicsb.get(),
+    #                          self.omhe_s_d_deliniator, self.diastolicsb.get(),
+    #                          self.pulse_deliniator,
+    #                          self.pulsesb.get())
+    #    print dm
+    #    try:
+    #        import twitter
+    #        api = twitter.Api(username=twitterid, password=twitterpass)
+    #        print api
+    #        result = api.PostDirectMessage(twitterreceiver, dm)
+    #        if result:
+    #            print "Successfuly sent DM"
+    #            if public_tweet==True:
+    #                try:
+    #                    api.PostUpdate(dm)
+    #                except:
+    #                    print "Failed to send Tweet"
+    #                
+    #            self.reset()
+    #        else:
+    #            print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
+    #    except:
+    #        print "There was a problem sending your DM tweet. Please check user, pass and that the reciever is following you."
+    #
 
     
 root = Tk()
