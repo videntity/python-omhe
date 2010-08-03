@@ -6,13 +6,7 @@
 import sys
 from Tkinter import *
 import tkMessageBox
-from settings import twitterid, twitterpass, twitterreceiver, serial_port, public_tweet
-
-try:    
-    sys.path.append('/home/alan/django-projects/omhe/python-omhe/omhe')
-    from omheparser import omheparser
-except:
-    print "Warning: Failed to import omhe parser"
+from settings import USERNAME, PASSWORD
 
 class App:
     """ A blood pressure GUI application based on OMHE Microsyntax"""
@@ -153,7 +147,7 @@ class App:
         """Parse it if valid, otherwise raise the appropriate  error"""
         d=o.parse(omhe_str)
         """Send the OMHE dictonary to RESTCat"""
-        result=upload2restcat.upload_OMHE_2_RESTCat(d, "out.txt")
+        result=upload2restcat.upload_OMHE_2_RESTCat(d, "out.txt", USERNAME, PASSWORD)
         response_code= str(result.getinfo(result.HTTP_CODE, ))
         print "HTTP Response Code=%s" % (response_code)
         if response_code=="200":

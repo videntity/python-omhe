@@ -1,10 +1,9 @@
 import pycurl
 import sys
 import parseomhe
+from settings import USERNAME, PASSWORD
 
 
-USERNAME='alan'
-PASSWORD='pass'
 URL="http://127.0.0.1:8000/api/create/"
 routing={
         '_sndr':"alan",
@@ -13,7 +12,7 @@ routing={
          '_sec':"3",
         }
 
-def upload_OMHE_2_RESTCat(omhe_dict, outfile):
+def upload_OMHE_2_RESTCat(omhe_dict, outfile, username, password):
     f = open(outfile, "wb")
     """Send an HTTP POST to RESTCat using a simple OMHE String"""
     pf=[]
@@ -30,7 +29,7 @@ def upload_OMHE_2_RESTCat(omhe_dict, outfile):
         pf.append(x)
     print pf
 
-    user_and_pass="%s:%s" % (USERNAME, PASSWORD)    
+    user_and_pass="%s:%s" % (username, password)    
     c = pycurl.Curl()
     c.setopt(pycurl.URL, URL)
     c.setopt(c.HTTPPOST, pf)
@@ -67,7 +66,7 @@ if __name__ == "__main__":
         """Parse it if valid, otherwise raise the appropriate  error"""
         d=o.parse(omhe_str)
         """Send the OMHE dictonary to RESTCat"""
-        result=upload_OMHE_2_RESTCat(d, out_file)
+        result=upload_OMHE_2_RESTCat(d, out_file, USERNAME, PASSWORD)
         print "HTTP Response Code=%s" % (result.getinfo(result.HTTP_CODE),)
         result.close()
         

@@ -52,7 +52,7 @@ class OMHE:
         self.uu=str(uuid.uuid4())
         self.transaction_datetime=datetime.utcnow()
         self._tx_dt=self.pydt2omhedt(self.transaction_datetime)
-                
+
         self.omhe_dict={'_ttype':'omhe',
                         '_id':self.uu,
                         '_tx_dt':self._tx_dt,
@@ -85,7 +85,7 @@ class OMHE:
                     """If no tags"""
                     if self.validator_dict.has_key(response[0]):
                         validatedict=self.validator_dict[response[0]](response[1])
-                        
+
                     splitdict.update({'_omhe': response[0],
                        '_value': response[1],
                        '_tags':_tags
@@ -136,7 +136,10 @@ class OMHE:
                 response = message.split(c)
                 command=c
                 _value=response[1]
-            
+            else:
+                _value=""
+                command=c
+                
         tag_response=_value.split("#")
         if len(tag_response)==1:
             """No tags"""    

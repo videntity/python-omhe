@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 
+
+
+USERNAME='alan'
+PASSWORD='pass'
+
+SENDER="aviars"
+RECEIVER="aviars"
+SUBJECT="aviars"
+SEC_LEVEL=3
+
 """settings file for weight.py and bloodpressure.py"""
 """change this to your twittername"""
 twitterid="aviars"
