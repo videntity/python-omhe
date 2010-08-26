@@ -1,15 +1,15 @@
 import pycurl
 import sys
 import parseomhe
-from settings import USERNAME, PASSWORD
+from settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL
 
 
 URL="http://127.0.0.1:8000/api/create/"
 routing={
-        '_sndr':"alan",
-        '_rcvr':"alan",
-        '_subj':"alan",
-         '_sec':"3",
+        'sndr':SENDER,
+        'rcvr':RECEIVER,
+        'subj': SUBJECT,
+         'sec': SEC_LEVEL,
         }
 
 def upload_OMHE_2_RESTCat(omhe_dict, outfile, username, password):
@@ -17,16 +17,30 @@ def upload_OMHE_2_RESTCat(omhe_dict, outfile, username, password):
     """Send an HTTP POST to RESTCat using a simple OMHE String"""
     pf=[]
     post_dict={}
-    post_dict['_ttype']='omhe'
+    
+    """ The type of transaction"""
+    post_dict['ttype']='omhe'
     post_dict.update(routing)
-    post_dict['_tx_dt']=omhe_dict['_tx_dt']
-    post_dict['_tx_tz']=omhe_dict['_tx_tz']
-    post_dict['_id']=omhe_dict['_id']
-    post_dict['_texti']=omhe_dict['_texti']
+    
+    """ The transaction's date/time/zone"""
+    post_dict['tx_dt']=omhe_dict['tx_dt']
+    post_dict['tx_tz']=omhe_dict['tx_tz']
+    
+    """ The event's date/time/zone"""
+    post_dict['ev_dt']=omhe_dict['ev_dt']
+    post_dict['ev_tz']=omhe_dict['ev_tz']
+    
+    """ The transaction's uuid"""
+    post_dict['id']=omhe_dict['id']
+    
+    """ The transaction's text item (ASCII payload)."""
+    post_dict['texti']=omhe_dict['texti']
+    
     
     for o in post_dict:
         x=(str(o), str(post_dict[o]))
         pf.append(x)
+    
     print pf
 
     user_and_pass="%s:%s" % (username, password)    

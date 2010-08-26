@@ -2,18 +2,53 @@ import re,sys
 from parseomhe import *
 from datetime import datetime
 
+def wt_validator(omhe_value):
+    print """validate weight"""
+    print omhe_value
+    valdict={}
+    
+    if omhe_value.isdigit():
+        valdict['wt_numeric']=omhe_value
+        valdict['wt_measure_unit']="l"
+        try:
+            x=float(valdict['wt_numeric'])
+            return valdict
+        except:
+            raise InvalidValueError("You didn't suply a numerical weight")
+            
+    if omhe_value.endswith('l'):
+        valdict['wt_numeric']=omhe_value[:-1]
+        valdict['wt_measure_unit']="l"
+        try:
+            x=float(valdict['wt_numeric'])
+            return valdict
+        except:
+            raise InvalidValueError("You didn't supply a numerical weight")
+        
+    
+    if omhe_value.endswith('k'):
+        valdict['wt_numeric']=omhe_value[:-1]
+        valdict['wt_measure_unit']="k"
+        try:
+            x=float(valdict['wt_numeric'])
+            return valdict 
+        except:
+            raise InvalidValueError("You didn't supply a numerical weight")
+    
+    error_msg="I could not validate the value %s" % (omhe_value)
+    raise InvalidMessageError(error_message)
+
 
 def bp_validator(omhe_value):
-    """Validate blood pressure information"""
+    print """Validate blood pressure information"""
     try:
         if omhe_value.isdigit():
-    
-            _bp_syst=omhe_value[0:3]
-            _bp_dia=omhe_value[3:6]
-            _bp_pul=omhe_value[6:9]
-            valdict={'_bp_syst':_bp_syst,
-                    '_bp_dia':_bp_dia,
-                    '_bp_pul':_bp_pul,}
+            bp_syst=omhe_value[0:3]
+            bp_dia=omhe_value[3:6]
+            bp_pul=omhe_value[6:9]
+            valdict={'bp_syst':bp_syst,
+                    'bp_dia':bp_dia,
+                    'bp_pul':bp_pul,}
             return valdict
         
         if omhe_value.__contains__('/'):
@@ -27,39 +62,36 @@ def bp_validator(omhe_value):
         splstr1=omhe_value.split(sys_delin)
         if len(splstr1) !=2:
             raise InvalidValueError, "Invalid bp syntax"
-        _bp_syst=splstr1[0]
+        bp_syst=splstr1[0]
 
-        if _bp_syst.isdigit()==False:
+        if bp_syst.isdigit()==False:
             raise InvalidValueError, "Systolic value is not a number"
         
-        if ( 20 > int(_bp_syst)) or (int(_bp_syst) > 500):
+        if ( 20 > int(bp_syst)) or (int(bp_syst) > 500):
             raise InvalidValueError, "Systolic value is out of range"
         
         
         splstr2=splstr1[1].split('p')
-        _bp_dia=splstr2[0]
+        bp_dia=splstr2[0]
 
-        if _bp_dia.isdigit()==False:
+        if bp_dia.isdigit()==False:
             raise InvalidValueError, "Diastolic value not a number"
-        elif (20 > int(_bp_dia)) or (int(_bp_dia)> 500):
+        elif (20 > int(bp_dia)) or (int(bp_dia)> 500):
             raise InvalidValueError, "Diastolic value out of range"
         valdict={
-                '_bp_syst':_bp_syst,
-                '_bp_dia':_bp_dia,
+                'bp_syst':bp_syst,
+                'bp_dia':bp_dia,
                 }
         if len(splstr2)==2:
             """Get the pulse if provided"""
-            _bp_pul=splstr2[1]
-            if _bp_pul.isdigit()==False:
+            bp_pul=splstr2[1]
+            if bp_pul.isdigit()==False:
                 raise InvalidValueError, "Pulse not a number"
-            elif (10 > int(_bp_pul)) or (int(_bp_pul) > 500):
+            elif (10 > int(bp_pul)) or (int(bp_pul) > 500):
                 raise InvalidValueError, "Pulse value out of range"
-            valdict['_bp_pul']=_bp_pul
+            valdict['bp_pul']=bp_pul
                 
         return valdict
-    
-    
-    
     
     except:
         print sys.exc_info()
@@ -129,7 +161,7 @@ def dt_helper_validator(helper_value):
     else:
         raise InvalidHelperFormatError, "Second is not an integer"
     dt=datetime(year, month, day, hour, minute, second, 0)
-    return { '_ev_dt': helper_value,
+    return { 'ev_dt': helper_value,
             }
     
 
@@ -141,7 +173,7 @@ def tz_helper_validator(helper_value):
     else:
         raise InvalidHelperFormatError, "TimeZoneOffset 'tz' is not an integer"
     _ev_tz=val
-    return {'_ev_tz':_ev_tz}
+    return {'ev_tz':ev_tz}
 
 
 if __name__ == "__main__":

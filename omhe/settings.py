@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
-
-
 USERNAME='alan'
 PASSWORD='pass'
 
 SENDER="aviars"
-RECEIVER="aviars"
+RECEIVER="transparent_practice"
 SUBJECT="aviars"
 SEC_LEVEL=3
 
@@ -14,7 +12,7 @@ SEC_LEVEL=3
 """change this to your twittername"""
 twitterid="aviars"
 """change this to your twitter password"""
-twitterpass="Yurpasswd" 
+twitterpass="yourpasswd" 
 """change this to the twitter account you wan to get the messg"""
 twitterreceiver="vomhe"
 """change this to your actual serial port. on windows COM1, COM2, COMX

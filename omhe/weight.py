@@ -7,11 +7,7 @@ import sys
 from Tkinter import *
 from settings import twitterid, twitterpass, twitterreceiver
 
-try:    
-    sys.path.append('/Users/alan/omhe/python-omhe/omhe')
-    from omheparser import omheparser
-except:
-    print "Warning: Failed to import omhe parser"
+wii_weight=""
     
 class App:
 
@@ -73,44 +69,64 @@ class App:
         self.e1 = Entry(frame2)
         self.e1.grid(row=0, column=1)
         
-        """See if the necessary libraries are present, disable buttons"""
-        try:
-            import serial
-            mystate=ACTIVE
-        except(ImportError):
-            mystate=DISABLED
-            print "The serial package was not found. Disabling scale reader."
-            
-        self.button = Button(frame, text="GET FROM SCALE", command=self.getFromScale, state=mystate)
-        self.button.grid(row=1, column=5)
+        self.username = Label(frame2, text="Username:")
+        self.username.grid(row=1, column=0)
+        
+        self.e2 = Entry(frame2)
+        self.e2.grid(row=1, column=1)
+        
+        self.password = Label(frame2, text="Password:")
+        self.password.grid(row=2, column=0)
+        
+        self.e3 = Entry(frame2)
+        self.e3.grid(row=2, column=1)        
+        
+        if wii_weight!="":
+            self.e1.delete(0, END)
+            self.e1.insert(END, wii_weight)
+            self.omhe_str=wii_weight
+        #"""See if the necessary libraries are present, disable buttons"""
+        #try:
+        #    import serial
+        #    mystate=ACTIVE
+        #except(ImportError):
+        #    mystate=DISABLED
+        #    print "The serial package was not found. Disabling scale reader."
+        #    
+        #self.button = Button(frame, text="GET FROM SCALE", command=self.getFromScale, state=mystate)
+        #self.button.grid(row=1, column=5)
         
         try:
-            import vypywrap
+            import parseomhe, upload2restcat
             mystate=ACTIVE
         except(ImportError):
             mystate=DISABLED
             print "The Videntity API package was not found. Disabling Videntity Send."
-        self.button = Button(frame, text="SEND VIA VIDENTITY", command=self.sendVidentity, state=mystate)
+        self.button = Button(frame, text="    SEND      ", command=self.sendVidentity, state=mystate)
+        self.button.grid(row=1, column=5)
+        
+        #try:
+        #    import twitter
+        #    mystate=ACTIVE
+        #except(ImportError):
+        #    mystate=DISABLED
+        #    print "The Twitter package was not found. Disabling Twitter Send."
+        #self.button = Button(frame, text="SEND VIA TWITTER", command=self.sendTwitter, state=mystate)
+        #self.button.grid(row=3, column=5)
+
+        self.button = Button(frame, text="    QUIT      ", command=frame.quit)
         self.button.grid(row=2, column=5)
         
+        self.stat_str = StringVar()
+        self.stat_str.set("Press Send when ready")
+        self.status = Label(master, textvariable=self.stat_str, fg="red")
+        self.status.grid(row=10, column=0)
         
-        try:
-            import twitter
-            mystate=ACTIVE
-        except(ImportError):
-            mystate=DISABLED
-            print "The Twitter package was not found. Disabling Twitter Send."
-        self.button = Button(frame, text="SEND VIA TWITTER", command=self.sendTwitter, state=mystate)
-        self.button.grid(row=3, column=5)
-
-        self.button = Button(master, text="QUIT", fg="red", command=frame.quit)
-        self.button.grid(row=9, column=0)
+        
+    
         
         self.firstdot=True
-    
         
-    
-    
     
     def say_one(self):
         self.omhe_str+="1"
@@ -190,23 +206,31 @@ class App:
     def sendVidentity(self):
         print "Send via videntity"
         print "%s%s%s" %(self.omhe_weight_prefix, self.omhe_str, self.units_str)
-        
-    def sendTwitter(self):
-        print "Send via Twitter"
-        dm = "%s%s%s" %(self.omhe_weight_prefix, self.omhe_str, self.units_str)
-        try:
-            
-            api = twitter.Api(username=twitterid, password=twitterpass)
-            result = api.PostDirectMessage(twitterreceiver, dm)
-            if result:
-                print "successfuly sent DM"
-                self.say_clear()
-            else:
-                print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
-        except:
-                print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
-        
+        print self.omhe_str
+        print "user=%s" % (self.e2.get())
+        print "pass=%s" % (self.e3.get())
+        self.stat_str.set("Hello")
+    #def sendTwitter(self):
+    #    print "Send via Twitter"
+    #    dm = "%s%s%s" %(self.omhe_weight_prefix, self.omhe_str, self.units_str)
+    #    try:
+    #        
+    #        api = twitter.Api(username=twitterid, password=twitterpass)
+    #        result = api.PostDirectMessage(twitterreceiver, dm)
+    #        if result:
+    #            print "successfuly sent DM"
+    #            self.say_clear()
+    #        else:
+    #            print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
+    #    except:
+    #            print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
+    #    
 
+
+try:
+    wii_weight = sys.argv[1]
+except:
+    wii_weight=""
 root = Tk()
 root.title("Please Enter Your Weight") 
 
