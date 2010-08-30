@@ -160,7 +160,9 @@ class OMHE:
             
         if not(found):
             raise InvalidCommandError("Message %s did not contain a valid OMHE command")
-        """No that we know what command we are dealing withlet's process the rest"""                
+       
+        """Now that we know what command we are dealing with let's process the rest"""                
+       
         tag_response=value.split("#")
         if len(tag_response)==1:
             """No tags"""    
