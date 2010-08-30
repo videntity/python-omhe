@@ -85,7 +85,7 @@ class OMHE:
             response = message.split('=')
             for i,j in self.command_dict.items():
             
-                if j.__contains__(response[0]):
+                if j.__contains__(response[0]) or i==(response[0]):
                 
                     tag_response=response[1].split("#")
                     if len(tag_response)==1:
