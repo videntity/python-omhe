@@ -2,9 +2,29 @@ import re,sys
 from parseomhe import *
 from datetime import datetime
 
-def wt_validator(omhe_value):
-    print """validate weight"""
+
+def st_validator(omhe_value):
+    print """validate steps"""
     print omhe_value
+    valdict={}
+    
+    try:
+        if omhe_value.isdigit():
+            valdict['st_numeric']=omhe_value
+        try:
+            x=float(valdict['st_numeric'])
+            return valdict
+        except:
+            raise InvalidValueError("You didn't suply a numer of steps")
+        
+    except:
+        error_msg="I could not validate the value %s" % (omhe_value)
+        raise InvalidMessageError(error_message)
+
+
+
+
+def wt_validator(omhe_value):
     valdict={}
     
     if omhe_value.isdigit():
@@ -40,7 +60,7 @@ def wt_validator(omhe_value):
 
 
 def bp_validator(omhe_value):
-    print """Validate blood pressure information"""
+    """Validate blood pressure information"""
     try:
         if omhe_value.isdigit():
             bp_syst=omhe_value[0:3]
