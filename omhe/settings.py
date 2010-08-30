@@ -1,11 +1,21 @@
 #!/usr/bin/env python
 
-USERNAME='alan'
-PASSWORD='pass'
+#the username needed to authenticate to RESTcat
+USERNAME='aviars'
 
-SENDER="aviars"
-RECEIVER="transparent_practice"
-SUBJECT="aviars"
+#the password needed to authenticate to RESTcat
+PASSWORD='password'
+
+#the tx's sender - should always be an email
+SENDER="aviars@videntity.com"
+
+#the tx's receiver - should always be an email
+RECEIVER="transparentp@microphr.com"
+
+#the tx's subject - should always be an email
+SUBJECT="aviars@videntity.com"
+
+#the tx's security level. 1 is highest and 3 is lowest.
 SEC_LEVEL=3
 
 """settings file for weight.py and bloodpressure.py"""

@@ -40,8 +40,6 @@ def upload_OMHE_2_RESTCat(omhe_dict, outfile, username, password):
     for o in post_dict:
         x=(str(o), str(post_dict[o]))
         pf.append(x)
-    
-    print pf
 
     user_and_pass="%s:%s" % (username, password)    
     c = pycurl.Curl()
