@@ -26,14 +26,23 @@ class OMHE:
 
     
     def __init__(self,**kwargs):
-        self.command_tuple=('hp', 'help', 'bp', 'bloodpressure', 'getbloodpressure', 'gbp',
-              'sbp', 'sendbloodpressure', 'mc', 'menstralcycle', 'wt', 'weight',
-              'gwt', 'getweight', 'swt', 'sendweight', 'bmi', 'bodymassindex',
-              'tsk', 'task', 'sta', 'start', 'sto', 'stop', 'sp', 'sleep', 'gsp',
-              'getsleep', 'ssp', 'sendslp', 'sw', 'swim', 'ca', 'calories',
-              'pain', 'pn', 'gpn', 'getpain', 'spn', 'sendpain', 'mood', 'md',
-              'gmd', 'getmood', 'smd', 'sendmood', 'ci','checkin')
-        """This tuple contains all possible omhe values"""
+        
+        """This dict of dicts contains all possible omhe values and aliases"""
+        self.command_dict={
+            'bp': ('bp','bloodpressure'),
+            'wt': ('wt','weight'),
+            'st': ('st','steps'),
+            'gbp': ('gbp','getbloodpressure'),
+        }
+        
+        #self.command_tuple=('hp', 'help', 'bp', 'bloodpressure', 'getbloodpressure', 'gbp',
+        #      'sbp', 'sendbloodpressure', 'mc', 'menstralcycle', 'wt', 'weight',
+        #      'gwt', 'getweight', 'swt', 'sendweight', 'bmi', 'bodymassindex',
+        #      'tsk', 'task', 'steps', 'st', ',sta', 'start', 'sto', 'stop', 'sp', 'sleep', 'gsp',
+        #      'getsleep', 'ssp', 'sendslp', 'sw', 'swim', 'ca', 'calories',
+        #      'pain', 'pn', 'gpn', 'getpain', 'spn', 'sendpain', 'mood', 'md',
+        #      'gmd', 'getmood', 'smd', 'sendmood', 'ci','checkin')
+        
     
         
         self.helper_tuple=('id', 'dt', 'tz', 'hid', 'pw' 'pi' 'tm' 'uu', '#')
@@ -42,6 +51,8 @@ class OMHE:
         self.validator_dict={
                    'bp': bp_validator,
                    'bloodpressure': bp_validator,
+                   'steps': st_validator,
+                   'st': st_validator,
                    'wt': wt_validator,
                    'weight': wt_validator,
                    }
@@ -81,49 +92,51 @@ class OMHE:
         
         if message.__contains__('='):
             response = message.split('=')
-            if self.command_tuple.__contains__(response[0]):
+            for i,j in self.command_dict.items():
+            
+                if j.__contains__(response[0]):
                 
-                tag_response=response[1].split("#")
-                if len(tag_response)==1:
-                    """If no tags"""
-                    if self.validator_dict.has_key(response[0]):
-                        validatedict=self.validator_dict[response[0]](response[1])
-
-                    splitdict.update({'omhe': response[0],
-                       'value': response[1],
-                       'tags':tags
-                       })
-                    splitdict.update(validatedict)
-                    self.omhe_dict.update(splitdict)       
-                    return self.omhe_dict
-                else:
-                    print """Tags were found"""
-                    value=tag_response[0]
-                    for t in tag_response[1:]:
-                        tags.append(t)
-                    
-                    print """proccess tags that are helpers"""
-                    for t in tags:
-                        for ht in self.helper_tuple:
-                            if t.startswith(ht):
-                                helper_split=t.split(ht)
-                                if len(helper_split)==2:
-                                    ot="omhe_helper_tag_%s" % (ht)
-                                    self.omhe_dict.update({ot:helper_split[1]})
-                                if self.helper_validator_dict.has_key(ht):
-                                    helper_validator_response=self.helper_validator_dict[ht](helper_split[1])
-                                    self.omhe_dict.update(helper_validator_response)
-                    
-                    self.omhe_dict.update({'omhe': response[0],
-                           'value': tag_response[0],
-                           'tags': tags,
+                    tag_response=response[1].split("#")
+                    if len(tag_response)==1:
+                        """If no tags"""
+                        if self.validator_dict.has_key(response[0]):
+                            validatedict=self.validator_dict[response[0]](response[1])
+    
+                        splitdict.update({'omhe': i,
+                           'value': response[1],
+                           'tags':tags
                            })
-                    
-                    
-                    if self.validator_dict.has_key(response[0]):
-                        validatedict=self.validator_dict[response[0]](tag_response[0])
-                        self.omhe_dict.update(validatedict)        
-                    return self.omhe_dict
+                        splitdict.update(validatedict)
+                        self.omhe_dict.update(splitdict)       
+                        return self.omhe_dict
+                    else:
+                        print """Tags were found"""
+                        value=tag_response[0]
+                        for t in tag_response[1:]:
+                            tags.append(t)
+                        
+                        print """proccess tags that are helpers"""
+                        for t in tags:
+                            for ht in self.helper_tuple:
+                                if t.startswith(ht):
+                                    helper_split=t.split(ht)
+                                    if len(helper_split)==2:
+                                        ot="omhe_helper_tag_%s" % (ht)
+                                        self.omhe_dict.update({ot:helper_split[1]})
+                                    if self.helper_validator_dict.has_key(ht):
+                                        helper_validator_response=self.helper_validator_dict[ht](helper_split[1])
+                                        self.omhe_dict.update(helper_validator_response)
+                        
+                        self.omhe_dict.update({'omhe': response[0],
+                               'value': tag_response[0],
+                               'tags': tags,
+                               })
+                        
+                        
+                        if self.validator_dict.has_key(response[0]):
+                            validatedict=self.validator_dict[response[0]](tag_response[0])
+                            self.omhe_dict.update(validatedict)        
+                        return self.omhe_dict
             else:
                 error_message="%s is not an OMHE command" % response[0]
                 raise InvalidCommandError, error_message
@@ -134,20 +147,43 @@ class OMHE:
         """
         print message
         
-    
-        
-        for c in self.command_tuple:
-                if message.startswith(c):
-                    found=True
-                    response = message.split(c)
-                    command=c
-                    value=response[1]
-                    break
-                else:
-                    pass
-                
+        for i,j in self.command_dict.items():
+            
+            if message.startswith(i)==True:
+                found=True
+                response = message.split(i)
+                command=i
+                value=response[1]
+                break
+            
+            else:
+                for x in j:
+                    if message.startswith(x):
+                        found=True
+                        response = message.split(x)
+                        command=i
+                        value=response[1]
+                        break
+
+            
         if not(found):
             raise InvalidCommandError("Message %s did not contain a valid OMHE command")
+            
+            
+        #if j.__contains__(response[0]):
+        #
+        #for c in self.command_tuple:
+        #        if message.startswith(c):
+        #            found=True
+        #            response = message.split(c)
+        #            command=c
+        #            value=response[1]
+        #            break
+        #        else:
+        #            pass
+        #        
+        #if not(found):
+        #    raise InvalidCommandError("Message %s did not contain a valid OMHE command")
                 
         tag_response=value.split("#")
         if len(tag_response)==1:
