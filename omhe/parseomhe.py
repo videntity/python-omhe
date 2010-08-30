@@ -29,22 +29,13 @@ class OMHE:
         
         """This dict of dicts contains all possible omhe values and aliases"""
         self.command_dict={
-            'bp': ('bp','bloodpressure'),
-            'wt': ('wt','weight'),
-            'st': ('st','steps'),
-            'gbp': ('gbp','getbloodpressure'),
+            'bp': ('bloodpressure',),
+            'wt': ('weight',),
+            'st': ('steps',),
+            'gbp': ('getbloodpressure',),
+            #TODO: Add others here...    
         }
-        
-        #self.command_tuple=('hp', 'help', 'bp', 'bloodpressure', 'getbloodpressure', 'gbp',
-        #      'sbp', 'sendbloodpressure', 'mc', 'menstralcycle', 'wt', 'weight',
-        #      'gwt', 'getweight', 'swt', 'sendweight', 'bmi', 'bodymassindex',
-        #      'tsk', 'task', 'steps', 'st', ',sta', 'start', 'sto', 'stop', 'sp', 'sleep', 'gsp',
-        #      'getsleep', 'ssp', 'sendslp', 'sw', 'swim', 'ca', 'calories',
-        #      'pain', 'pn', 'gpn', 'getpain', 'spn', 'sendpain', 'mood', 'md',
-        #      'gmd', 'getmood', 'smd', 'sendmood', 'ci','checkin')
-        
-    
-        
+                
         self.helper_tuple=('id', 'dt', 'tz', 'hid', 'pw' 'pi' 'tm' 'uu', '#')
         """This tuple contains helpers"""
     
@@ -145,18 +136,10 @@ class OMHE:
         Without the equals, let's tease out which omhe command we are dealing
         with
         """
-        print message
         
         for i,j in self.command_dict.items():
-            
+
             if message.startswith(i)==True:
-                found=True
-                response = message.split(i)
-                command=i
-                value=response[1]
-                break
-            
-            else:
                 for x in j:
                     if message.startswith(x):
                         found=True
@@ -164,27 +147,20 @@ class OMHE:
                         command=i
                         value=response[1]
                         break
+                    else:
+                        found=True
+                        response = message.split(i)
+                        command=i
+                        value=response[1]
+                break
+            
+            if found:
+                break
 
             
         if not(found):
             raise InvalidCommandError("Message %s did not contain a valid OMHE command")
-            
-            
-        #if j.__contains__(response[0]):
-        #
-        #for c in self.command_tuple:
-        #        if message.startswith(c):
-        #            found=True
-        #            response = message.split(c)
-        #            command=c
-        #            value=response[1]
-        #            break
-        #        else:
-        #            pass
-        #        
-        #if not(found):
-        #    raise InvalidCommandError("Message %s did not contain a valid OMHE command")
-                
+        """No that we know what command we are dealing withlet's process the rest"""                
         tag_response=value.split("#")
         if len(tag_response)==1:
             """No tags"""    
