@@ -9,6 +9,9 @@ from settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
 import parseomhe
 import pycurl
 wii_weight=""
+username=""
+subject=""
+password=""
 
 
 def uploadOMHE2restcat(omhe_dict, username, password, sndr, rcvr, subj, security=3):
@@ -130,16 +133,20 @@ class App:
             self.e1.delete(0, END)
             self.e1.insert(END, wii_weight)
             self.omhe_str=wii_weight
-        #"""See if the necessary libraries are present, disable buttons"""
-        #try:
-        #    import serial
-        #    mystate=ACTIVE
-        #except(ImportError):
-        #    mystate=DISABLED
-        #    print "The serial package was not found. Disabling scale reader."
-        #    
-        #self.button = Button(frame, text="GET FROM SCALE", command=self.getFromScale, state=mystate)
-        #self.button.grid(row=1, column=5)
+            
+        if username!="":
+            self.e2.delete(0, END)
+            self.e2.insert(END, username)
+
+            
+        if subject!="":
+            self.e3.delete(0, END)
+            self.e3.insert(END, subject)
+
+            
+        if password!="":
+            self.e4.delete(0, END)
+            self.e4.insert(END, password)
         
         try:
             import parseomhe, upload2restcat
@@ -150,14 +157,6 @@ class App:
         self.button = Button(frame, text="    SEND      ", command=self.sendVidentity, state=mystate)
         self.button.grid(row=1, column=5)
         
-        #try:
-        #    import twitter
-        #    mystate=ACTIVE
-        #except(ImportError):
-        #    mystate=DISABLED
-        #    print "The Twitter package was not found. Disabling Twitter Send."
-        #self.button = Button(frame, text="SEND VIA TWITTER", command=self.sendTwitter, state=mystate)
-        #self.button.grid(row=3, column=5)
 
         self.button = Button(frame, text="    QUIT      ", command=frame.quit)
         self.button.grid(row=2, column=5)
@@ -248,8 +247,9 @@ class App:
     def sendVidentity(self):
         self.stat_str.set("Uploading...")
         print "Upload to RESTCat"
-        x= "%s%s%s" %(self.omhe_weight_prefix, self.omhe_str, self.units_str)
-        self.omhe_str=x
+        
+        weight=(self.e1.get())
+        self.omhe_str= "%s%s%s" %(self.omhe_weight_prefix, weight, self.units_str)
         user=(self.e2.get())
         email=(self.e3.get())
         password=(self.e4.get())
@@ -294,8 +294,28 @@ class App:
 
 try:
     wii_weight = sys.argv[1]
+    wii_weight="%.2f" % (float(wii_weight))
+
 except:
+    print sys.exc_info()
     wii_weight=""
+    
+try:
+    username = sys.argv[2]
+except:
+    username ="" 
+    
+try:
+    subject = sys.argv[3]
+except:
+    subject =""
+    
+try:
+    password = sys.argv[4]
+except:
+    password ="" 
+    
+    
 root = Tk()
 root.title("Please Enter Your Weight") 
 
