@@ -5,9 +5,48 @@
 
 import sys
 from Tkinter import *
-from settings import twitterid, twitterpass, twitterreceiver
-
+from settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
+import parseomhe
+import pycurl
 wii_weight=""
+
+
+def uploadOMHE2restcat(omhe_dict, username, password, sndr, rcvr, subj, security=3):
+
+        URL="%s/api/create/" % (RESTCAT_SERVER)
+        URL=str(URL)
+        user_and_pass="%s:%s" % (username, password)
+        user_and_pass=str(user_and_pass)
+        pf=[]
+        routing={'sndr':sndr,
+            'rcvr':RECEIVER,
+            'subj':sndr,
+             'sec':security,}
+        post_dict={}
+        post_dict['ttype']='omhe'
+        post_dict.update(routing)
+        post_dict['tx_dt']=omhe_dict['tx_dt']
+        post_dict['tx_tz']=omhe_dict['tx_tz']
+        post_dict['id']=omhe_dict['id']
+        post_dict['texti']=omhe_dict['texti']
+        
+        print post_dict
+        
+        for o in post_dict:
+            x=(str(o), str(post_dict[o]))
+            pf.append(x)   
+        
+        
+        c = pycurl.Curl()
+        c.setopt(pycurl.URL, URL)
+        c.setopt(c.HTTPPOST, pf)
+        c.setopt(pycurl.FOLLOWLOCATION, 1)
+        c.setopt(pycurl.MAXREDIRS, 5)
+        c.setopt(pycurl.HTTPHEADER, ["Accept:"])
+        c.setopt(pycurl.USERPWD, user_and_pass)
+        c.perform()
+        return c
+
     
 class App:
 
@@ -65,21 +104,27 @@ class App:
                 
         self.weight = Label(frame2, text="Weight:")
         self.weight.grid(row=0, column=0)
-        
         self.e1 = Entry(frame2)
         self.e1.grid(row=0, column=1)
         
+        
         self.username = Label(frame2, text="Username:")
         self.username.grid(row=1, column=0)
-        
         self.e2 = Entry(frame2)
         self.e2.grid(row=1, column=1)
         
-        self.password = Label(frame2, text="Password:")
-        self.password.grid(row=2, column=0)
-        
+        self.email = Label(frame2, text="Subject's Email:")
+        self.email.grid(row=2, column=0)
         self.e3 = Entry(frame2)
-        self.e3.grid(row=2, column=1)        
+        self.e3.grid(row=2, column=1)  
+        
+        
+        self.password = Label(frame2, text="Password:")
+        self.password.grid(row=3, column=0)
+        self.e4 = Entry(frame2)
+        self.e4.grid(row=3, column=1)        
+ 
+ 
         
         if wii_weight!="":
             self.e1.delete(0, END)
@@ -121,9 +166,6 @@ class App:
         self.stat_str.set("Press Send when ready")
         self.status = Label(master, textvariable=self.stat_str, fg="red")
         self.status.grid(row=10, column=0)
-        
-        
-    
         
         self.firstdot=True
         
@@ -204,12 +246,35 @@ class App:
         print "get from scale"
         
     def sendVidentity(self):
-        print "Send via videntity"
-        print "%s%s%s" %(self.omhe_weight_prefix, self.omhe_str, self.units_str)
-        print self.omhe_str
-        print "user=%s" % (self.e2.get())
-        print "pass=%s" % (self.e3.get())
-        self.stat_str.set("Hello")
+        self.stat_str.set("Uploading...")
+        print "Upload to RESTCat"
+        x= "%s%s%s" %(self.omhe_weight_prefix, self.omhe_str, self.units_str)
+        self.omhe_str=x
+        user=(self.e2.get())
+        email=(self.e3.get())
+        password=(self.e4.get())
+        print "user=%s" % (user)
+        print "email=%s" % (email)
+        print "password=%s" % (password)
+
+        
+        omhe_str=self.omhe_str
+        """ Instantiate an instance of the OMHE class"""
+        o = parseomhe.OMHE()
+        """Parse it if valid, otherwise raise the appropriate  error"""
+        d=o.parse(self.omhe_str)
+
+        result=uploadOMHE2restcat(d, user, password, email, RECEIVER,
+                                  email, 2)
+        print "HTTP Response Code=%s" % (result.getinfo(result.HTTP_CODE),)
+        code = result.getinfo(result.HTTP_CODE)
+        if int(code)==200:
+            self.stat_str.set("Done! Peace out!")
+            exit(0)
+        else:
+            s="Error Uploading. Error code %s" % (code)
+            self.stat_str.set(s)
+
     #def sendTwitter(self):
     #    print "Send via Twitter"
     #    dm = "%s%s%s" %(self.omhe_weight_prefix, self.omhe_str, self.units_str)
