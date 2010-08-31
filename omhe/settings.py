@@ -20,6 +20,11 @@ RESTCAT_SERVER="http://127.0.0.1:8000"
 #the tx's security level. 1 is highest and 3 is lowest.
 SEC_LEVEL=3
 
+"""Change this to your actual serial port. on windows COM1, COM2, COMX
+on Unix/Linx, ttyX. Note this currently only works with the A&D model UA-767PC"""
+SERIAL_PORT="/dev/ttyUSB0"
+
+
 """settings file for weight.py and bloodpressure.py"""
 """change this to your twittername"""
 twitterid="aviars"
@@ -27,10 +32,10 @@ twitterid="aviars"
 twitterpass="yourpasswd" 
 """change this to the twitter account you wan to get the messg"""
 twitterreceiver="vomhe"
-"""change this to your actual serial port. on windows COM1, COM2, COMX
-on Unix/Linx, ttyX. Note this currently only works with the A&D model UA-767PC"""
-serial_port="/dev/ttyUSB1"
 """Set this to True if you want to add your reading to your PUBLIC timeline"""
 public_tweet=False
+
+
+
 
 
