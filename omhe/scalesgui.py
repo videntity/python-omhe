@@ -197,7 +197,7 @@ while True:
 		
 		weightlbs=weight * 2.2
 		#print "%.2flb" % (weightlbs)
-		weight_sprite.weight = weightlbs
+		weight_sprite.weight = weightlbs + 2
 	
 	
 	readings = wiimote.state['balance']
