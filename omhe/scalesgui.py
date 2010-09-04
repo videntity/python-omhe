@@ -186,6 +186,7 @@ while True:
 			print "Average=%.2f" % average
 			cmd = 'python /home/alan/django-projects/python-omhe/omhe/weight.py %s' % average
 			os.system(cmd)
+			weight_list=[]
 			
 	wiimote.request_status()
 	frame = frame + 1
