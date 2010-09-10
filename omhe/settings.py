@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 
 #the username needed to authenticate to RESTcat
-USERNAME='aviars'
+USERNAME='chris'
 
 #the password needed to authenticate to RESTcat
 PASSWORD='password'
 
 #the tx's sender - should always be an email
-SENDER="aviars@videntity.com"
+SENDER="chris@geheran.com"
 
 #the tx's receiver - should always be an email
 RECEIVER="transparentp@microphr.com"
 
 #the tx's subject - should always be an email
-SUBJECT="aviars@videntity.com"
+SUBJECT="chris@geheran.com"
 
-RESTCAT_SERVER="http://127.0.0.1:8000"
+RESTCAT_SERVER="http://restcat1.wellrbox.com:80"
 
 #the tx's security level. 1 is highest and 3 is lowest.
 SEC_LEVEL=3

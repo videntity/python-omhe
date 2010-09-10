@@ -1,10 +1,10 @@
 import pycurl
 import sys
 import parseomhe
-from settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL
+from settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
 
 
-URL="http://127.0.0.1:8000/api/create/"
+URL="%s/api/create/" % (RESTCAT_SERVER)
 routing={
         'sndr':SENDER,
         'rcvr':RECEIVER,
@@ -40,7 +40,7 @@ def upload_OMHE_2_RESTCat(omhe_dict, outfile, username, password):
     for o in post_dict:
         x=(str(o), str(post_dict[o]))
         pf.append(x)
-
+    print pf
     user_and_pass="%s:%s" % (username, password)    
     c = pycurl.Curl()
     c.setopt(pycurl.URL, URL)
