@@ -2,6 +2,13 @@ import re,sys
 from parseomhe import *
 from datetime import datetime
 
+class OMHEError(Exception): pass
+class InvalidCommandError(OMHEError):pass
+class InvalidValueError(OMHEError):pass
+class InvalidMessageError(OMHEError):pass
+class InvalidHelperFormatError(OMHEError):pass
+class NotADatetimeObjectError(OMHEError):pass
+class DatetimeFormatError(OMHEError):pass
 
 def st_validator(omhe_value):
     print """validate steps"""
@@ -19,7 +26,7 @@ def st_validator(omhe_value):
         
     except:
         error_msg="I could not validate the value %s" % (omhe_value)
-        raise InvalidMessageError(error_message)
+        raise InvalidMessageError(error_msg)
 
 
 
@@ -56,7 +63,7 @@ def wt_validator(omhe_value):
             raise InvalidValueError("You didn't supply a numerical weight")
     
     error_msg="I could not validate the value %s" % (omhe_value)
-    raise InvalidMessageError(error_message)
+    raise InvalidMessageError(error_msg)
 
 
 def bp_validator(omhe_value):
@@ -186,13 +193,15 @@ def dt_helper_validator(helper_value):
     
 
 def tz_helper_validator(helper_value):
-    if helper_value.isdigit():
+    
+    try:
         val=int(helper_value)
-        if not (-12 <= val <=12 ):
-            raise InvalidHelperFormatError, "TimeZoneOffset 'tz' mut be between -12 and +12"
-    else:
+    except():
         raise InvalidHelperFormatError, "TimeZoneOffset 'tz' is not an integer"
-    _ev_tz=val
+    
+    if not (-12 <= val <=12 ):
+            raise InvalidHelperFormatError, "TimeZoneOffset 'tz' mut be between -12 and +12"
+    ev_tz=val
     return {'ev_tz':ev_tz}
 
 
