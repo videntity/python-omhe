@@ -64,12 +64,12 @@ def wt_validator(omhe_value):
     
     error_msg="I could not validate the value %s" % (omhe_value)
     raise InvalidMessageError(error_msg)
+    
 
 
 def bp_validator(omhe_value):
-    """Validate blood pressure information"""
     try:
-        if omhe_value.isdigit():
+        if omhe_value.isdigit() and len(omhe_value)==9:
             bp_syst=omhe_value[0:3]
             bp_dia=omhe_value[3:6]
             bp_pul=omhe_value[6:9]
@@ -82,9 +82,8 @@ def bp_validator(omhe_value):
             sys_delin='/'
         elif omhe_value.__contains__('d'):
             sys_delin='d'
-        else: 
-            raise InvalidValueError, "Invalid bp syntax"
-            
+        else:  
+            raise InvalidValueError, "Invalid bp syntax" 
         
         splstr1=omhe_value.split(sys_delin)
         if len(splstr1) !=2:
