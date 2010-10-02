@@ -91,8 +91,11 @@ class OMHE:
                     if len(tag_response)==1:
                         """If no tags"""
                         if self.validator_dict.has_key(response[0]):
-                            validatedict=self.validator_dict[response[0]](response[1])
-    
+				"""Validate the omhe command and value"""
+				try:
+				    validatedict=self.validator_dict[response[0]](response[1])
+				except:
+				    validatedict={'error': "There was an error with your OMHE syntax"}
                         splitdict.update({'omhe': i,
                            'value': response[1],
                            'tags':tags
@@ -101,12 +104,12 @@ class OMHE:
                         self.omhe_dict.update(splitdict)       
                         return self.omhe_dict
                     else:
-                        print """Tags were found"""
+                        """Tags were found"""
                         value=tag_response[0]
                         for t in tag_response[1:]:
-                            tags.append(t)
+                            tags.append(str(t))
                         
-                        print """proccess tags that are helpers"""
+                        """proccess tags that are helpers"""
                         for t in tags:
                             for ht in self.helper_tuple:
                                 if t.startswith(ht):
@@ -125,7 +128,11 @@ class OMHE:
                         
                         
                         if self.validator_dict.has_key(response[0]):
-                            validatedict=self.validator_dict[response[0]](tag_response[0])
+			    """Validate the omhe command and value"""
+			    try:
+				validatedict=self.validator_dict[response[0]](tag_response[0])
+			    except:
+				validatedict={'error': "There was an error with your OMHE syntax"}
                             self.omhe_dict.update(validatedict)        
                         return self.omhe_dict
             else:
@@ -170,7 +177,7 @@ class OMHE:
         else:
             print """tags in message"""
             for t in tag_response[1:]:
-                tags.append(t)
+                tags.append(str(t))
             value=tag_response[0]
             
         self.omhe_dict.update({
@@ -192,7 +199,12 @@ class OMHE:
 
         if self.validator_dict.has_key(self.omhe_dict['omhe']):
                     value_to_validate=self.omhe_dict['value']
-                    validatedict=self.validator_dict[self.omhe_dict['omhe']](value)
+		    """Validate the omhe command and value"""
+		    try:
+			validatedict=self.validator_dict[self.omhe_dict['omhe']](value)
+		    except:
+			validatedict={'error': "There was an error with your OMHE syntax"}
+                    
                     self.omhe_dict.update(validatedict)          
         return self.omhe_dict
                         
