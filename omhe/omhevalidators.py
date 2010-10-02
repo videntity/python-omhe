@@ -11,8 +11,7 @@ class NotADatetimeObjectError(OMHEError):pass
 class DatetimeFormatError(OMHEError):pass
 
 def st_validator(omhe_value):
-    print """validate steps"""
-    print omhe_value
+    """validate steps"""
     valdict={}
     
     try:
@@ -28,6 +27,23 @@ def st_validator(omhe_value):
         error_msg="I could not validate the value %s" % (omhe_value)
         raise InvalidMessageError(error_msg)
 
+
+def bg_validator(omhe_value):
+    """validate blood glucose"""
+    valdict={}
+    
+    try:
+        if omhe_value.isdigit():
+            valdict['bg_numeric']=omhe_value
+        try:
+            x=float(valdict['bg_numeric'])
+            return valdict
+        except:
+            raise InvalidValueError("You didn't suply a numer for blood glucose")
+        
+    except:
+        error_msg="I could not validate the value %s" % (omhe_value)
+        raise InvalidMessageError(error_msg)
 
 
 
@@ -135,13 +151,14 @@ def sbp_validator(omhe_value):
     
     
 def validateEmail(email):
-    """ Validates that email is well-formed."""
+    """ Validate that email is well-formed."""
     if len(email) > 7:
         if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:
             return True
     return False
 
 def dt_helper_validator(helper_value):
+    """ Validate datetime helper."""
     if (len(helper_value)!=16):
         error_string = "Datime %s is Incorrect Length." % (helper_value)
         raise InvalidHelperFormatError, error_string
@@ -192,7 +209,7 @@ def dt_helper_validator(helper_value):
     
 
 def tz_helper_validator(helper_value):
-    
+    """ Validate timezone helper."""
     try:
         val=int(helper_value)
     except():

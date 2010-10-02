@@ -30,6 +30,7 @@ class OMHE:
         """This dict of dicts contains all possible omhe values and aliases"""
         self.command_dict={
             'bp': ('bloodpressure',),
+	    'bg': ('bloodglucose',),
             'wt': ('weight',),
             'st': ('steps',),
             'gbp': ('getbloodpressure',),
@@ -41,6 +42,7 @@ class OMHE:
     
         self.validator_dict={
                    'bp': bp_validator,
+		   'bg': bg_validator,
                    'bloodpressure': bp_validator,
                    'steps': st_validator,
                    'st': st_validator,
