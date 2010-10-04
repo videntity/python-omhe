@@ -32,7 +32,7 @@ class OMHE:
             'bp': ('bloodpressure',),
 	    'bg': ('bloodglucose',),
             'wt': ('weight',),
-            'st': ('steps',),
+            'spd': ('steps','st',),
             'gbp': ('getbloodpressure',),
             #TODO: Add others here...    
         }
@@ -44,7 +44,9 @@ class OMHE:
                    'bp': bp_validator,
 		   'bg': bg_validator,
                    'bloodpressure': bp_validator,
+                   'bloodglucose': bg_validator,
                    'steps': st_validator,
+                   'spd': st_validator,
                    'st': st_validator,
                    'wt': wt_validator,
                    'weight': wt_validator,
@@ -75,7 +77,8 @@ class OMHE:
         """Parse an OMHE message and return a dictonary of its subparts"""
         found=False
         tags=[]
-	splitdict={}        
+	splitdict={}
+        validatedict={}
         if type(message).__name__!='str' and type(message).__name__!='unicode':
             raise InvalidMessageError, "The message was not a string"
         message=message.lower()
@@ -92,12 +95,15 @@ class OMHE:
                     tag_response=response[1].split("#")
                     if len(tag_response)==1:
                         """If no tags"""
+
                         if self.validator_dict.has_key(response[0]):
 				"""Validate the omhe command and value"""
 				try:
 				    validatedict=self.validator_dict[response[0]](response[1])
 				except:
-				    validatedict={'error': "There was an error with your OMHE syntax"}
+				    validatedict={'error': "There was an error with your OMHE syntax."}
+
+           
                         splitdict.update({'omhe': i,
                            'value': response[1],
                            'tags':tags
@@ -147,24 +153,24 @@ class OMHE:
         """
         
         for i,j in self.command_dict.items():
-
+            print i,j
             if message.startswith(i)==True:
-                for x in j:
-                    if message.startswith(x):
+                command=i
+                response = message.split(i)
+                value=response[1]
+                found=True
+            for x in j:
+                
+                if message.startswith(x):
                         found=True
                         response = message.split(x)
                         command=i
                         value=response[1]
                         break
-                    else:
-                        found=True
-                        response = message.split(i)
-                        command=i
-                        value=response[1]
-                break
             
             if found:
                 break
+            
 
             
         if not(found):
