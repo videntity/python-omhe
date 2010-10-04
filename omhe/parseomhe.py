@@ -32,7 +32,7 @@ class OMHE:
             'bp': ('bloodpressure',),
 	    'bg': ('bloodglucose',),
             'wt': ('weight',),
-            'spd': ('steps','st',),
+            'st': ('steps','spd',),
             'gbp': ('getbloodpressure',),
             #TODO: Add others here...    
         }
