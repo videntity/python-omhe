@@ -1,19 +1,33 @@
-###############################################################################
-# Open Mobile Health Exchange (OMHE) Parser & Tools for Python
-# (c) 2010. All Rights Reserved.
-# Release 0.3dev
-# Authors: Alan Viars (Videntity)
-# License: This code is open source and available via Apache2 license.
-# Please read LICENSE.txt for more information.
-#  
-################################################################################
+.. image::  http://github.com/aviars/python-omhe/raw/master/omhe.png
+
+WiiBalance README:
+==================
+
+Open Mobile Health Exchange (OMHE) Parser & Tools for Python
+
+(c) 2010. All Rights Reserved.
+
+Release 0.3dev
+
+Authors: Alan Viars (Videntity)
+
+License: This code is open source and available via Apache2 license.
+
+Please read LICENSE.txt for more information.
+ 
 
 These instructions will help you connect your Wii Balance board to your Ubunutu Linux
 computer, output the weight im OMHE format and upload it to RESTCat so it can be
-shared and visualized.
+stored, shared, and visualized.
 
-Setting up Your computer to talk Wii
-------------------------------------
+Table of Contents:
+==================
+.. toctree::
+   :maxdepth: 3
+
+
+1. Setting up Your computer to talk with a Wii Balance Board:
+=============================================================
 
 These instructions were modified from Matt Cutt's blog article:
     http://www.mattcutts.com/blog/linux-wii-balanceboard/
@@ -53,20 +67,20 @@ If this works then your computer is now read to connect to the balance board.
 If you have problems please see the cwiid documentaion.  These instructions
 were tested on Ubuntu 10.
 
-Using the Wii Balance Board Application
----------------------------------------
+2. Using the Wii Balance Board Application:
+===========================================
 
 Run the weightdemo.py application and immedatly press the red button on the
 bottom of your balance board to sync the bluetooth connection.  If all goes well
 you will see a GUI display on your computer.
 ::
-    python weightdemo.py
+    python scalesgui.py
     
 If you get an error message, r/o error or a bluetooth connection timeout
 just run the application again.
 
-Capture your Weight:
---------------------
+3. Capture Your Weight:
+========================
 
 Press F2 to capture your weight.  You'll see another screen come up to upload
 your weight to RESCat.  Enter your username and password and press Send.  If
