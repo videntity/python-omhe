@@ -1,3 +1,4 @@
+.. image::  http://github.com/aviars/python-omhe/raw/master/omhe.png
 
 Open Mobile Health Exchange (OMHE) Parser & Tools for Python
 ============================================================
@@ -5,12 +6,21 @@ Open Mobile Health Exchange (OMHE) Parser & Tools for Python
 Release 0.5dev
 Author: Alan Viars (Videntity)
 License: This code is open source and available via Apache2 license.
-Please read LICENSE.txt for more information.
+Please read LICENSE.txt for more information. If you need support,
+python-omhe is avaiable under a commercial license by Videntity Systems, Inc. 
+
+	If you need commercial support please email us at sales [at] videntity [dot] [com]
 
 
-##############
-# BACKGROUND #
-##############
+Table of Contents:
+==================
+.. toctree::
+   :maxdepth: 3
+
+
+
+1. Background:
+==============
 
 OMHE is a microsyntax.org project.  The goal behind OMHE is to help exchange
 data over mobile device such as phones or medical or wellness devices.
@@ -31,20 +41,19 @@ See http://github.com/aviars/RESTCat for more information
 
 
 
-INSTALLATION:
-------------
+2. Dependencies:
+================
 
-DEPENDENCIES:
-~~~~~~~~~~~~~
-We assume you are already running Python 2.4, 2.5, or 2.6. If you are on Linux
-or MacOS, chance are python is already installed.  The upload tools also require
+We assume you are already running 2.5, or 2.6. If you are on Linux
+or MacOS, chances are Python is already installed.  The upload tools require
 pycurl.  The blood pressure application requires pyserial.  The Wii Balance Board
 application requires Cwiid.
 
-OMHE requires no additional dependicies at this time.
+The python-omhe library requires no additional dependicies at this time.
 
-
-MANY WAYS TO INSTALL:
+3. Installation:
+===============
+Installing with sudo apt-get in:
 There are many ways to install on Linux, Mac or Windows. Here is an example
 on Ubuntu Linux.  Adjust these instructions to you platform.
 Install the prereqs:
@@ -58,15 +67,13 @@ Install python-omhe:
     git clone git://github.com/aviars/python-omhe.git
 
 
-
-#########################
-# HOW TO USE THE PARSER #
-#########################
+4. How to Use the Parser:
+==========================
 
 It takes a string as a single argurment and returns parsed data.
 ::
     #import the omheparser library
-    import parseomhe
+    from omhe import parseomhe
     
     #create a strng to parse
     omhe_str="bp=120/80p60#dt19751217:083059z"
@@ -109,26 +116,41 @@ these cpmmands will validate
     
     python parseomhe.py bp120/80p60#afteryog
 
+5. Using the GUI Applications.
 
-TODO:
-----
+To run the bloodpressure GUI:
+::
+    python bloodpressure.py
+    
+See the bloodpressure_ README for more information.    
+
+..  _bloodpressure: ./omhe/README.rst
+
+Run the WiiBalance Sample GUI:
+::
+    python scalesgui.py
+    
+See wiibalance_ for more information.
+.. _wiibalance: ./omhe/WiiBalanceREADME.rst
+
+6. TODOs:
+=========
 
 Validators are still needed for many omhe commands.  Simply add you validator
 function to omhevalidators.py and make sure they are 'turned on' in the code
 by having the command and validation function present in the omhe_validators
 dictionary in the parsepmhe.py file.
 
-##############
-#DEDICATIONS #
-##############
-
+7. DEDICATIONS:
+===============
 This code is dedicated to my Grandmother, Rachel Bradshaw, who
 is in her 90's and has Congestive Heart Failure, to my father who recently had
 open heart surgery and  to all those who struggle to stay well or get better.
 
-############
-# SUPPORT  #
-############
+
+8 SUPPORT:
+==========
+
 This is free open source software commerically supported by Videntity Systems,
 Inc.  Among other things, Videntity commercialy supports the
 python-omhe library. http://videntity.com
