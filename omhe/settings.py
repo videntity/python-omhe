@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 
 #the username needed to authenticate to RESTcat
-USERNAME='chris'
+USERNAME='aviars'
 
 #the password needed to authenticate to RESTcat
 PASSWORD='password'
 
 #the tx's sender - should always be an email
-SENDER="chris@geheran.com"
+SENDER="alan.viars@videntity.com"
 
 #the tx's receiver - should always be an email
-RECEIVER="transparentp@microphr.com"
+RECEIVER="alan.viars@videntity.com"
 
 #the tx's subject - should always be an email
-SUBJECT="chris@geheran.com"
+SUBJECT="alan.viars@videntity.com"
 
 RESTCAT_SERVER="http://restcat1.wellrbox.com:80"
 

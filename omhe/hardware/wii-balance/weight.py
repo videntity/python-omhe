@@ -303,17 +303,17 @@ except:
 try:
     username = sys.argv[2]
 except:
-    username ="" 
+    username ="aviars" 
     
 try:
     subject = sys.argv[3]
 except:
-    subject =""
+    subject ="alan.viars@videntity.com"
     
 try:
     password = sys.argv[4]
 except:
-    password ="" 
+    password ="password" 
     
     
 root = Tk()

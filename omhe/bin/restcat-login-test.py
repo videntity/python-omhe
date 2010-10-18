@@ -1,18 +1,15 @@
 import urllib2, urllib, sys, base64
 import types, time, pycurl
+from settings import RESTCAT_SERVER, USERNAME, PASSWORD
 
 
-
-theurl = 'http://127.0.0.1:8000/api/testlogin/'
-protocol = 'http://'
-username = 'alan'
-password = 'pass'         # a great password
+THEURL = '%s/api/testlogin/' % (RESTCAT_SERVER)
     
 
 def login():
-    user_and_pass="%s:%s" % (username, password)    
+    user_and_pass="%s:%s" % (USERNAME, PASSWORD)    
     c = pycurl.Curl()
-    c.setopt(pycurl.URL, theurl)
+    c.setopt(pycurl.URL, THEURL)
     c.setopt(pycurl.HTTPHEADER, ["Accept:"])
     c.setopt(pycurl.USERPWD, user_and_pass)
     c.perform()
