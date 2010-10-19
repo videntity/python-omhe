@@ -1,7 +1,7 @@
 import pycurl
 import sys
-import omhe.bin.parseomhe
-from omhe.settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
+import parseomhe
+from settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
 
 
 URL="%s/api/create/" % (RESTCAT_SERVER)
@@ -52,3 +52,36 @@ def upload_OMHE_2_RESTCat(omhe_dict, outfile, username, password):
     f.close() 
     return c
     
+
+if __name__ == "__main__":
+    """
+    Accept a singe omhe string from the command line. Parse, then print
+    the resulting dict, then upload to RESTCat
+    """
+    try: 
+        omhe_str=sys.argv[1]
+    except(IndexError):
+        print "You must supply an omhe message!"
+        exit(1)
+        
+    try: 
+        out_file=sys.argv[2]
+    except(IndexError):
+        print "You must an output file!"
+        exit(1)
+    
+    print "Input omhe string is: %s" % (omhe_str) 
+    
+    try:
+        """ Instantaiate an instance of the OMHE class"""
+        o = parseomhe.OMHE()
+        """Parse it if valid, otherwise raise the appropriate  error"""
+        d=o.parse(omhe_str)
+        """Send the OMHE dictonary to RESTCat"""
+        result=upload_OMHE_2_RESTCat(d, out_file, USERNAME, PASSWORD)
+        print "HTTP Response Code=%s" % (result.getinfo(result.HTTP_CODE),)
+        result.close()
+        
+    except():
+        print "An unexpected error occured. Here is the post-mortem:"
+        print sys.exc_info()

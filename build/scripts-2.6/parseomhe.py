@@ -153,7 +153,7 @@ class OMHE:
         """
         
         for i,j in self.command_dict.items():
-            #print i,j
+            print i,j
             if message.startswith(i)==True:
                 command=i
                 response = message.split(i)
@@ -183,7 +183,7 @@ class OMHE:
             """No tags"""    
             pass
         else:
-            #print """tags in message"""
+            print """tags in message"""
             for t in tag_response[1:]:
                 tags.append(str(t))
             value=tag_response[0]
@@ -294,3 +294,29 @@ class OMHE:
         dt=datetime(year, month, day, hour, minute, second, val)
         return dt
     
+        
+                
+if __name__ == "__main__":
+    """
+    Accept a singe omhe string from the command line. Parse, then print
+    the resulting dict.
+    """
+    try: 
+        omhe_str=sys.argv[1]
+    except(IndexError):
+        print "You must supply an omhe message!"
+        exit(1)
+    
+    print "Input omhe string is: %s" % (omhe_str) 
+    
+    try:
+        """ Instantaiate an instance of the OMHE class"""
+        o = OMHE()
+        """Parse it if valid, otherwise raise the appropriate  error"""
+        d=o.parse(omhe_str)
+        """Print the dictonary"""
+        print d
+        
+    except():
+        print "An unexpected error occured. Here is the post-mortem:"
+        print sys.exc_info()

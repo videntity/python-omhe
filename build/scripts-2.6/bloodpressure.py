@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 # Written by: Alan Viars, Videntity
 # Copyright 2010 - All Rights Reserved

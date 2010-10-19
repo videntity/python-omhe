@@ -62,9 +62,23 @@ Install the prereqs:
     sudo easy_install pip
     sudo pip install pycurl
     sudo pip install pyserial
+    
 Install python-omhe:
+--------------------
+Make sure you are root or working in a virtual python environment to issue the
+'python setup.py install' or the uninstall command
 ::
     git clone git://github.com/aviars/python-omhe.git
+    cd python-omhe
+    python setup.py install
+    
+To uninstall python-omhe
+::
+    pip uninstall python-omhe
+    
+Press y when prompted
+
+
 
 
 4. How to Use the Parser:
