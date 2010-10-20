@@ -2,7 +2,7 @@
 """scalesgui.py
 """
 
-import sys,time
+
 
 try:
 	import pygame
@@ -18,12 +18,58 @@ except:
 	print "Please check that it and it's python bindings are installed, and also the balance board patch from:"
 	print "http://abstrakraft.org/cwiid/ticket/63"
 	sys.exit(1)
+	
+try:
+	import pycurl
+except:
+	print "Sorry, I can't seem to import pycurl for some reason."
+	print "Please check that it and it's python bindings are installed."
+	print "If on Ubuntu try, sudo apt-get install pycurl"
+	print "See http://pycurl.sourceforge.net/"
+	sys.exit(1)
 
+
+try:
+	from settings import callback_url
+	from settings import weight_output_file
+except:
+	print "Sorry, I can't seem fo import the settings file."
+	sys.exit(1)
+
+import sys,time, cgi, BaseHTTPServer
 import os, math, random
 import time as ptime
 from pygame.locals import *
 from ConfigParser import ConfigParser
 from threading import Thread
+
+#Callback on or off
+callback=False
+callbackweight=0
+
+
+
+
+def httpcallback(weight, units="l"):
+	if callback:
+		print "Callback"
+		"""Send an HTTP POST of weight"""
+		pf=[]
+		post_dict={}
+    
+		""" The type of transaction"""
+		post_dict['omhe']="wt=%s" % (callbackweight)
+		print post_dict
+		for o in post_dict:
+		    x=(str(o), str(post_dict[o]))
+		    pf.append(x)    
+		c = pycurl.Curl()
+		c.setopt(pycurl.URL, callback_url)
+		c.setopt(c.HTTPPOST, pf)
+		c.setopt(pycurl.HTTPHEADER, ["Accept:"])
+		c.perform()
+
+
 
 class WeightSprite(pygame.sprite.Sprite):
 	"""This class describes a sprite containing the weight."""
@@ -31,6 +77,7 @@ class WeightSprite(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		self.weight = 0.0
 		self.update()
+
 		
 	def update(self):
 		global screen_res, sys_font_weight_fgcolour, sys_font_weight, screen_res
@@ -164,7 +211,7 @@ pygame.display.set_caption("scales application")
 weight_sprite = WeightSprite()
 weight_sprite.weight = 40.33
 frame = 0
-record=False
+kg=False
 weight_list=[]
 while True:
 	for event in pygame.event.get():
@@ -172,34 +219,44 @@ while True:
 			if event.key == K_F12:
 				quit_app()
 			if event.key == K_F2:
-				record=True
-	
-	if record==True:
-		print "recording..."
-		#print weight_sprite.weight
-		weight_list.append(weight_sprite.weight)
-		if len(weight_list)>100:
-			record=False
-			print "Finished recording"
-			#print weight_list
-			average = float(sum(weight_list)) / len(weight_list)
-			print "Average=%.2f" % average
-			cmd = 'python /home/alan/django-projects/python-omhe/omhe/weight.py %s' % average
-			os.system(cmd)
-			weight_list=[]
-			
+				if kg==True:
+					kg=False
+					print "Switching to pounds (lbs)"
+				else:
+					kg=True
+					print "Switching to kilograms (kg)"
+			if event.key == K_F3:
+				if callback==True:
+					callback=False
+					print "Turn off callback"
+				else:
+					callback=True
+					print "Turning on Callback"
+				
 	wiimote.request_status()
 	frame = frame + 1
 	if frame == 50:
 		frame = 0
 		weight = (calcweight(wiimote.state['balance'], named_calibration) / 100.0)
-		
 		print "%.2fkg" % weight
 		
-		weightlbs=weight * 2.2
-		#print "%.2flb" % (weightlbs)
-		weight_sprite.weight = weightlbs + 2
-	
+		weightlbs=(weight * 2.2)+2
+		print "%.2flb" % (weightlbs)
+		if kg==True:
+			weight_sprite.weight = weight
+			weight="%sk"  % str(weight)
+			r=httpcallback(weight, "k")
+			file=open(weight_output_file, 'w')
+			file.write(weight)
+			callbackweight=weight
+		else:
+			weight_sprite.weight = weightlbs
+			r=httpcallback(weight, "l")
+			weightlbs="%sl" % (str(weightlbs))
+			file=open(weight_output_file, 'w')
+			file.write(weightlbs)
+			callbackweight=weightlbs
+		file.close()
 	
 	readings = wiimote.state['balance']
 	
@@ -239,6 +296,7 @@ while True:
 	pygame.display.flip()
 	pygame.time.wait(refresh_delay)	
 
+    
 
 
 

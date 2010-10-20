@@ -184,7 +184,7 @@ while True:
 			#print weight_list
 			average = float(sum(weight_list)) / len(weight_list)
 			print "Average=%.2f" % average
-			cmd = 'weight.py %s' % average
+			cmd = 'python /home/alan/django-projects/python-omhe/omhe/weight.py %s' % average
 			os.system(cmd)
 			weight_list=[]
 			
@@ -238,5 +238,8 @@ while True:
 	pygame.draw.circle(screen, (255,0,0), (int(xpos), int(ypos)), 5)
 	pygame.display.flip()
 	pygame.time.wait(refresh_delay)	
+
+
+
 
 

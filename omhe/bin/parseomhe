@@ -1,9 +1,9 @@
-#An OMHE Microsyntax parser class.
+# An OMHE Microsyntax parser command line utility.
 # Alan Viars, Videntity 2010
 
 import os, sys
-import omhe.bin.parseomhe
-from import omhe.bin.upload2restcat import *
+from  omhe.bin.parseomhe import *
+from omhe.bin.upload2restcat import *
     
         
                 
@@ -22,7 +22,8 @@ if __name__ == "__main__":
     
     try:
         """ Instantaiate an instance of the OMHE class"""
-        o = OMHE()
+        
+	o = OMHE()
         """Parse it if valid, otherwise raise the appropriate  error"""
         d=o.parse(omhe_str)
         """Print the dictonary"""
