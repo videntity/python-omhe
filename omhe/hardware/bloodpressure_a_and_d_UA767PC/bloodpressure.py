@@ -6,8 +6,15 @@
 import sys
 from Tkinter import *
 import tkMessageBox
-from omhe.settings import *
-import parseomhe
+
+try:
+    from settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
+except:
+    print "Sorry, I can't seem fo import the settings file."
+    sys.exit(1)
+
+
+from omhe.core.parseomhe import parseomhe
 import pycurl
 
 bp_value=""

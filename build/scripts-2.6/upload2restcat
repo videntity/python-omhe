@@ -1,6 +1,6 @@
 import pycurl
 import sys
-from omhe.bin import parseomhe, upload2restcat
+from omhe.core import parseomhe, upload2restcat
 from omhe.settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
 
 

@@ -3,7 +3,7 @@
 # Written By: Alan Viars, and Chris Boyce  - Videntity systems, Inc.
 
 import sys
-from omhe.core.omheparser import omheparser
+from omheparser import omheparser
 import simplejson
 
 class omhe2json:

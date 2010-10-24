@@ -2,8 +2,8 @@
 # Alan Viars, Videntity 2010
 
 import os, sys
-from  omhe.bin.parseomhe import *
-from omhe.bin.upload2restcat import *
+from omhe.core.parseomhe import parseomhe
+
     
         
                 
@@ -21,11 +21,11 @@ if __name__ == "__main__":
     print "Input omhe string is: %s" % (omhe_str) 
     
     try:
-        """ Instantaiate an instance of the OMHE class"""
+        """ Instantaiate an instance of the parseomhe class"""
         
-	o = OMHE()
+	p = parseomhe()
         """Parse it if valid, otherwise raise the appropriate  error"""
-        d=o.parse(omhe_str)
+        d=p.parse(omhe_str)
         """Print the dictonary"""
         print d
         

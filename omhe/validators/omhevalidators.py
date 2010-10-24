@@ -1,5 +1,5 @@
 import re,sys
-from parseomhe import *
+from omhe.lib.parseomhe import *
 from datetime import datetime
 
 class OMHEError(Exception): pass

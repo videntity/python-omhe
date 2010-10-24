@@ -1,11 +1,6 @@
 import sys,time, cgi, BaseHTTPServer
 import os, linecache
-
-try:
-    from settings import server_ip, server_port, weight_output_file
-except:
-    print "Sorry, I can't seem fo import the settings file."
-    sys.exit(1)
+from settings import server_ip, server_port, weight_output_file
 
 servAddr=(server_ip, server_port)
 
@@ -18,14 +13,12 @@ class httpServHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		self.send_response(200)
 		self.send_header('Content-type', 'application/json')
 		self.end_headers()
-                f=open(weight_output_file, 'rU')
-		jsonstr=f.read()
-		f.close()
-                #print jsonstr
+                l=linecache.getline(weight_output_file, 1)
+                
+		#self.globals=dict(cgi.parse_qsl(self.query_string))
 		self.stout =self.wfile
-		self.wfile.write(jsonstr)
+		self.wfile.write("{'wt':'%s'}" % (l))
                 linecache.clearcache()
 serv = BaseHTTPServer.HTTPServer(servAddr, httpServHandler)
-print "Serving forever on http://%s:%s" % (server_ip, server_port)
-print "Press Ctrl-C to kill the server"
+print "Serve forever"
 serv.serve_forever()

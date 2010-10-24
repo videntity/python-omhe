@@ -14,7 +14,7 @@ class InvalidHelperFormatError(OMHEError):pass
 class NotADatetimeObjectError(OMHEError):pass
 class DatetimeFormatError(OMHEError):pass
 
-class OMHE:
+class parseomhe:
     """A class to parse omhe strings into  their respective sub parts."""
     command_tuple=          None
     helper_tuple=           None

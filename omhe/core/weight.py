@@ -5,8 +5,23 @@
 
 import sys
 from Tkinter import *
-from omhe.settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
-import pycurl
+
+try:
+    import pycurl
+except:
+    print "Sorry, I can't seem to import pycurl for some reason."
+    print "Please check that it and it's python bindings are installed."
+    print "If on Ubuntu try, sudo apt-get install pycurl"
+    print "See http://pycurl.sourceforge.net/"
+    sys.exit(1)
+
+
+try:
+    from settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
+except:
+    print "Sorry, I can't seem fo import the settings file."
+    sys.exit(1)
+
 wii_weight=""
 username=""
 subject=""
