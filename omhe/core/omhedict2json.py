@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-# Written By: Alan Viars, and Chris Boyce  - Videntity systems, Inc.
+
+# Videntity
+# Author: Alan Viars
 
 import sys
-from omheparser import omheparser
+from omhe.core.parseomhe import parseomhe
 import simplejson
 
 class omhe2json:
@@ -24,15 +26,15 @@ if __name__ == "__main__":
         omhe_str=sys.argv[1]
     except(IndexError):
         #use a samplestring if one was not given
-        omhe_str = "shc=cboyce@vIDentity.com ghc hc=http://google.com hc"
+        print "Please provide an omhe message."
     
     print "Input omhe string is: %s" % (omhe_str) 
     try:
-        o = omheparser(omhe_str = omhe_str)
+        o = parseomhe(omhe_str)
         parsed = o.list
         j = omhe2json()
         jsonstr= j.omhelist2json(parsed)
         print "JSON:"
         print type(jsonstr)
     except:
-        print "There was an error converting the parsing/comverting the omhe string"
+        print "There was an error parsing/converting the omhe string"

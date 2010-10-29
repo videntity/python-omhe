@@ -120,9 +120,9 @@ this file's name is wiiweightout.json.  So lets have an example shall we?
 This command start the server
 ::
     python wiibalance_server.py
-    Serve forver...
+    Serve forver
 
-
+Now you
 
 
 

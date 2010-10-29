@@ -27,7 +27,7 @@ class parseomhe:
     
     def __init__(self,**kwargs):
         
-        """This dict of dicts contains all possible omhe values and aliases"""
+        """This dict of tuples contains all possible omhe values and aliases"""
         self.command_dict={
             'bp': ('bloodpressure',),
 	    'bg': ('bloodglucose',),
@@ -294,3 +294,28 @@ class parseomhe:
         dt=datetime(year, month, day, hour, minute, second, val)
         return dt
     
+if __name__ == "__main__":
+    """
+    Accept a singe omhe string from the command line. Parse, then print
+    the resulting dict.
+    """
+    try: 
+        omhe_str=sys.argv[1]
+    except(IndexError):
+        print "You must supply an omhe message!"
+        exit(1)
+    
+    print "Input omhe string is: %s" % (omhe_str) 
+    
+    try:
+        """ Instantaiate an instance of the parseomhe class"""
+        
+	p = parseomhe()
+        """Parse it if valid, otherwise raise the appropriate  error"""
+        d=p.parse(omhe_str)
+        """Print the dictonary"""
+        print d
+        
+    except():
+        print "An unexpected error occured. Here is the post-mortem:"
+        print sys.exc_info()    

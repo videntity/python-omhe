@@ -25,15 +25,6 @@ on Unix/Linx, ttyX. Note this currently only works with the A&D model UA-767PC""
 SERIAL_PORT="/dev/ttyUSB0"
 
 
-"""settings file for weight.py and bloodpressure.py"""
-"""change this to your twittername"""
-twitterid="aviars"
-"""change this to your twitter password"""
-twitterpass="yourpasswd" 
-"""change this to the twitter account you wan to get the messg"""
-twitterreceiver="vomhe"
-"""Set this to True if you want to add your reading to your PUBLIC timeline"""
-public_tweet=False
 
 
 
