@@ -31,4 +31,6 @@ if __name__ == "__main__":
         
     except():
         print "An unexpected error occured. Here is the post-mortem:"
-        print sys.exc_info()
+        print sys.exc_info(
+
+
