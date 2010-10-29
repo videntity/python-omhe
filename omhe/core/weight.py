@@ -17,7 +17,7 @@ except:
 
 
 try:
-    from settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
+    from omhe.settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
 except:
     print "Sorry, I can't seem fo import the settings file."
     sys.exit(1)
