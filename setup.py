@@ -79,12 +79,10 @@ Sample code to connect a Wii Balance Board, blood pressure meters, and more.
       download_url="http://github.com/aviars/python-omhe/tarball/master",
       packages=packages,
       package_data={'omhe': ['omhe/hardware/wiibalance/*.ini']},
-      scripts=['omhe/bin/parseomhe',
-               'omhe/bin/restcat-login-test',
-               'omhe/bin/upload2restcat',
-               'omhe/hardware/bloodpressure_a_and_d_UA767PC/bloodpressure.py',
-               'omhe/hardware/wiibalance/scalesgui.py',
-               'omhe/hardware/wiibalance/weight.py',
+      scripts=['omhe/hardware/bloodpressure_a_and_d_UA767PC/bloodpressure.py',
                'omhe/hardware/wiibalance/wiibal-weighdemo.py',
+               'omhe/core/weight.py',
+               'omhe/bin/pomhe',
+               'omhe/bin/u2rc',
                ]
       )

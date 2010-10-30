@@ -4,7 +4,7 @@
 import os, sys, re, uuid
 from datetime import datetime
 from omhe.validators.omhevalidators import *
-
+from omhe.validators.omhevalidators import bp_validator
 
 class OMHEError(Exception): pass
 class InvalidCommandError(OMHEError):pass
@@ -40,16 +40,20 @@ class parseomhe:
         self.helper_tuple=('id', 'dt', 'tz', 'hid', 'pw' 'pi' 'tm' 'uu', '#')
         """This tuple contains helpers"""
     
+	"""
+	This is where we map the command and/or its aliase to a validation function
+	in its own file (found under validators)
+	"""
         self.validator_dict={
-                   'bp': bp_validator,
-		   'bg': bg_validator,
-                   'bloodpressure': bp_validator,
-                   'bloodglucose': bg_validator,
-                   'steps': st_validator,
-                   'spd': st_validator,
-                   'st': st_validator,
-                   'wt': wt_validator,
-                   'weight': wt_validator,
+                   'bp': bp_validator.bp_validator,
+		   'bg': bg_validator.bg_validator,
+                   'bloodpressure': bp_validator.bp_validator,
+                   'bloodglucose': bg_validator.bg_validator,
+                   'steps': st_validator.st_validator,
+                   'spd': st_validator.st_validator,
+                   'st': st_validator.st_validator,
+                   'wt': wt_validator.wt_validator,
+                   'weight': wt_validator.wt_validator,
                    }
         
         
@@ -204,14 +208,20 @@ class parseomhe:
                     if self.helper_validator_dict.has_key(ht):
                         helper_validator_response=self.helper_validator_dict[ht](helper_split[1])
                         self.omhe_dict.update(helper_validator_response)
-
+	"""Run the validator"""
         if self.validator_dict.has_key(self.omhe_dict['omhe']):
+		    
                     value_to_validate=self.omhe_dict['value']
-		    """Validate the omhe command and value"""
+		    #print """Value to validate = %s""" % (value_to_validate)
+		    command_to_validate = str(self.omhe_dict['omhe'])
+		    
 		    try:
-			validatedict=self.validator_dict[self.omhe_dict['omhe']](value)
+			validatedict=self.validator_dict[command_to_validate](value)
 		    except:
-			validatedict={'error': "There was an error with your OMHE syntax"}
+			print sys.exc_info()
+			error_additional_info= str(sys.exc_info())
+			validatedict={'error': "There was an error with your OMHE syntax",
+				      'error_additional_info': error_additional_info}
                     
                     self.omhe_dict.update(validatedict)          
         return self.omhe_dict
