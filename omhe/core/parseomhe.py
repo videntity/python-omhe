@@ -4,15 +4,9 @@
 import os, sys, re, uuid, simplejson
 from datetime import datetime
 from omhe.validators.omhevalidators import *
-from omhe.validators.omhevalidators import bp_validator
+from omhe.validators.validator_errors import *
 
-class OMHEError(Exception): pass
-class InvalidCommandError(OMHEError):pass
-class InvalidValueError(OMHEError):pass
-class InvalidMessageError(OMHEError):pass
-class InvalidHelperFormatError(OMHEError):pass
-class NotADatetimeObjectError(OMHEError):pass
-class DatetimeFormatError(OMHEError):pass
+
 
 class parseomhe:
     """A class to parse omhe strings into  their respective sub parts."""

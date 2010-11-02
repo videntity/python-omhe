@@ -7,31 +7,49 @@ Release 0.5dev
 Author: Alan Viars (Videntity)
 License: This code is open source and available via Apache2 license.
 Please read LICENSE.txt for more information. If you need support,
-python-omhe is avaiable under a commercial license by Videntity Systems, Inc. 
+python-omhe is avaiable under a commercial license by Videntity Systems, Inc.
+If you need commercial support please email us at:
 
-	If you need commercial support please email us at sales [at] videntity [dot] [com]
-
-
+        sales [at] videntity [dot] [com]
+        
 Table of Contents:
 ==================
 .. toctree::
    :maxdepth: 3
 
 
-
 1. Background:
 ==============
 
+OMHE (Open Mobile Health Exchange) is a  a Microsyntax for Devices, Machines,
+& Humans.  This is a python package which inplements OMHE and provides sample
+code.
+
+OMHE (Open Mobile Health Exchange), pronounced "ooommm" is an open-source
+microsyntax for text messaging (mobile SMS), Twitter®, medical devices, and
+other "short text capable" systems. It is a community work product from many
+interested parties including doctors, hackers, software developers,
+entrpreneurs, quantified-selfers, health IT vendors, wellness vendors,
+and health/mobile device manufactures.
+
+Its called OMHE because its the nirvana of health informatics..open, free, and simple.
 OMHE is a microsyntax.org project.  The goal behind OMHE is to help exchange
-data over mobile device such as phones or medical or wellness devices.
+data over mobile device such as phones or medical or wellness devices in an
+ultra-companct, human and machine readable format.
 
-Read all about it here:
-::
-    http://code.google.com/p/omhe
+This package, "python-omhe" was developed by and is maintained by Videntity
+Systems, Inc. It is free to use and 100% open source.  Feel like contributing to
+this project?  Please email us or join the Google Group "omhe-microsyntax".
 
-Note the latest code has moved to github.
-::
-    http://github.com/aviars/python-omhe
+
+The commands and a lengthly description can be found here_
+
+.. _here: http://code.google.com/p/omhe
+
+The home base for this code can be found on github_.
+
+.. _github: http://github.com/aviars/python-omhe
+
 
 
 The library also includes tools to capture and upload bloodpressure information
@@ -47,15 +65,26 @@ See http://github.com/aviars/RESTCat for more information
 We assume you are already running 2.5, or 2.6. If you are on Linux
 or MacOS, chances are Python is already installed.  The upload tools require
 pycurl.  The blood pressure application requires pyserial.  The Wii Balance Board
-application requires Cwiid.
+application requires Cwiid_.
 
-The python-omhe library requires no additional dependicies at this time.
+.. _Cwiid: http://github.com/abstrakraft/cwiid
+
+
+To make things easier you should install:
+
+* python-setuptools (so you can use easy_insall)
+* pip (so you can use pip)
+* pycurl (So you can use the curl libraries inside Python)
+* pyserial (So you can talk to a seriel port)
+* git-core (so you can use and download with git)
+* build-essential (Tools to compile C code. You only need this for Cwiid)
+* cwiid (so you can talk to a Wii Balance Board)
 
 3. Installation:
 ===============
-Installing with sudo apt-get in:
-There are many ways to install on Linux, Mac or Windows. Here is an example
-on Ubuntu Linux.  Adjust these instructions to you platform.
+There are many ways to install python-omhe on Linux, Mac or Windows.
+The following instructions outline the process on Ubuntu.  Adjust these
+instructions to you platform.
 Install the prereqs:
 ::
     sudo apt-get install python-setuptools git-core
@@ -77,8 +106,6 @@ To uninstall python-omhe
     pip uninstall python-omhe
     
 Press y when prompted
-
-
 
 
 4. How to Use the Parser:
@@ -133,7 +160,7 @@ these commands will validate.  The pomhe utility outputs JSON.
     
     python pomhe bp120/80p60
     
-    python pomhe bp120/80p60#afteryog
+    python pomhe bp120/80p60#afteryoga
 
 5. Using the GUI Applications.
 
@@ -149,25 +176,64 @@ Run the WiiBalance Sample GUI:
 See wiibalance_ for more information.
 .. _wiibalance: ./omhehardware/wiibalance/README.rst
 
-6. TODOs:
+6. TESTING FRAMEWORK:
+=====================
+
+Tis section describe python-omhe's testing framework. Python-omhe package has
+its own special testing harness based on unittest. 
+
+6.1 Why Build a Test Framework?:
+--------------------------------
+
+The long term goal of the testing system is to provide
+quantifiable results to validation of correct input, output, and to ensure the
+tools throw the right exception when errant input is given.
+
+We foresee some "omhe-powered" projects being part of systems that fall under
+FDA and FCC regulation.
+This package addition is the beginning of a larger test framework
+designed to appease regulators (from a quantifiable and verifiable perspective).
+Also, automated testing is just a good idea and "test-driven-development" makes
+for cleaner, more modular code.  It also makes developing OMHE-powered
+applications easier and more reliable.
+ 
+6.1 Running Tests:
+------------------
+You'll find test scripts inside 'omhe/tests'. 
+
+Right now only "bp" (blood pressure) has an automated suite of tests, but others
+will be created in the near future.  
+ 
+To run the tests for blood pressure just run the following command inside the
+"omhe/tests/" folder:
+::
+    python test_bp.py
+    
+That's it.  You should not receive any errors unless you've changed something in
+the code base.  This validates that correct input returns parsed data, incorrect
+input raises the errors that it should.
+
+
+7. TODOs:
 =========
 
 Validators are still needed for many omhe commands.  Simply add you validator
-function to omhevalidators.py and make sure they are 'turned on' in the code
-by having the command and validation function present in the omhe_validators
-dictionary in the parsepmhe.py file.
+function to the omhe/validators folder and make sure they are 'turned on' in the
+code by having the command and validation function present in the omhe_validators
+dictionary in the __init__ of the parseomhe.py file. Validators must either
+return a dict of correctly parsed contents or raise an OMHE Error.  Errors are
+defined in the 'omhe/validators/validator_errors.py' file.
 
-7. DEDICATIONS:
+8. DEDICATIONS:
 ===============
-This code is dedicated to my Grandmother, Rachel Bradshaw, who
-is in her 90's and has Congestive Heart Failure, to my father who recently had
-open heart surgery and  to all those who struggle to stay well or get better.
+This code is dedicated to my Grandmother, Rachel Bradshaw, who is in her 90's
+and has Congestive Heart Failure, to my father who recently had open heart
+surgery and  to all those who struggle to stay well or get better.
 
 
-8 SUPPORT:
-==========
+9. LICENSE & SUPPORT:
+=====================
 
-This is free open source software commerically supported by Videntity Systems,
-Inc.  Among other things, Videntity commercialy supports the
-python-omhe library. http://videntity.com
+This is free open source software.  You can however purchase a commerically-supported
+license from Videntity Systems, Inc. python-omhe library. http://videntity.com
     

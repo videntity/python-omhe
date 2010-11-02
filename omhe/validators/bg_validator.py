@@ -9,15 +9,11 @@ def bg_validator(omhe_value):
     """validate blood glucose"""
     valdict={}
     
+    if omhe_value.isdigit():
+        valdict['bg_numeric']=omhe_value
     try:
-        if omhe_value.isdigit():
-            valdict['bg_numeric']=omhe_value
-        try:
-            x=float(valdict['bg_numeric'])
-            return valdict
-        except:
-            raise InvalidValueError("You didn't suply a numer for blood glucose")
-        
+        x=float(valdict['bg_numeric'])
+        return valdict
     except:
-        error_msg="I could not validate the value %s" % (omhe_value)
-        raise InvalidMessageError(error_msg)
+        raise InvalidValueError("You didn't suply a numer for blood glucose")
+        
