@@ -177,10 +177,10 @@ Run the WiiBalance Sample GUI:
 See wiibalance_ for more information.
 .. _wiibalance: ./omhehardware/wiibalance/README.rst
 
-6. TESTING FRAMEWORK:
-=====================
+6. OMHE TESTING FRAMEWORK:
+==========================
 
-Tis section describe python-omhe's testing framework. Python-omhe package has
+This section describes python-omhe's testing framework. Python-omhe package has
 its own special testing harness based on unittest. 
 
 6.1 Why Build a Test Framework?:
