@@ -87,16 +87,17 @@ Press y when prompted
 It takes a string as a single argurment and returns parsed data.
 ::
     #import the omheparser library
-    from omhe import parseomhe
+    from omhe.core.parseomhe import parseomhe
     
     #create a strng to parse
     omhe_str="bp=120/80p60#dt19751217:083059z"
     
-    #Instantiate a new OMHE object
-    o = OMHE()
+    #Create a new OMHE object
+    o = parseomhe()
     
-    #run the paser function and return a parsed dict
-    #If something is malformed, an error will be raised.
+    # Call the paser method and return a parsed dict
+    # If something is malformed, an error value will be
+    # in the dictionary raised.
     d=o.parse(omhe_str)
     
     #print the dictionary
@@ -106,29 +107,33 @@ The output of the previous code is:
 ::
     {
     'tx_dt': '201071:16438z',
-    'pul': '60',
+    'bp_pul': '60',
     'tz': '12',
     'tags': ['dt19751217:083059z', 'tz12'],
-    '_id': '266a7b2f-64eb-4e7b-9abf-a25dfd1db890',
-    'syst': '120',
-    'dia': '80',
+    'id': '266a7b2f-64eb-4e7b-9abf-a25dfd1db890',
+    'bp_syst': '120',
+    'bp_dia': '80',
     'value': '120/80p60',
-    'datetime': datetime.datetime(2010, 7, 1, 16, 43, 8, 2728),
     'ev_dt': 20100701:164208z
-    'ev_tz': 12,
+    'ev_tz': 0,
     'omhe': 'bp',
     'tx_dt': '19751217:083059z'
-    'tx_tz': 12,
+    'tx_tz': 0,
     }
-
-The easist way to try it out is to just run the command line utility.  All of
-these cpmmands will validate
+    
+Now lets convert it to json
 ::
-    python parseomhe.py bp120/80p60#dt20100701:121212#tx-5
+    j=o.omhedict2json(d)
+    print j
     
-    python parseomhe.py bp120/80p60
+The easist way to try it out is to just run the command line utility.  All of
+these commands will validate
+::
+    python pomhe bp120/80p60#dt20100701:121212#tx-5
     
-    python parseomhe.py bp120/80p60#afteryog
+    python pomhe bp120/80p60
+    
+    python pomhe bp120/80p60#afteryog
 
 5. Using the GUI Applications.
 
@@ -136,16 +141,13 @@ To run the bloodpressure GUI:
 ::
     python bloodpressure.py
     
-See the bloodpressure_ README for more information.    
-
-..  _bloodpressure: ./omhe/README.rst
 
 Run the WiiBalance Sample GUI:
 ::
-    python scalesgui.py
+    python wiibal-weightdemo.py
     
 See wiibalance_ for more information.
-.. _wiibalance: ./omhe/WiiBalanceREADME.rst
+.. _wiibalance: ./omhehardware/wiibalance/README.rst
 
 6. TODOs:
 =========
