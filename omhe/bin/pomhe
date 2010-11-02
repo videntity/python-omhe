@@ -6,10 +6,8 @@
 import os, sys
 from omhe.core.parseomhe import parseomhe
 
-    
-        
-                
-if __name__ == "__main__":
+
+if __name__ == "__main__":    
     """
     Accept a singe omhe string from the command line. Parse, then print
     the resulting dict.
@@ -19,18 +17,16 @@ if __name__ == "__main__":
     except(IndexError):
         print "You must supply an omhe message!"
         exit(1)
-    
-    print "Input omhe string is: %s" % (omhe_str) 
-    
-    try:
-        """ Instantaiate an instance of the parseomhe class"""
         
+    try:
+        """ Instantaiate an instance of the parseomhe class"""        
 	p = parseomhe()
         """Parse it if valid, otherwise raise the appropriate  error"""
         d=p.parse(omhe_str)
-        """Print the dictonary"""
-        print d
-        
+        """convvert to json"""
+	j=p.omhedict2json(d)
+	print j
+
     except():
         print "An unexpected error occured. Here is the post-mortem:"
         print sys.exc_info()

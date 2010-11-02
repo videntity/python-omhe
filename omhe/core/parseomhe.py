@@ -1,7 +1,7 @@
 #An OMHE Microsyntax parser class.
 # Alan Viars, Videntity 2010
 
-import os, sys, re, uuid
+import os, sys, re, uuid, simplejson
 from datetime import datetime
 from omhe.validators.omhevalidators import *
 from omhe.validators.omhevalidators import bp_validator
@@ -41,9 +41,11 @@ class parseomhe:
         """This tuple contains helpers"""
     
 	"""
-	This is where we map the command and/or its aliase to a validation function
-	in its own file (found under validators)
+	This is where we map the command and/or its aliases to a
+	validation function.  Define each function in its own file and class
+	(under the validators directory).
 	"""
+	
         self.validator_dict={
                    'bp': bp_validator.bp_validator,
 		   'bg': bg_validator.bg_validator,
@@ -58,8 +60,8 @@ class parseomhe:
         
         
         self.helper_validator_dict={
-                   'dt': dt_helper_validator,
-                   'tz': tz_helper_validator
+                   'dt': dt_helper_validator.dt_helper_validator,
+                   'tz': tz_helper_validator.tz_helper_validator,
                    }
         self.uu=str(uuid.uuid4())
         self.transaction_datetime=datetime.utcnow()
@@ -70,170 +72,18 @@ class parseomhe:
                         'tx_dt':self.tx_dt,
                         'ev_dt':self.tx_dt,
                         'ev_tz':self.ev_tz,
-                        'tx_tz':self.tx_tz                 
+                        'tx_tz':self.tx_tz,
                         }
     
     message = None
     command = None
     value = None
     
-    def parse(self, message):
-        """Parse an OMHE message and return a dictonary of its subparts"""
-        found=False
-        tags=[]
-	splitdict={}
-        validatedict={}
-        if type(message).__name__!='str' and type(message).__name__!='unicode':
-            raise InvalidMessageError, "The message was not a string"
-        message=message.lower()
-        self.message=message
-        self.omhe_dict['texti']=self.message
-        """If there's an equals then this is easier to parse"""
-        
-        if message.__contains__('='):
-            response = message.split('=')
-            for i,j in self.command_dict.items():
-            
-                if j.__contains__(response[0]) or i==(response[0]):
-                
-                    tag_response=response[1].split("#")
-                    if len(tag_response)==1:
-                        """If no tags"""
-
-                        if self.validator_dict.has_key(response[0]):
-				"""Validate the omhe command and value"""
-				try:
-				    validatedict=self.validator_dict[response[0]](response[1])
-				except:
-				    validatedict={'error': "There was an error with your OMHE syntax."}
-
-           
-                        splitdict.update({'omhe': i,
-                           'value': response[1],
-                           'tags':tags
-                           })
-                        splitdict.update(validatedict)
-                        self.omhe_dict.update(splitdict)       
-                        return self.omhe_dict
-                    else:
-                        """Tags were found"""
-                        value=tag_response[0]
-                        for t in tag_response[1:]:
-                            tags.append(str(t))
-                        
-                        """proccess tags that are helpers"""
-                        for t in tags:
-                            for ht in self.helper_tuple:
-                                if t.startswith(ht):
-                                    helper_split=t.split(ht)
-                                    if len(helper_split)==2:
-                                        ot="omhe_helper_tag_%s" % (ht)
-                                        self.omhe_dict.update({ot:helper_split[1]})
-                                    if self.helper_validator_dict.has_key(ht):
-                                        helper_validator_response=self.helper_validator_dict[ht](helper_split[1])
-                                        self.omhe_dict.update(helper_validator_response)
-                        
-                        self.omhe_dict.update({'omhe': response[0],
-                               'value': tag_response[0],
-                               'tags': tags,
-                               })
-                        
-                        
-                        if self.validator_dict.has_key(response[0]):
-			    """Validate the omhe command and value"""
-			    try:
-				validatedict=self.validator_dict[response[0]](tag_response[0])
-			    except:
-				validatedict={'error': "There was an error with your OMHE syntax"}
-                            self.omhe_dict.update(validatedict)        
-                        return self.omhe_dict
-            else:
-                error_message="%s is not an OMHE command" % response[0]
-                raise InvalidCommandError, error_message
-
-        """
-        Without the equals, let's tease out which omhe command we are dealing
-        with
-        """
-        
-        for i,j in self.command_dict.items():
-            #print i,j
-            if message.startswith(i)==True:
-                command=i
-                response = message.split(i)
-                value=response[1]
-                found=True
-            for x in j:
-                
-                if message.startswith(x):
-                        found=True
-                        response = message.split(x)
-                        command=i
-                        value=response[1]
-                        break
-            
-            if found:
-                break
-            
-
-            
-        if not(found):
-            raise InvalidCommandError("Message %s did not contain a valid OMHE command")
-       
-        """Now that we know what command we are dealing with let's process the rest"""                
-       
-        tag_response=value.split("#")
-        if len(tag_response)==1:
-            """No tags"""    
-            pass
-        else:
-            #print """tags in message"""
-            for t in tag_response[1:]:
-                tags.append(str(t))
-            value=tag_response[0]
-            
-        self.omhe_dict.update({
-                    'omhe': command,
-                    'value': value,
-                    'tags': tags,
-                    })
-        """proccess tags that are helpers"""
-        for t in tags:
-            for ht in self.helper_tuple:
-                if t.startswith(ht):
-                    helper_split=t.split(ht)
-                    if len(helper_split)==2:
-                        ot="omhe_helper_tag_%s" % (ht)
-                        self.omhe_dict.update({ot:helper_split[1]})
-                    if self.helper_validator_dict.has_key(ht):
-                        helper_validator_response=self.helper_validator_dict[ht](helper_split[1])
-                        self.omhe_dict.update(helper_validator_response)
-	"""Run the validator"""
-        if self.validator_dict.has_key(self.omhe_dict['omhe']):
-		    
-                    value_to_validate=self.omhe_dict['value']
-		    #print """Value to validate = %s""" % (value_to_validate)
-		    command_to_validate = str(self.omhe_dict['omhe'])
-		    
-		    try:
-			validatedict=self.validator_dict[command_to_validate](value)
-		    except:
-			print sys.exc_info()
-			error_additional_info= str(sys.exc_info())
-			validatedict={'error': "There was an error with your OMHE syntax",
-				      'error_additional_info': error_additional_info}
-                    
-                    self.omhe_dict.update(validatedict)          
-        return self.omhe_dict
-                        
-            
-        if found==False:
-            error_message="An OMHE command was not found in message %s" % message
-            raise InvalidCommandError, error_message
+   
         
         
     def pydt2omhedt(self, dt_object):
-
+	"""Convert a python datetime object to OMHE datetime string"""
         if type(dt_object)!=datetime:
             thetype=type(dt_object)
             error_string= "The object is type %s not a Datetime object" % (thetype)
@@ -244,7 +94,7 @@ class parseomhe:
     
     
     def omhedt2pydt(self, in_string, tzo_string=None):
-        """Convert a datetime string into a python datetime object"""
+        """Convert a n OMHE datetime string into a python datetime object"""
         if (len(helper_value)!=16):
             error_string = "Datime %s is Incorrect Length." % (in_string)
             raise InvalidHelperFormatError, error_string
@@ -304,28 +154,193 @@ class parseomhe:
         dt=datetime(year, month, day, hour, minute, second, val)
         return dt
     
-if __name__ == "__main__":
-    """
-    Accept a singe omhe string from the command line. Parse, then print
-    the resulting dict.
-    """
-    try: 
-        omhe_str=sys.argv[1]
-    except(IndexError):
-        print "You must supply an omhe message!"
-        exit(1)
+
     
-    print "Input omhe string is: %s" % (omhe_str) 
     
-    try:
-        """ Instantaiate an instance of the parseomhe class"""
-        
-	p = parseomhe()
-        """Parse it if valid, otherwise raise the appropriate  error"""
-        d=p.parse(omhe_str)
-        """Print the dictonary"""
-        print d
-        
-    except():
-        print "An unexpected error occured. Here is the post-mortem:"
-        print sys.exc_info()    
+    def command_exists(self, omhe_command):
+	"""
+	Validates if the omhe command is defined and properly configured.
+	Returns the core command name or raises an error.
+	"""
+	if type(omhe_command).__name__!='str' and type(omhe_command).__name__!='unicode':
+	    """Make sure the input is a string or unicode"""
+	    raise InvalidMessageError, "The omhe_command was not a string"
+	
+	for base_command, alias_command in self.command_dict.items():
+		if alias_command.__contains__(omhe_command) or base_command==(omhe_command):
+		    d={}
+		    d['omhe']=omhe_command
+		    return d
+	raise InvalidCommandError, "This command is not defined in command_dict."
+	return None
+    
+    def validate(self, splitdict):
+	"""
+	validate a dict containing the omhe command
+	its value and its tags.  You can build this automatically by passing
+	your message into split().
+	"""
+        if type(splitdict).__name__!='dict':
+            raise OMHEError, "The varialbe you passed in was not a valid dict"
+	
+	if (not splitdict.has_key('omhe')) or (not splitdict.has_key('value')) or (not splitdict.has_key('tags')):
+	    raise OMHEError, "The varialbe you passed in was not a valid omhe splitdict"
+
+	#run the command's validator if it exists and it is defined
+	if self.validator_dict.has_key(splitdict['omhe']):
+	    """Validate the omhe command and value"""
+	    validated_dict=self.validator_dict[splitdict['omhe']](splitdict['value'])
+	
+	#run the helper tag's validators if exists and are defined
+	if len(splitdict['tags'])!=0:
+	    helper_dict={}
+	    for t in splitdict['tags']:
+		for ht in self.helper_tuple:
+		    if t.startswith(ht):
+			helper_split=t.split(ht)
+			if len(helper_split)==2:
+			    ot="omhe_helper_tag_%s" % (ht)
+			    helper_dict.update({ot:helper_split[1]})
+			if self.helper_validator_dict.has_key(ht):
+			    helper_validator_response=self.helper_validator_dict[ht](helper_split[1])
+			    helper_dict.update(helper_validator_response)
+	    #Add the special helper values to our dict
+	    splitdict.update(helper_dict)
+	    
+	"""Add validated dict to splitdict"""
+	splitdict.update(validated_dict)
+	return splitdict
+
+    def split(self, message):
+	"""
+	Split the command, value and tags into 3 parts.  Return a dict. Pass
+	the result of this method to validate the data.
+	"""
+	
+	d={}
+	tags=[]
+	value=None
+	command=None
+	"""
+	Will return a either a dict containing the code and value
+	or None if nothing was found
+	"""
+	found=False
+	if type(message).__name__!='str' and type(message).__name__!='unicode':
+	    """Make sure the input is a string or unicode"""
+	    raise InvalidMessageError, "The message was not a string"
+	
+    
+	"""If there's an equals then this is easier to parse"""
+	if message.__contains__('='):
+	    response = message.split('=')
+	    command=response[0]
+	    value=response[1]
+	    """Verify"""
+	    for base_command, alias_command in self.command_dict.items():
+		if alias_command.__contains__(response[0]) or base_command==(response[0]):
+		    found=True
+		    command=base_command
+	else:
+	    """
+	    Without the equals, let's tease out which omhe command we are dealing
+	    with
+	    """
+	    
+	    for i,j in self.command_dict.items():
+		#print i,j
+		if message.startswith(i)==True:
+		    command=i
+		    response = message.split(i)
+		    value=response[1]
+		    found=True
+		for x in j:
+		    
+		    if message.startswith(x):
+			    found=True
+			    response = message.split(x)
+			    command=i
+			    value=response[1]
+			    break
+		if found:
+		    break
+
+	if not(found):
+	    raise InvalidMessageError, "The message did not contain an omhe command"
+	else:
+		d={}
+		d['omhe']=command.lower()
+		d['value']=value.lower()
+		
+		
+	"""determine if we have tags by attempting to split # """
+	tag_response=d['value'].split("#")
+	
+	if len(tag_response)==1:
+	    """If no tags"""
+	    pass
+	else:
+	    """Tags"""
+	    d['value']=tag_response[0]
+	    for t in tag_response[1:]:
+		tags.append(str(t))
+		
+	"""Add tags to our dict"""
+	d['tags']=tags
+	
+	"""Add the origional message to our dict"""
+	d['texti']=str(message)
+	
+	return d
+
+
+    def parse(self, message, tx_dt=datetime.utcnow(), tx_tz=0):
+	"""
+	Parse an OMHE message and return a dictonary of its subparts
+	If there is any error, do not raise the exception, but rather
+	add the error to the dict
+	"""
+	d={}
+	try:
+	    s=self.split(message)
+	except:
+	    error= str(sys.exc_info())
+	    d['error']=error
+	    return d
+	try:
+	    d=self.validate(s)
+	except:
+	    error= str(sys.exc_info())
+	    d['error']=error
+	    return d
+	"""
+	all is well so lets add some additional info to our dict for
+	convienence and easy uploading to RESTCat.
+	"""
+	#Add a unique ID
+	d['id']=str(uuid.uuid4())
+	
+	#add transaction datetime and timexzone offset
+	tx_dt=self.pydt2omhedt(tx_dt)
+	d['tx_dt']=tx_dt
+	d['tx_tz']="0"
+	
+	#Add the event datetime and timezone if not already present
+	if not d.has_key("ev_dt"):
+	    d['ev_dt']=tx_dt
+	    
+	if not d.has_key("ev_tz"):
+	    d['ev_tz']="0"
+
+	#all is well, return the dict without errors
+	return d
+    
+    def omhedict2json(self, omhedict):
+	"""Convert an omhe dict to a JSON formatted string"""
+	if type(omhedict).__name__!='dict':
+            raise OMHEError, "The varialbe you passed in was not a valid dict"
+	jsonstr=simplejson.dumps(omhedict, indent=4)
+	return jsonstr
+
+
+   

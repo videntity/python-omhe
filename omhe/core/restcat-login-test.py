@@ -1,8 +1,16 @@
 import urllib2, urllib, sys, base64
 import types, time, pycurl
-from settings import RESTCAT_SERVER, USERNAME, PASSWORD
 
-
+try:
+    from omhe.settings import RESTCAT_SERVER, USERNAME, PASSWORD
+except:
+    try:
+        from settings import RESTCAT_SERVER, USERNAME, PASSWORD
+    except:
+        print "I couldn't find your settings.py.  Perhaps you need to create one?"
+        print sys.exc_info()
+        exit(1)
+        
 THEURL = '%s/api/testlogin/' % (RESTCAT_SERVER)
     
 

@@ -19,6 +19,7 @@ except:
 
 
 URL="%s/api/transaction/create/" % (RESTCAT_SERVER)
+
 routing={
         'sndr':SENDER,
         'rcvr':RECEIVER,
@@ -81,6 +82,9 @@ the resulting dict, then upload to RESTCat
         
     except(IndexError):
         print "You must supply username, password, an omhe message, and an out file!"
+        print "The sender, receiver, subject, and security level are defined in \
+        the settings.py by default."
+        print "Usage:"
         print "u2rc [user:pass] [omhe_message] [out.json]"
         exit(1)
         
