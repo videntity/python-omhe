@@ -90,7 +90,7 @@ It takes a string as a single argurment and returns parsed data.
     from omhe.core.parseomhe import parseomhe
     
     #create a strng to parse
-    omhe_str="bp=120/80p60#dt19751217:083059z"
+    omhe_str="bp=120/80p60#dt20101217:083059z"
     
     #Create a new OMHE object
     o = parseomhe()
@@ -103,21 +103,21 @@ It takes a string as a single argurment and returns parsed data.
     #print the dictionary
     print d
 
-The output of the previous code is:
+The output of the previous code might look like this:
 ::
     {
     'tx_dt': '201071:16438z',
     'bp_pul': '60',
     'tz': '12',
-    'tags': ['dt19751217:083059z', 'tz12'],
+    'tags': ['dt20101217:083059z', 'tz12'],
     'id': '266a7b2f-64eb-4e7b-9abf-a25dfd1db890',
     'bp_syst': '120',
     'bp_dia': '80',
     'value': '120/80p60',
-    'ev_dt': 20100701:164208z
+    'ev_dt': 20101217:164208z
     'ev_tz': 0,
     'omhe': 'bp',
-    'tx_dt': '19751217:083059z'
+    'tx_dt': '20101217:093100z'
     'tx_tz': 0,
     }
     
@@ -127,7 +127,7 @@ Now lets convert it to json
     print j
     
 The easist way to try it out is to just run the command line utility.  All of
-these commands will validate
+these commands will validate.  The pomhe utility outputs JSON.
 ::
     python pomhe bp120/80p60#dt20100701:121212#tx-5
     

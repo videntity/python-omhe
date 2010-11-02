@@ -32,13 +32,15 @@ Table of Contents:
 These instructions were modified from Matt Cutt's blog article:
     http://www.mattcutts.com/blog/linux-wii-balanceboard/
 
+On Ubuntu you'll nees a few prereqs.  thwe following command should
+work on Ubuntu 10.
 ::
     sudo apt-get install autoconf autogen automake gcc bluetooth
     libbluetooth3-dev libgtk2.0-dev pkg-config python2.6-dev flex
     bison git-core libbluetooth-dev python-pygame python-tk
     
 
-Check out the CWiid (get it? CWiid? Seaweed?) library using Subversion:
+Check out the CWiid (get it? CWiid? Seaweed?) library using Git:
 ::
     mkdir bin
     cd bin
@@ -46,7 +48,7 @@ Check out the CWiid (get it? CWiid? Seaweed?) library using Subversion:
     cd cwiid
 
 
-Compile the library, e.g.
+Compile the Cwiid library. At the command line execute the following
 ::
     aclocal
     autoconf
@@ -54,7 +56,8 @@ Compile the library, e.g.
     make
     sudo make install
     
-You can test things with a Wii Remote by running the GUI
+You can test things with a Wii Remote by running the GUI (This GUI will not work
+on a headless server)
 ::
     wmgui
 
@@ -63,7 +66,7 @@ Lets now install the python bindings:
     cd python
     sudo python setup.py install
 
-If this works then your computer is now read to connect to the balance board.
+If this works, then your computer is now read to connect to the balance board.
 If you have problems please see the cwiid documentaion.  These instructions
 were tested on Ubuntu 10.
 
@@ -92,10 +95,6 @@ This applicating will do 3 things each time you press enter:
 * Print the JSON file to standard output (Most often the screen)
 
 
-
-
-
-
 3. Serve Your Weight:
 =====================
 
@@ -110,8 +109,8 @@ This means that we will perform an HTTP client POST containing the weight
 information.  You must write and make avalaible your own callback handler
 at the URL specified in your settings.py.  
 
-3.2 Pulling weight from a Webserver:
-------------------------------------
+3.2 Pulling (Polling) weight from a Webserver:
+----------------------------------------------
 Using wiibalance_server.py you can make your weight avalaible via a webserver.
 wiibalance_server.py is a simple web server written in pure python that simply
 serves the file containing the weight information.  This file is generated
@@ -121,8 +120,18 @@ This command start the server
 ::
     python wiibalance_server.py
     Serve forver
+Make sure you are using a port not used by another process (such as Apache, etc.)
+Change this in settings.py.
 
-Now you
+Now your serving yout Weight.  Use your browser or Curl to point to the URL.
+By default its serving on port 8002 and will bind to any IP. So the following
+should yield a JSON file result.  
+::
+    curl http://127.0.0.1:8002
+
+
+
+
 
 
 
