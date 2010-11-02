@@ -7,7 +7,7 @@ Release 0.5dev
 Author: Alan Viars (Videntity)
 License: This code is open source and available via Apache2 license.
 Please read LICENSE.txt for more information. If you need support,
-python-omhe is avaiable under a commercial license by Videntity Systems, Inc.
+python-omhe is available under a commercial license by Videntity Systems, Inc.
 If you need commercial support please email us at:
 
         sales [at] videntity [dot] [com]
