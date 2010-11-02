@@ -22,8 +22,9 @@ Table of Contents:
 ==============
 
 OMHE (Open Mobile Health Exchange) is a  a Microsyntax for Devices, Machines,
-& Humans.  This is a python package which inplements OMHE and provides sample
-code.
+& Humans.  This is a python package which implements the OMHE microsyntax format
+and provides sample code for parsing and making hardware, such as a Wii Balance
+board, "speak OMHE".
 
 OMHE (Open Mobile Health Exchange), pronounced "ooommm" is an open-source
 microsyntax for text messaging (mobile SMS), Twitter®, medical devices, and
