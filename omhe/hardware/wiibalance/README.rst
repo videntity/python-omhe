@@ -119,7 +119,11 @@ this file's name is wiiweightout.json.  So lets have an example shall we?
 This command start the server
 ::
     python wiibalance_server.py
+    
+You should see the message:
+::
     Serve forver
+
 Make sure you are using a port not used by another process (such as Apache, etc.)
 Change this in settings.py.
 
@@ -129,7 +133,7 @@ should yield a JSON file result.
 ::
     curl http://127.0.0.1:8002
 
-
+Have fun! -Alan
 
 
 
