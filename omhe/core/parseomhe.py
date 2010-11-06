@@ -89,12 +89,12 @@ class parseomhe:
     
     def omhedt2pydt(self, in_string, tzo_string=None):
         """Convert a n OMHE datetime string into a python datetime object"""
-        if (len(helper_value)!=16):
+        if (len(in_string)!=16):
             error_string = "Datime %s is Incorrect Length." % (in_string)
             raise InvalidHelperFormatError, error_string
         
-        if (in_string[15]!="z" and in_string[15]!="Z"):
-            error_string = "Datime %s must end in Z to explicitly denote UTC." % (in_string)
+        if (in_string[15]!="z" and in_string[15]!="Z" and in_string[15]!="u" and in_string[15]!="U"):
+            error_string = "Datime %s must end in 'z' or 'u' to explicitly denote UTC." % (in_string)
             raise InvalidHelperFormatError, error_string
     
         year=str(in_string[0:4])
