@@ -10,7 +10,7 @@ from omhe.core.parseomhe import parseomhe
 if __name__ == "__main__":    
     """
     Accept a singe omhe string from the command line. Parse, then print
-    the resulting dict.
+    the resulting dict as JSON to stout.
     """
     try: 
         omhe_str=sys.argv[1]

@@ -31,6 +31,7 @@ class parseomhe:
             'pbf': ('percentbodyfat',),
 	    'st': ('steps','spd',),
             'gbp': ('getbloodpressure',),
+	    'ci': ('checkin', 'check-in','check',),
             #TODO: Add others here...    
         }
                 
@@ -56,7 +57,7 @@ class parseomhe:
 		   'ffm': ffm_validator.ffm_validator,
 		   'fm': fm_validator.fm_validator,
 		   'pbf': pbf_validator.pbf_validator,
-		   
+		   'ci': ci_validator.ci_validator,
                    }
         
         
