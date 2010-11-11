@@ -26,7 +26,10 @@ class parseomhe:
             'bp': ('bloodpressure',),
 	    'bg': ('bloodglucose',),
             'wt': ('weight',),
-            'st': ('steps','spd',),
+	    'fm': ('fatmass',),
+	    'ffm': ('freefatmass',),
+            'pbf': ('percentbodyfat',),
+	    'st': ('steps','spd',),
             'gbp': ('getbloodpressure',),
             #TODO: Add others here...    
         }
@@ -50,6 +53,10 @@ class parseomhe:
                    'st': st_validator.st_validator,
                    'wt': wt_validator.wt_validator,
                    'weight': wt_validator.wt_validator,
+		   'ffm': ffm_validator.ffm_validator,
+		   'fm': fm_validator.fm_validator,
+		   'pbf': pbf_validator.pbf_validator,
+		   
                    }
         
         
