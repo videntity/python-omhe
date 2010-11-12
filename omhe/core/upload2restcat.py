@@ -6,13 +6,9 @@ import omhe.core.parseomhe
 
 try:
     
-    from omhe.settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
+    from omhe.core.settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
 
 except:
-    
-    try:
-        from settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
-    except:
         print "I couldn't find your settings.py.  Perhaps you need to create one?"
         print sys.exc_info()
         exit(1)
