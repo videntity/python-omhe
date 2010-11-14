@@ -32,7 +32,9 @@ class parseomhe:
 	    'st': ('steps','spd',),
             'gbp': ('getbloodpressure',),
 	    'ci': ('checkin', 'check-in','check',),
-            #TODO: Add others here...    
+            'pn': ('pain',),
+	    'md': ('mood',),
+	    #TODO: Add others here...    
         }
                 
         self.helper_tuple=('id', 'dt', 'tz', 'hid', 'pw' 'pi' 'tm' 'uu', '#')
@@ -58,7 +60,9 @@ class parseomhe:
 		   'fm': fm_validator.fm_validator,
 		   'pbf': pbf_validator.pbf_validator,
 		   'ci': ci_validator.ci_validator,
-                   }
+                   'pn': pn_validator.pn_validator,
+		   'md': md_validator.md_validator,
+		   }
         
         
         self.helper_validator_dict={
@@ -76,7 +80,6 @@ class parseomhe:
                         'ev_tz':self.ev_tz,
                         'tx_tz':self.tx_tz,
                         }
-    
     message = None
     command = None
     value = None

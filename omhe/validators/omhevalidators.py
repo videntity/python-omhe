@@ -15,6 +15,9 @@ from omhe.validators import ffm_validator
 from omhe.validators import fm_validator
 from omhe.validators import pbf_validator
 from omhe.validators import ci_validator
+from omhe.validators import md_validator
+from omhe.validators import pn_validator
+
 
 #import all the validator helpers
 from omhe.validators import tz_helper_validator
