@@ -3,7 +3,7 @@
 
 import os, sys, re, uuid, simplejson
 from datetime import datetime
-from omhe.validators.omhevalidators import *
+from omhe.validators import *
 from omhe.validators.validator_errors import *
 
 
@@ -34,9 +34,17 @@ class parseomhe:
 	    'ci': ('checkin', 'check-in','check',),
             'pn': ('pain',),
 	    'md': ('mood',),
+	    'frt': ('fruit',),
+	    'veg': ('vegatable','veggie'),
+	    'sch': ('starch',),
+	    'jnk': ('junk','junkfood'),
+	    'wtr': ('water', 'h2o', 'h20'),
+	    'alc': ('alcohol',),
+	    'eat': ('ate', 'tweat'),
 	    #TODO: Add others here...    
         }
-                
+
+
         self.helper_tuple=('id', 'dt', 'tz', 'hid', 'pw' 'pi' 'tm' 'uu', '#')
         """This tuple contains helpers"""
     
@@ -45,7 +53,7 @@ class parseomhe:
 	validation function.  Define each function in its own file and class
 	(under the validators directory).
 	"""
-	
+
         self.validator_dict={
                    'bp': bp_validator.bp_validator,
 		   'bg': bg_validator.bg_validator,
@@ -62,8 +70,15 @@ class parseomhe:
 		   'ci': ci_validator.ci_validator,
                    'pn': pn_validator.pn_validator,
 		   'md': md_validator.md_validator,
+		   'frt': dummy_validator.dummy_validator,
+		   'veg': dummy_validator.dummy_validator,
+		   'sch': dummy_validator.dummy_validator,
+	           'jnk': dummy_validator.dummy_validator,
+		   'wtr': dummy_validator.dummy_validator,
+	           'alc': dummy_validator.dummy_validator,
+		   'eat': dummy_validator.dummy_validator,
 		   }
-        
+
         
         self.helper_validator_dict={
                    'dt': dt_helper_validator.dt_helper_validator,

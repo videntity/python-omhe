@@ -28,12 +28,17 @@ the resulting dict, then upload to RESTCat
 """
     try:
         userpass=sys.argv[1]
-        omhe_str=sys.argv[2]
-        out_file=sys.argv[3]
+        sender=sys.argv[2]
+        receiver=sys.argv[3]
+        subject=sys.argv[4]
+        restcat_server=sys.argv[5]
+        omhe_str=sys.argv[6]
+        out_file=sys.argv[7]
+
         
     except(IndexError):
         print "You must supply username, password, an omhe message, and an out file!"
-        print "u2rc [user:pass] [omhe_message] [out.json]"
+        print "u2rc [user:pass] [sender] [receiver] [subject] [restcat_server] [omhe_message] [out.json]"
         exit(1)
         
 
@@ -44,9 +49,15 @@ the resulting dict, then upload to RESTCat
         """ Instantaiate an instance of the OMHE class"""
         o = parseomhe()
         """Parse it if valid, otherwise raise the appropriate error"""
-        d=o.parse(omhe_str)
-        """Send the OMHE dictonary to RESTCat"""
-        result=upload2restcat.upload2restcat(d, userpass, out_file)
+        try:
+            d=o.parse(omhe_str)
+            """Send the OMHE dictonary to RESTCat"""
+        except():
+            print "Failed to parse OMHE string"
+            sys.exit(1)
+        result=upload2restcat.upload2restcat(d, userpass, sender, receiver,
+                                             subject, restcat_server,
+                                             out_file)
         print "HTTP Response Code=%s" % (result.getinfo(result.HTTP_CODE),)
         result.close()
         

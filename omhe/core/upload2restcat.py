@@ -4,28 +4,18 @@ import sys
 import omhe.core.parseomhe
 
 
-try:
+def upload2restcat(omhe_dict, userpass, sender, receiver, subject,
+                   restcat_server, outfile="out.json", sec_level=3):
     
-    from omhe.core.settings import USERNAME, PASSWORD, SENDER, RECEIVER, SUBJECT, SEC_LEVEL, RESTCAT_SERVER
+    URL="%s/api/transaction/create/" % (restcat_server)
 
-except:
-        print "I couldn't find your settings.py.  Perhaps you need to create one?"
-        print sys.exc_info()
-        exit(1)
-
-
-URL="%s/api/transaction/create/" % (RESTCAT_SERVER)
-
-routing={
-        'sndr':SENDER,
-        'rcvr':RECEIVER,
-        'subj': SUBJECT,
-         'sec': SEC_LEVEL,
+    routing={
+        'sndr':sender,
+        'rcvr':receiver,
+        'subj': subject,
+        'sec': sec_level,
         }
-
-
-
-def upload2restcat(omhe_dict, userpass, outfile):
+    
     f = open(outfile, "wb")
     """Send an HTTP POST to RESTCat using a simple OMHE String"""
     pf=[]
