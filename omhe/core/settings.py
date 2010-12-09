@@ -15,8 +15,9 @@ RECEIVER="alan.viars@videntity.com"
 #the tx's subject - should always be an email
 SUBJECT="alan.viars@videntity.com"
 
+# The server and port
+#RESTCAT_SERVER="http://restcat1.wellrbox.com:80"
 RESTCAT_SERVER="http://127.0.0.1:8000"
-
 #the tx's security level. 1 is highest and 3 is lowest.
 SEC_LEVEL=3
 
