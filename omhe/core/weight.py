@@ -56,6 +56,7 @@ def uploadOMHE2restcat(omhe_dict, username, password, sndr, rcvr, subj, security
         
         c = pycurl.Curl()
         c.setopt(pycurl.URL, URL)
+        c.setopt(c.SSL_VERIFYPEER, False)
         c.setopt(c.HTTPPOST, pf)
         c.setopt(pycurl.FOLLOWLOCATION, 1)
         c.setopt(pycurl.MAXREDIRS, 5)

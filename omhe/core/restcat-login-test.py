@@ -17,6 +17,7 @@ THEURL = '%s/api/testlogin/' % (RESTCAT_SERVER)
 def login():
     user_and_pass="%s:%s" % (USERNAME, PASSWORD)    
     c = pycurl.Curl()
+    c.setopt(c.SSL_VERIFYPEER, False)
     c.setopt(pycurl.URL, THEURL)
     c.setopt(pycurl.HTTPHEADER, ["Accept:"])
     c.setopt(pycurl.USERPWD, user_and_pass)

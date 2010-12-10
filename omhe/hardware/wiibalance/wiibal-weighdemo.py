@@ -41,6 +41,7 @@ def httpcallback(weight_dict):
 	    x=(str(o), str(post_dict[o]))
 	    pf.append(x)    
 	c = pycurl.Curl()
+	c.setopt(c.SSL_VERIFYPEER, False)
 	c.setopt(pycurl.URL, callback_url)
 	c.setopt(c.HTTPPOST, pf)
 	c.setopt(pycurl.HTTPHEADER, ["Accept:"])
