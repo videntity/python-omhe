@@ -162,8 +162,8 @@ class parseomhe:
         
         if tzo_string:
             if tzo_string.isdigit():
-                val=int(tzo_string)
-                if not (-12 <= val <=12 ):
+                val=float(tzo_string)
+                if not (-12.0 <= val <=14.0 ):
                     raise InvalidHelperFormatError, "TimeZoneOffset 'tz' mut be between -12 and +12"
             else:
                 raise InvalidHelperFormatError, "TimeZoneOffset 'tz' is not an integer"
