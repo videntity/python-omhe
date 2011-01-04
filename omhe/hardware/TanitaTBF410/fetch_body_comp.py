@@ -14,18 +14,30 @@ def sub_hex2(hex1, hex2):
     """subtract two hexadecimal string values and return as such"""
     return hex(int(hex1, 16) - int(hex2,16))
  
-print add_hex2('0xff', '0xff')  # 0x1fe
+#print add_hex2('0xff', '0xff')  # 0x1fe
 
 
 def getFromMeter():
         import serial
-        ser = serial.Serial(SERIAL_PORT, baudrate=2400, parity=serial.PARITY_SPACE, bytesize=7,timeout=30)
-        print "waiting for device reading..."
-        s = ser.readline()
-        print "Fetched data"        
-        h=binascii.hexlify(s)
-        process_string(s)
-        
+        try:
+            ser = serial.Serial(SERIAL_PORT, baudrate=2400, parity=serial.PARITY_NONE, bytesize=7,timeout=30)
+            print "Waiting for device reading..."
+            s = ser.readline()
+            if len(s)< 10:
+                print "It appears the connection timmed out.  Please start over."
+                ser.close()
+                exit(1)
+            print "Successfully Fetched Data"        
+            h=binascii.hexlify(s)
+            print h
+            ser.flushOutput()
+            ser.flushInput()
+            ser.flush()
+            ser.close()
+            return h
+        except(serial.serialutil.SerialException):
+            print "Something went wrong. Please try unplugging and replugging the USB connection"
+            return ""
        
 def process_string(s):
     counter=0
@@ -42,7 +54,11 @@ def process_string(s):
         else:
             newstring="%s%s" % (newstring, b)
     newstring="%s%s" % (newstring, "0")        
-    n= newstring.decode("hex")
+    try:
+        n= newstring.decode("hex")
+    except(TypeError):
+        newstring="%s%s" % (newstring, "0")
+        n= newstring.decode("hex")
     return n
 
 def parse_values(n):
@@ -62,6 +78,9 @@ def parse_values(n):
     return d
 
 if __name__ == "__main__":
-    s="30acb1acb7302e30acb136b22e30ac35b2b4acb1b72e33acb2b82e30acb133b42e30ac39b82e30ac33b4acb2332eb2acb7b2b7398d0a"
-    r= parse_values(process_string(s))
-    print r
+    #h="g302d63b772302db3330963b45b62b1930962b2934963b1a69bc962b1822e63334d4d9b2e4ded93396b0a"
+    h=getFromMeter()
+    if len(h)>10:
+        r= parse_values(process_string(h))
+        print r
+    
