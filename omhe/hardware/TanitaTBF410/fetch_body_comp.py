@@ -3,7 +3,7 @@ import binascii, sys
 from omhe.core.parseomhe import parseomhe
 from omhe.core import upload2restcat
 
-RESTCAT_SERVER="http://127.0.0.1:8000"
+RESTCAT_SERVER="http://restcat.physique7.com:80"
 SERIAL_PORT="/dev/ttyUSB0"
 
 
