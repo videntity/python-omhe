@@ -23,8 +23,5 @@ def fm_validator(omhe_value):
     except ValueError:
         error_msg="I could not validate the value %s is not a numerical fat mass. " % (valdict['fm_numeric'])
         raise InvalidMessageError(error_msg)
-    
-    
-        
-    
+
     return valdict

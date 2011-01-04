@@ -7,34 +7,21 @@ from omhe.validators.utils import *
 
 def wt_validator(omhe_value):
     valdict={}
-    
-    if omhe_value.isdigit():
+    if omhe_value.endswith('l') or omhe_value.endswith('k'):
+        valdict['wt_numeric']=omhe_value[:-1]
+        valdict['wt_measure_unit']=omhe_value[-1]
+    else:
         valdict['wt_numeric']=omhe_value
         valdict['wt_measure_unit']="l"
-        try:
-            x=float(valdict['wt_numeric'])
-            return valdict
-        except:
-            raise InvalidValueError("You didn't suply a numerical weight")
-            
-    if omhe_value.endswith('l'):
-        valdict['wt_numeric']=omhe_value[:-1]
-        valdict['wt_measure_unit']="l"
-        try:
-            x=float(valdict['wt_numeric'])
-            return valdict
-        except:
-            raise InvalidValueError("You didn't supply a numerical weight")
         
+    try:
+        f=float(valdict['wt_numeric'])
+        if f < 15.0:
+            error_msg="Weight may not be less than 15."
+            raise InvalidValueError(error_msg)
+        
+    except ValueError:
+        error_msg="I could not validate the value %s." % (valdict['wt_numeric'])
+        raise InvalidMessageError(error_msg)
     
-    if omhe_value.endswith('k'):
-        valdict['wt_numeric']=omhe_value[:-1]
-        valdict['wt_measure_unit']="k"
-        try:
-            x=float(valdict['wt_numeric'])
-            return valdict 
-        except:
-            raise InvalidValueError("You didn't supply a numerical weight")
-    
-    error_msg="I could not validate the value %s" % (omhe_value)
-    raise InvalidMessageError(error_msg)
+    return valdict
