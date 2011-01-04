@@ -1,6 +1,9 @@
-import serial
-import binascii
+import serial, omhe.core
+import binascii, sys
+from omhe.core.parseomhe import parseomhe
+from omhe.core import upload2restcat
 
+RESTCAT_SERVER="http://127.0.0.1:8000"
 SERIAL_PORT="/dev/ttyUSB0"
 
 
@@ -27,9 +30,8 @@ def getFromMeter():
                 print "It appears the connection timmed out.  Please start over."
                 ser.close()
                 exit(1)
-            print "Successfully Fetched Data"        
+            print "Successfully Fetched Data! How awesome!"        
             h=binascii.hexlify(s)
-            print h
             ser.flushOutput()
             ser.flushInput()
             ser.flush()
@@ -77,10 +79,81 @@ def parse_values(n):
     d['bmi']=x[10]
     return d
 
+
+
+
 if __name__ == "__main__":
-    #h="g302d63b772302db3330963b45b62b1930962b2934963b1a69bc962b1822e63334d4d9b2e4ded93396b0a"
+    #h="302c312c37302e302c3136332e382c3437352c31362e302c32362e322c3133372e362c3130302e382c33352c32332e352c373239380d0a"
     h=getFromMeter()
     if len(h)>10:
         r= parse_values(process_string(h))
         print r
-    
+        
+        email= raw_input("Please enter the user's email address: ")
+        pin = raw_input("Please enter the user's PIN or PASSWORD: ")
+        
+        #upload the weight
+        try:
+            """ Instantaiate an instance of the OMHE class"""
+            o = parseomhe()
+            """Parse it if valid, otherwise raise the appropriate error"""
+            try:
+                omhe_str="wt=%s#tanita_body_scan" % (r['weight'])
+                d=o.parse(omhe_str)
+                """Send the OMHE dictonary to RESTCat"""
+            except():
+                print "Failed to parse OMHE string"
+                sys.exit(1)
+            
+            userpass="%s:%s" % (email, pin)
+            sender=email
+            receiver=email
+            subject=email
+            restcat_server=RESTCAT_SERVER
+            out_file="out.json"
+            result=upload2restcat.upload2restcat(d, userpass, sender, receiver,
+                                                 subject, restcat_server,
+                                                 out_file, idr=None)
+            httpcode=result.getinfo(result.HTTP_CODE)
+            #print "HTTP Response Code=%s" % (result.getinfo(result.HTTP_CODE),)
+            result.close()
+            if int(httpcode)==200:
+                print "Successfully uploaded weight"
+            else:
+                print "Weight Upload failed. Error code %s" % (httpcode)
+        except():
+            print "An unexpected error occured. Here is the post-mortem:"
+            print sys.exc_info()
+            
+        #upload the fat mass
+        try:
+            """ Instantaiate an instance of the OMHE class"""
+            o = parseomhe()
+            """Parse it if valid, otherwise raise the appropriate error"""
+            try:
+                omhe_str="fm=%s#tanita_body_scan" % (r['fatmass'])
+                d=o.parse(omhe_str)
+                """Send the OMHE dictonary to RESTCat"""
+            except():
+                print "Failed to parse OMHE string"
+                sys.exit(1)
+            
+            userpass="%s:%s" % (email, pin)
+            sender=email
+            receiver=email
+            subject=email
+            restcat_server=RESTCAT_SERVER
+            out_file="out.json"
+            result=upload2restcat.upload2restcat(d, userpass, sender, receiver,
+                                                 subject, restcat_server,
+                                                 out_file, idr=None)
+            httpcode=result.getinfo(result.HTTP_CODE)
+            #print "HTTP Response Code=%s" % (result.getinfo(result.HTTP_CODE),)
+            result.close()
+            if int(httpcode)==200:
+                print "Successfully uploaded fat mass"
+            else:
+                print "Fatmass Upload failed. Error code %s" % (httpcode)
+        except():
+            print "An unexpected error occured. Here is the post-mortem:"
+            print sys.exc_info()

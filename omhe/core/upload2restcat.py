@@ -47,7 +47,7 @@ def upload2restcat(omhe_dict, userpass, sender,
     for o in post_dict:
         x=(str(o), str(post_dict[o]))
         pf.append(x)
-    print pf
+    #print pf
     c = pycurl.Curl()
     
     c.setopt(c.SSL_VERIFYPEER, False) 
