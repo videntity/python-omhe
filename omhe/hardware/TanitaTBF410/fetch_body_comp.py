@@ -87,6 +87,7 @@ if __name__ == "__main__":
     h=getFromMeter()
     if len(h)>10:
         r= parse_values(process_string(h))
+        #print r
         
         email= raw_input("Please enter the user's email address: ")
         pin = raw_input("Please enter the user's PIN or PASSWORD: ")
