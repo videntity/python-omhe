@@ -42,6 +42,7 @@ class parseomhe:
 	    'alc': ('alcohol','beer', 'wine', 'shot'),
 	    'eat': ('ate', 'tweat'),
 	    'gym': ('workout',),
+	    'ptn': ('protien',),
 	    #TODO: Add others here...    
         }
 
@@ -77,8 +78,10 @@ class parseomhe:
 	           'jnk': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'wtr': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 	           'alc': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
+		   'ptn': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'eat': dummy_validator.dummy_validator,
 		   'gym': dummy_validator.dummy_validator,
+
 		   }
 
         
