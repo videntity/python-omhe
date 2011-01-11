@@ -39,8 +39,9 @@ class parseomhe:
 	    'sch': ('starch',),
 	    'jnk': ('junk','junkfood'),
 	    'wtr': ('water', 'h2o', 'h20'),
-	    'alc': ('alcohol',),
+	    'alc': ('alcohol','beer', 'wine', 'shot'),
 	    'eat': ('ate', 'tweat'),
+	    'gym': ('workout',),
 	    #TODO: Add others here...    
         }
 
@@ -70,13 +71,14 @@ class parseomhe:
 		   'ci': ci_validator.ci_validator,
                    'pn': pn_validator.pn_validator,
 		   'md': md_validator.md_validator,
-		   'frt': dummy_validator.dummy_validator,
-		   'veg': dummy_validator.dummy_validator,
-		   'sch': dummy_validator.dummy_validator,
-	           'jnk': dummy_validator.dummy_validator,
-		   'wtr': dummy_validator.dummy_validator,
-	           'alc': dummy_validator.dummy_validator,
+		   'frt': one_to_ten_or_blank_validator.one_to_ten_or_blank_validator,
+		   'veg': one_to_ten_or_blank_validator.one_to_ten_or_blank_validator,
+		   'sch': one_to_ten_or_blank_validator.one_to_ten_or_blank_validator,
+	           'jnk': one_to_ten_or_blank_validator.one_to_ten_or_blank_validator,
+		   'wtr': one_to_ten_or_blank_validator.one_to_ten_or_blank_validator,
+	           'alc': one_to_ten_or_blank_validator.one_to_ten_or_blank_validator,
 		   'eat': dummy_validator.dummy_validator,
+		   'gym': dummy_validator.dummy_validator,
 		   }
 
         
