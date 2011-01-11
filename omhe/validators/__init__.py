@@ -20,7 +20,7 @@ from omhe.validators import pn_validator
 from omhe.validators import dummy_validator
 from omhe.validators import one_to_ten_validator
 from omhe.validators import one_to_ten_or_blank_validator
-
+from omhe.validators import one_to_ten_or_blank_or_string_validator
 
 #import all the validator helpers
 from omhe.validators import tz_helper_validator
