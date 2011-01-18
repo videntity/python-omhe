@@ -35,7 +35,7 @@ class parseomhe:
             'pn': ('pain',),
 	    'md': ('mood',),
 	    'frt': ('fruit',),
-	    'veg': ('vegatable','veggie'),
+	    'veg': ('vegetable','veggie'),
 	    'sch': ('starch',),
 	    'jnk': ('junk','junkfood'),
 	    'wtr': ('water', 'h2o', 'h20'),
