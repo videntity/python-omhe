@@ -45,6 +45,7 @@ class parseomhe:
 	    'ptn': ('protien',),
 	    'crb': ('starch','carb', 'carbohydrate'),
 	    'dry': ('dairy',),
+	    'drk': ('drink',)
 	    #TODO: Add others here...    
         }
 
@@ -82,6 +83,7 @@ class parseomhe:
 		   'ptn': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'crb': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'dry': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
+		   'drk': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'eat': dummy_validator.dummy_validator,
 		   'gym': dummy_validator.dummy_validator,
 
