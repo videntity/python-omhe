@@ -43,6 +43,8 @@ class parseomhe:
 	    'eat': ('ate', 'tweat'),
 	    'gym': ('workout',),
 	    'ptn': ('protien',),
+	    'crb': ('starch','carb', 'carbohydrate'),
+	    'dry': ('dairy',),
 	    #TODO: Add others here...    
         }
 
@@ -74,11 +76,12 @@ class parseomhe:
 		   'md': md_validator.md_validator,
 		   'frt': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'veg': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'sch': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 	           'jnk': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'wtr': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 	           'alc': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'ptn': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
+		   'crb': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
+		   'dry': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
 		   'eat': dummy_validator.dummy_validator,
 		   'gym': dummy_validator.dummy_validator,
 
