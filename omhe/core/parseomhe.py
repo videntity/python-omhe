@@ -48,7 +48,7 @@ class parseomhe:
 	    'drk': ('drink',),
 	    'que': ('question',),
 	    'ans': ('answer',),
-		
+	    'pts': ('points','gems'),
 	    #TODO: Add others here...    
         }
 
@@ -91,6 +91,7 @@ class parseomhe:
 		   'gym': dummy_validator.dummy_validator,
 		   'que': dummy_validator.dummy_validator,
 		   'ans': dummy_validator.dummy_validator,
+		   'pts': integer_validator.integer_validator,
 		   }
 
         
