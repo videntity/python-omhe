@@ -22,7 +22,7 @@ from omhe.validators import one_to_ten_validator
 from omhe.validators import one_to_ten_or_blank_validator
 from omhe.validators import one_to_ten_or_blank_or_string_validator
 from omhe.validators import integer_validator
-
+from omhe.validators import pts_validator
 
 #import all the validator helpers
 from omhe.validators import tz_helper_validator

@@ -91,7 +91,7 @@ class parseomhe:
 		   'gym': dummy_validator.dummy_validator,
 		   'que': dummy_validator.dummy_validator,
 		   'ans': dummy_validator.dummy_validator,
-		   'pts': integer_validator.integer_validator,
+		   'pts': pts_validator.pts_validator,
 		   }
 
         
