@@ -1,9 +1,9 @@
-.. image::  http://github.com/aviars/python-omhe/raw/master/omhe.png
+.. image::  http://videntity.com/images/omhe.png
 
 Open Mobile Health Exchange (OMHE) Parser & Tools for Python
 ============================================================
-(c) 2010 - All Rights Reserved.
-Release 0.5dev
+(c) 2011 - All Rights Reserved.
+Release 0.6dev
 Author: Alan Viars (Videntity)
 License: This code is open source and available via Apache2 license.
 Please read LICENSE.txt for more information. If you need support,
