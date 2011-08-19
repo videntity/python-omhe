@@ -29,7 +29,7 @@ class parseomhe:
 	    'fm': ('fatmass',),
 	    'ffm': ('freefatmass',),
             'pbf': ('percentbodyfat',),
-	    'st': ('steps','spd',),
+	    'st': ('steps','spd','fitbit'),
             'gbp': ('getbloodpressure',),
 	    'ci': ('checkin', 'check-in','check',),
             'pn': ('pain',),
@@ -49,6 +49,7 @@ class parseomhe:
 	    'que': ('question',),
 	    'ans': ('answer',),
 	    'pts': ('points','gems'),
+	    'zeo': ('sleepscore',),
 	    #TODO: Add others here...    
         }
 
@@ -92,6 +93,7 @@ class parseomhe:
 		   'que': dummy_validator.dummy_validator,
 		   'ans': dummy_validator.dummy_validator,
 		   'pts': pts_validator.pts_validator,
+		   'zeo': one_to_onehundred_validator.one_to_onehundred_validator,
 		   }
 
         
