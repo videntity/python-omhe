@@ -2,16 +2,22 @@
 
 Open Mobile Health Exchange (OMHE) Parser & Tools for Python
 ============================================================
-(c) 2011 - All Rights Reserved.
-Release 0.6dev
-Author: Alan Viars (Videntity)
-License: This code is open source and available via Apache2 license.
-Please read LICENSE.txt for more information. If you need support,
-python-omhe is available under a commercial license by Videntity Systems, Inc.
-If you need commercial support please email us at:
+(c) 2011 - Alan Viars (Videntity) -All Rights Reserved.
 
-        sales [at] videntity [dot] [com]
-        
+
+
+Release 0.6.0
+
+
+LICENSE: This code is open source and available under a dual license model; Apache2 license or a commercial license.
+Please read LICENSE.txt for more information.
+
+If you need a commercial license or support please email us at:
+
+        sales [at] videntity [dot] com
+
+
+Author: Alan Viars (Videntity)
 Table of Contents:
 ==================
 .. toctree::
