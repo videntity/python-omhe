@@ -1,7 +1,14 @@
 #!/usr/bin/python
 import sys
 sys.path.insert(0, '/home/tbble/code/cwiid/svn/cwiid/python/build/lib.linux-x86_64-2.5/')
-import sys, simplejson
+import sys
+
+try:
+ import simplejson as json
+except:
+ import json
+
+
 from datetime import datetime
 
 try:
@@ -98,7 +105,7 @@ def main():
 		d=datetime.utcnow()
 		weight_dict['ev_dt']= d.strftime("%d%m%y:%H%M%Sz")
 		weight_dict['ev_tz']= timezone_offset
-		jsonstr=simplejson.dumps(weight_dict, indent = 4,)
+		jsonstr=json.dumps(weight_dict, indent = 4,)
 		print jsonstr
 		file=open(weight_output_file, 'w')
 		file.write(jsonstr)

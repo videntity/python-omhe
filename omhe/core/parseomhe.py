@@ -1,7 +1,13 @@
 #An OMHE Microsyntax parser class.
 # Alan Viars, Videntity 2010
 
-import os, sys, re, uuid, simplejson
+import os, sys, re, uuid
+
+try:
+ import simplejson as json
+except:
+ import json
+
 from datetime import datetime
 from omhe.validators import *
 from omhe.validators.validator_errors import *
@@ -376,7 +382,7 @@ class parseomhe:
 	"""Convert an omhe dict to a JSON formatted string"""
 	if type(omhedict).__name__!='dict':
             raise OMHEError, "The varialbe you passed in was not a valid dict"
-	jsonstr=simplejson.dumps(omhedict, indent=4)
+	jsonstr=json.dumps(omhedict, indent=4)
 	return jsonstr
 
 
