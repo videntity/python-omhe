@@ -6,7 +6,7 @@ from omhe.validators.validator_errors import *
 from omhe.validators.utils import *
 
 def pn_validator(omhe_value):
-    """validate mood"""
+    """validate pain"""
     valdict={}
     
     if omhe_value.isdigit():

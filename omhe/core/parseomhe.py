@@ -9,20 +9,36 @@ except:
  import json
 
 from datetime import datetime
-from omhe.validators import *
-from omhe.validators.validator_errors import *
+from validators.validator_errors import *
 
-
+from validators.bg_validator import bg_validator
+from validators.bp_validator import bp_validator
+from validators.sbp_validator import sbp_validator
+from validators.bg_validator import bg_validator
+from validators.st_validator import st_validator
+from validators.wt_validator import wt_validator
+from validators.ffm_validator import ffm_validator
+from validators.fm_validator import fm_validator
+from validators.pbf_validator import pbf_validator
+from validators.ci_validator import ci_validator
+from validators.pn_validator import pn_validator
+from validators.md_validator import md_validator
+from validators.one_to_ten_or_blank_or_string_validator import one_to_ten_or_blank_or_string_validator
+from validators.dummy_validator import dummy_validator
+from validators.one_to_onehundred_validator import one_to_onehundred_validator
+from validators.dt_helper_validator import dt_helper_validator
+from validators.tz_helper_validator import tz_helper_validator
+from validators.pts_helper_validator import pts_helper_validator
 
 class parseomhe:
     """A class to parse omhe strings into  their respective sub parts."""
-    command_tuple=          None
-    helper_tuple=           None
-    validator_dict=         None
-    helper_validator_dict=  None
-    omhe_dict=              None
-    ev_tz=                 -5
-    tx_tz=                 -5
+    command_tuple =          	None
+    helper_tuple =           	None
+    validator_dict =         	None
+    helper_validator_dict =  	None
+    omhe_dict =              	None
+    ev_tz =                 	0
+    tx_tz =                 	0
 
     
     def __init__(self,**kwargs):
@@ -30,6 +46,7 @@ class parseomhe:
         """This dict of tuples contains all possible omhe values and aliases"""
         self.command_dict={
             'bp': ('bloodpressure',),
+	    'sbp': ('sendbloodpressure',),
 	    'bg': ('bloodglucose',),
             'wt': ('weight',),
 	    'fm': ('fatmass',),
@@ -55,12 +72,18 @@ class parseomhe:
 	    'que': ('question',),
 	    'ans': ('answer',),
 	    'pts': ('points','gems'),
-	    'zeo': ('sleepscore',),
+	    'zeo': ('sleepscore','zscore'),    
 	    #TODO: Add others here...    
         }
+        
+	# Add items here that have no value (e.g. a name/statement only)
+	self.no_value_command_dict={
+	    'yes': ('y','si','ok',),
+	    'gbp': ('getbloodpressure',),
+	}
 
-
-        self.helper_tuple=('id', 'dt', 'tz', 'hid', 'pw' 'pi' 'tm' 'uu', '#')
+        self.helper_tuple=('id', 'dt', 'tz', 'pts', 'hid', 'pw', 'pi', 'tm',
+			   'uu', '#')
         """This tuple contains helpers"""
     
 	"""
@@ -70,57 +93,52 @@ class parseomhe:
 	"""
 
         self.validator_dict={
-                   'bp': bp_validator.bp_validator,
-		   'bg': bg_validator.bg_validator,
-                   'bloodpressure': bp_validator.bp_validator,
-                   'bloodglucose': bg_validator.bg_validator,
-                   'steps': st_validator.st_validator,
-                   'spd': st_validator.st_validator,
-                   'st': st_validator.st_validator,
-                   'wt': wt_validator.wt_validator,
-                   'weight': wt_validator.wt_validator,
-		   'ffm': ffm_validator.ffm_validator,
-		   'fm': fm_validator.fm_validator,
-		   'pbf': pbf_validator.pbf_validator,
-		   'ci': ci_validator.ci_validator,
-                   'pn': pn_validator.pn_validator,
-		   'md': md_validator.md_validator,
-		   'frt': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'veg': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-	           'jnk': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'wtr': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-	           'alc': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'ptn': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'crb': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'dry': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'drk': one_to_ten_or_blank_or_string_validator.one_to_ten_or_blank_or_string_validator,
-		   'eat': dummy_validator.dummy_validator,
-		   'gym': dummy_validator.dummy_validator,
-		   'que': dummy_validator.dummy_validator,
-		   'ans': dummy_validator.dummy_validator,
-		   'pts': pts_validator.pts_validator,
-		   'zeo': one_to_onehundred_validator.one_to_onehundred_validator,
+                   'bp': bp_validator,
+		   'sbp': sbp_validator,
+		   'bg': bg_validator,
+                   'st': st_validator,
+                   'wt': wt_validator,
+		   'ffm': ffm_validator,
+		   'fm': fm_validator,
+		   'pbf': pbf_validator,
+		   'ci': ci_validator,
+                   'pn': pn_validator,
+		   'md': md_validator,
+		   'frt': one_to_ten_or_blank_or_string_validator,
+		   'veg': one_to_ten_or_blank_or_string_validator,
+	           'jnk': one_to_ten_or_blank_or_string_validator,
+		   'wtr': one_to_ten_or_blank_or_string_validator,
+	           'alc': one_to_ten_or_blank_or_string_validator,
+		   'ptn': one_to_ten_or_blank_or_string_validator,
+		   'crb': one_to_ten_or_blank_or_string_validator,
+		   'dry': one_to_ten_or_blank_or_string_validator,
+		   'drk': one_to_ten_or_blank_or_string_validator,
+		   'eat': dummy_validator,
+		   'gym': dummy_validator,
+		   'que': dummy_validator,
+		   'ans': dummy_validator,
+		   'zeo': one_to_onehundred_validator,
 		   }
 
         
         self.helper_validator_dict={
-                   'dt': dt_helper_validator.dt_helper_validator,
-                   'tz': tz_helper_validator.tz_helper_validator,
+                   'dt': dt_helper_validator,
+                   'tz': tz_helper_validator,
+		   'pts': pts_helper_validator,
                    }
         self.uu=str(uuid.uuid4())
         self.transaction_datetime=datetime.utcnow()
         self.tx_dt=self.pydt2omhedt(self.transaction_datetime)
-
-        self.omhe_dict={'ttype':'omhe',
-                        'id':self.uu,
-                        'tx_dt':self.tx_dt,
-                        'ev_dt':self.tx_dt,
-                        'ev_tz':self.ev_tz,
-                        'tx_tz':self.tx_tz,
-                        }
+        
+	""" Create a base OMHE dict w/ default values"""
+	self.omhe_dict={
+		    'ttype':'omhe',
+                    'id':self.uu,
+                    'tx_dt':self.tx_dt,
+		    }
     message = None
     command = None
-    value = None
+    value   = ""
     
    
         
@@ -229,11 +247,33 @@ class parseomhe:
 	if (not splitdict.has_key('omhe')) or (not splitdict.has_key('value')) or (not splitdict.has_key('tags')):
 	    raise OMHEError, "The varialbe you passed in was not a valid omhe splitdict"
 
+	validated_dict={}
+	
 	#run the command's validator if it exists and it is defined
 	if self.validator_dict.has_key(splitdict['omhe']):
 	    """Validate the omhe command and value"""
 	    validated_dict=self.validator_dict[splitdict['omhe']](splitdict['value'])
 	
+	
+	    
+	"""Add validated dict to splitdict"""
+	splitdict.update(validated_dict)
+	return splitdict
+
+
+    def validate_helpers(self, splitdict):
+	"""
+	validate a dict containing the omhe command
+	its value and its tags.  You can build this automatically by passing
+	your message into split().
+	"""
+        if type(splitdict).__name__!='dict':
+            raise OMHEError, "The variable you passed in was not a valid dict"
+	
+	if (not splitdict.has_key('omhe')) or (not splitdict.has_key('value')) or (not splitdict.has_key('tags')):
+	    raise OMHEError, "The variable you passed in was not a valid omhe splitdict"
+
+	validated_dict={}
 	#run the helper tag's validators if exists and are defined
 	if len(splitdict['tags'])!=0:
 	    helper_dict={}
@@ -253,6 +293,10 @@ class parseomhe:
 	"""Add validated dict to splitdict"""
 	splitdict.update(validated_dict)
 	return splitdict
+
+
+
+
 
     def split(self, message):
 	"""
@@ -309,11 +353,31 @@ class parseomhe:
 		    break
 
 	if not(found):
-	    raise InvalidMessageError, "The message did not contain an omhe command"
-	else:
+	    found2=False
+	    #See if its an omhe value that does not have a value.
+	    for i,j in self.no_value_command_dict.items():
+		if message.startswith(i)==True:
+		    found2=True
+		    command=i
+		    value=message
+		    break
+		for x in j:
+		    if message.startswith(x):
+			    found2=True
+			    response = message.split(x)
+			    command=i
+			    value=message
+			    break
+	    if found2==False:
+		raise InvalidMessageError, "The message did not contain an omhe command"
+	    else:
 		d={}
 		d['omhe']=command.lower()
-		d['value']=value.lower()
+		d['value']=value
+	else:
+	    d={}
+	    d['omhe']=command.lower()
+	    d['value']=value.lower()
 		
 		
 	"""determine if we have tags by attempting to split # """
@@ -333,7 +397,6 @@ class parseomhe:
 	
 	"""Add the origional message to our dict"""
 	d['texti']=str(message)
-	
 	return d
 
 
@@ -343,25 +406,43 @@ class parseomhe:
 	If there is any error, do not raise the exception, but rather
 	add the error to the dict
 	"""
+	
+	#Split the message
 	d={}
 	try:
 	    s=self.split(message)
+	    print s
 	except:
 	    error= str(sys.exc_info())
 	    d['error']=error
 	    return d
+	
+	#Run the value validators on the commands
 	try:
-	    d=self.validate(s)
+	    if not self.no_value_command_dict.has_key(s['omhe']):
+		#only do this if it is a command that expects a value
+		d=self.validate(s)
+	    else:
+		d.update(s)
 	except:
 	    error= str(sys.exc_info())
 	    d['error']=error
 	    return d
+	
+	#validate the helpers
+	try:    
+	    d=self.validate_helpers(s)
+	except:
+	    error= str(sys.exc_info())
+	    d['error']=error
+	    return d
+	
+	
 	"""
 	all is well so lets add some additional info to our dict for
 	convienence and easy uploading to RESTCat.
 	"""
-	#Add a unique ID
-	d['id']=str(uuid.uuid4())
+	d.update(self.omhe_dict)
 	
 	#add transaction datetime and timexzone offset
 	tx_dt=self.pydt2omhedt(tx_dt)
@@ -377,8 +458,10 @@ class parseomhe:
 
 	#all is well, return the dict without errors
 	return d
-    
+
     def omhedict2json(self, omhedict):
+	
+
 	"""Convert an omhe dict to a JSON formatted string"""
 	if type(omhedict).__name__!='dict':
             raise OMHEError, "The varialbe you passed in was not a valid dict"
