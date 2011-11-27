@@ -1,6 +1,5 @@
 import re,sys
 from validator_errors import *
-from utils import *
 
 def st_validator(omhe_value):
     """validate steps"""

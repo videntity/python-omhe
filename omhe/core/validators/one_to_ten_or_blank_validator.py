@@ -1,6 +1,5 @@
 import re,sys
 from validator_errors import *
-from utils import *
 
 def one_to_ten_or_blank_validator(omhe_value):
     """validate one to ten or blank"""

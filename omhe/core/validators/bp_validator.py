@@ -1,6 +1,5 @@
 import re,sys
 from validator_errors import *
-from utils import *
 
 
 def bp_validator(omhe_value):

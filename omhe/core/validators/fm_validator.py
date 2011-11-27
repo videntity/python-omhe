@@ -1,6 +1,5 @@
 import re,sys
 from validator_errors import *
-from utils import *
 
 def fm_validator(omhe_value):
     valdict={}

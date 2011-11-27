@@ -1,6 +1,5 @@
 import re,sys
 from validator_errors import *
-from utils import *
 
 def md_validator(omhe_value):
     """validate mood"""

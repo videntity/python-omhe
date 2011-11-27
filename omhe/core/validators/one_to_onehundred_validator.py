@@ -1,6 +1,5 @@
 import re,sys
 from validator_errors import *
-from utils import *
 
 def one_to_onehundred_validator(omhe_value):
     """validate one to one hundred"""

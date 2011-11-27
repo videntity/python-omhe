@@ -1,9 +1,7 @@
 import re,sys
 from datetime import datetime
+from validator_errors import *
 
-from omhe.core.parseomhe import *
-from omhe.validators.validator_errors import *
-from omhe.validators.utils import *
 
 def wt_validator(omhe_value):
     valdict={}
