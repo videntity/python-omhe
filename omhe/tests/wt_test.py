@@ -1,7 +1,7 @@
 from omhe.tests.OMHETestCase import OMHETestCase
 import unittest
 from omhe.core.parseomhe import parseomhe
-from omhe.validators.validator_errors import *
+from omhe.core.validators.validator_errors import *
 
 class wt_test(OMHETestCase):
     validValues = ('wt155', 'wt100', 'weight=60#tag','weight=75',

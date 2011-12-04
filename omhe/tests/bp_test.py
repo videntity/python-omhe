@@ -1,7 +1,7 @@
 from omhe.tests.OMHETestCase import OMHETestCase
 import unittest
 from omhe.core.parseomhe import parseomhe
-from omhe.validators.validator_errors import *
+from omhe.core.validators.validator_errors import *
 
 class bp_test(OMHETestCase):
     validValues = ('bp120/80', 'bp120/80p60', 'bp120/90p60#tag','bp=090090060',

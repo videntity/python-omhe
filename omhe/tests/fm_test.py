@@ -1,7 +1,7 @@
 from omhe.tests.OMHETestCase import OMHETestCase
 import unittest
 from omhe.core.parseomhe import parseomhe
-from omhe.validators.validator_errors import *
+from omhe.core.validators.validator_errors import *
 
 class fm_test(OMHETestCase):
     validValues = ('fm30', 'fm100', 'fatmass=60#tag','fatmass=60',

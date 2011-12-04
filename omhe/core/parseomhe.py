@@ -36,8 +36,8 @@ class parseomhe:
     validator_dict =         	None
     helper_validator_dict =  	None
     omhe_dict =              	None
-    ev_tz =                 	0
-    tx_tz =                 	0
+    evtz =                 	0
+    txtz =                 	0
 
     
     def __init__(self,**kwargs):
@@ -72,6 +72,8 @@ class parseomhe:
 	    'ans': ('answer',),
 	    'pts': ('points','gems'),
 	    'zeo': ('sleepscore','zscore'),    
+	    'hivcd4': ('cd4-count',), 
+	    'hivvl': ('hiv-viral-load',),
 	    #TODO: Add others here...    
         }
         
@@ -127,19 +129,17 @@ class parseomhe:
                    }
         self.uu=str(uuid.uuid4())
         self.transaction_datetime=datetime.utcnow()
-        self.tx_dt=self.pydt2omhedt(self.transaction_datetime)
+        self.txdt = self.pydt2omhedt(self.transaction_datetime)
         
 	""" Create a base OMHE dict w/ default values"""
 	self.omhe_dict={
 		    'ttype':'omhe',
-                    'id':self.uu,
-                    'tx_dt':self.tx_dt,
+                    'txid':self.uu,
+                    'txdt':self.txdt,
 		    }
     message = None
     command = None
     value   = ""
-    
-   
         
         
     def pydt2omhedt(self, dt_object):
@@ -399,7 +399,7 @@ class parseomhe:
 	return d
 
 
-    def parse(self, message, tx_dt=datetime.utcnow(), tx_tz=0):
+    def parse(self, message, txdt=datetime.utcnow(), txtz=0):
 	"""
 	Parse an OMHE message and return a dictonary of its subparts
 	If there is any error, do not raise the exception, but rather
@@ -444,16 +444,16 @@ class parseomhe:
 	d.update(self.omhe_dict)
 	
 	#add transaction datetime and timexzone offset
-	tx_dt=self.pydt2omhedt(tx_dt)
-	d['tx_dt']=tx_dt
-	d['tx_tz']="0"
+	txdt=self.pydt2omhedt(txdt)
+	d['txdt']=txdt
+	d['txtz']="0"
 	
 	#Add the event datetime and timezone if not already present
-	if not d.has_key("ev_dt"):
-	    d['ev_dt']=tx_dt
+	if not d.has_key("evdt"):
+	    d['evdt']=txdt
 	    
-	if not d.has_key("ev_tz"):
-	    d['ev_tz']="0"
+	if not d.has_key("evtz"):
+	    d['evtz']="0"
 
 	#all is well, return the dict without errors
 	return d

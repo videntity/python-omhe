@@ -103,8 +103,8 @@ def main():
 		weight_dict['texti']= str("wt=%.2f" % (weightlbs))
 		weight_dict['subj']= "%s" % (c)
 		d=datetime.utcnow()
-		weight_dict['ev_dt']= d.strftime("%d%m%y:%H%M%Sz")
-		weight_dict['ev_tz']= timezone_offset
+		weight_dict['evdt']= d.strftime("%d%m%y:%H%M%Sz")
+		weight_dict['evtz']= timezone_offset
 		jsonstr=json.dumps(weight_dict, indent = 4,)
 		print jsonstr
 		file=open(weight_output_file, 'w')

@@ -39,8 +39,8 @@ def uploadOMHE2restcat(omhe_dict, username, password, sndr, rcvr, subj, security
         post_dict={}
         post_dict['ttype']='omhe'
         post_dict.update(routing)
-        post_dict['tx_dt']=omhe_dict['tx_dt']
-        post_dict['tx_tz']=omhe_dict['tx_tz']
+        post_dict['txdt']=omhe_dict['txdt']
+        post_dict['txtz']=omhe_dict['txtz']
         post_dict['id']=omhe_dict['id']
         post_dict['texti']=omhe_dict['texti']
         

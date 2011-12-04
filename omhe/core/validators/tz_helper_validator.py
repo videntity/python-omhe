@@ -27,6 +27,6 @@ def tz_helper_validator(helper_value):
     
     helper_value=helper_value.replace(".",":")
     
-    return {'ev_tz':helper_value}
+    return {'evtz':helper_value}
     
     

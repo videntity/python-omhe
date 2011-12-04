@@ -50,5 +50,5 @@ def dt_helper_validator(helper_value):
     else:
         raise InvalidHelperFormatError, "Second is not an integer"
     dt=datetime(year, month, day, hour, minute, second, 0)
-    return { 'ev_dt': helper_value,
+    return { 'evdt': helper_value,
             }

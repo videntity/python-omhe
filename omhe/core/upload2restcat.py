@@ -31,12 +31,12 @@ def upload2restcat(omhe_dict, userpass, sender,
     post_dict.update(routing)
     
     """ The transaction's date/time/zone"""
-    post_dict['tx_dt']=omhe_dict['tx_dt']
-    post_dict['tx_tz']=omhe_dict['tx_tz']
+    post_dict['txdt']=omhe_dict['txdt']
+    post_dict['txtz']=omhe_dict['txtz']
     
     """ The event's date/time/zone"""
-    post_dict['ev_dt']=omhe_dict['ev_dt']
-    post_dict['ev_tz']=omhe_dict['ev_tz']
+    post_dict['evdt']=omhe_dict['evdt']
+    post_dict['evtz']=omhe_dict['evtz']
     
     """ The transaction's uuid"""
     post_dict['id']=omhe_dict['id']
