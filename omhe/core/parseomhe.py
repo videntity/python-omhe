@@ -266,7 +266,7 @@ class parseomhe:
 	its value and its tags.  You can build this automatically by passing
 	your message into split().
 	"""
-        if type(splitdict).__name__!='dict':
+	if type(splitdict).__name__!='dict':
             raise OMHEError, "The variable you passed in was not a valid dict"
 	
 	if (not splitdict.has_key('omhe')) or (not splitdict.has_key('value')) or (not splitdict.has_key('tags')):
@@ -282,7 +282,7 @@ class parseomhe:
 			helper_split=t.split(ht)
 			if len(helper_split)==2:
 			    ot="omhe_helper_tag_%s" % (ht)
-			    helper_dict.update({ot:helper_split[1]})
+			    #helper_dict.update({ot:helper_split[1]})
 			if self.helper_validator_dict.has_key(ht):
 			    helper_validator_response=self.helper_validator_dict[ht](helper_split[1])
 			    helper_dict.update(helper_validator_response)
@@ -316,40 +316,32 @@ class parseomhe:
 	    """Make sure the input is a string or unicode"""
 	    raise InvalidMessageError, "The message was not a string"
 	
-    
-	"""If there's an equals then this is easier to parse"""
-	if message.__contains__('='):
-	    response = message.split('=')
-	    command=response[0]
-	    value=response[1]
-	    """Verify"""
-	    for base_command, alias_command in self.command_dict.items():
-		if alias_command.__contains__(response[0]) or base_command==(response[0]):
-		    found=True
-		    command=base_command
-	else:
-	    """
-	    Without the equals, let's tease out which omhe command we are dealing
-	    with
-	    """
-	    
-	    for i,j in self.command_dict.items():
-		#print i,j
-		if message.startswith(i)==True:
-		    command=i
-		    response = message.split(i)
-		    value=response[1]
-		    found=True
-		for x in j:
-		    
-		    if message.startswith(x):
-			    found=True
-			    response = message.split(x)
-			    command=i
-			    value=response[1]
-			    break
-		if found:
-		    break
+
+	"""
+	Let's tease out which omhe command we are dealing with
+	"""
+	
+	for i,j in self.command_dict.items():
+	    #print i,j
+	    if message.startswith(i)==True:
+		command=i
+		response = message.split(i)
+		#if response[1].startswith("="):
+		#    response[1]=response[1:]
+		value=response[1]
+		if value.startswith("="):
+		    value=value[1:]
+		found=True
+	    for x in j:
+		
+		if message.startswith(x):
+			found=True
+			response = message.split(x)
+			command=i
+			value=response[1]
+			break
+	    if found:
+		break
 
 	if not(found):
 	    found2=False
@@ -410,7 +402,6 @@ class parseomhe:
 	d={}
 	try:
 	    s=self.split(message)
-	    print s
 	except:
 	    error= str(sys.exc_info())
 	    d['error']=error

@@ -4,6 +4,10 @@ from validator_errors import *
 from utils import *
 
 def tz_helper_validator(helper_value):
+    
+    if helper_value.startswith("="):
+        helper_value=omhe_value[1:]
+    
     """ Validate timezone helper."""
     if type(helper_value).__name__!='str' and \
        type(helper_value).__name__!='unicode' and \
@@ -11,7 +15,6 @@ def tz_helper_validator(helper_value):
        type(helper_value).__name__!='float':
 	    """Make sure the input is a string or unicode"""
 	    raise InvalidMessageError, "The omhe_command was not a string"
-    
     
     if helper_value.find(":")!=-1:
         orig_value=helper_value

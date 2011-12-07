@@ -3,6 +3,9 @@ from validator_errors import *
 
 def pts_helper_validator(omhe_value):
     """validate positive or negative integer"""
+    
+    if omhe_value.startswith("="):
+        omhe_value=omhe_value[1:]
     valdict={}
     negative=False
     if omhe_value[0]=="-":

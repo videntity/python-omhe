@@ -4,13 +4,17 @@ from validator_errors import *
 from utils import *
 
 def dt_helper_validator(helper_value):
+
+    if helper_value.startswith("="):
+        helper_value=helper_value[1:]
+    
     """ Validate datetime helper."""
     if (len(helper_value)!=16):
-        error_string = "Datime %s is Incorrect Length." % (helper_value)
+        error_string = "Dateime %s is Incorrect Length." % (helper_value)
         raise InvalidHelperFormatError, error_string
     
     if (helper_value[15]!="z" and helper_value[15]!="Z"):
-        error_string = "Datime %s must end in Z to explicitly denote UTC." % (helper_value)
+        error_string = "Dateime %s must end in Z to explicitly denote UTC." % (helper_value)
         raise InvalidHelperFormatError, error_string
 
     year=str(helper_value[0:4])
