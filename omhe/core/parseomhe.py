@@ -22,6 +22,7 @@ from omhe.core.validators.pbf_validator import pbf_validator
 from omhe.core.validators.ci_validator import ci_validator
 from omhe.core.validators.pn_validator import pn_validator
 from omhe.core.validators.md_validator import md_validator
+from omhe.core.validators.frv_validator import frv_validator
 from omhe.core.validators.one_to_ten_or_blank_or_string_validator import one_to_ten_or_blank_or_string_validator
 from omhe.core.validators.dummy_validator import dummy_validator
 from omhe.core.validators.one_to_onehundred_validator import one_to_onehundred_validator
@@ -58,6 +59,7 @@ class parseomhe:
 	    'md': ('mood',),
 	    'frt': ('fruit',),
 	    'veg': ('vegetable','veggie'),
+	    'frv': ('freggie',),
 	    'sch': ('starch',),
 	    'jnk': ('junk','junkfood'),
 	    'wtr': ('water', 'h2o', 'h20'),
@@ -83,7 +85,7 @@ class parseomhe:
 	    'gbp': ('getbloodpressure',),
 	}
 
-        self.helper_tuple=('id', 'dt', 'tz', 'pts', 'hid', 'pw', 'pi', 'tm',
+        self.helper_tuple=('id', 'dt', 'tz', 'points', 'hid', 'pw', 'pi', 'tm',
 			   'uu', '#')
         """This tuple contains helpers"""
     
@@ -105,6 +107,7 @@ class parseomhe:
 		   'ci': ci_validator,
                    'pn': pn_validator,
 		   'md': md_validator,
+		   'frv': frv_validator,
 		   'frt': one_to_ten_or_blank_or_string_validator,
 		   'veg': one_to_ten_or_blank_or_string_validator,
 	           'jnk': one_to_ten_or_blank_or_string_validator,
@@ -125,7 +128,7 @@ class parseomhe:
         self.helper_validator_dict={
                    'dt': dt_helper_validator,
                    'tz': tz_helper_validator,
-		   'pts': pts_helper_validator,
+		   'points': pts_helper_validator,
                    }
         self.uu=str(uuid.uuid4())
         self.transaction_datetime=datetime.utcnow()

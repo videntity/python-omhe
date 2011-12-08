@@ -8,19 +8,10 @@ def pts_helper_validator(omhe_value):
         omhe_value=omhe_value[1:]
     valdict={}
     negative=False
-    if omhe_value[0]=="-":
-        negative=True
-        if omhe_value[1:].isdigit():
-            valdict['pts_numeric']=omhe_value
-            valdict['points']=omhe_value
-        else:
-            raise InvalidValueError("You must supply a whole number")
-    
+    print omhe_value
+    if omhe_value.isdigit() or omhe_value[1:].isdigit():
+        valdict['points']=omhe_value
     else:
-        if omhe_value[1:].isdigit():
-            valdict['pts_numeric']=omhe_value
-            valdict['points']=omhe_value
-        else:
-            raise InvalidValueError("You must supply a whole number")
+        raise InvalidValueError("You must supply a whole number")
     
     return valdict
