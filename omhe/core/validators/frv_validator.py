@@ -25,13 +25,16 @@ def frv_validator(omhe_value):
     valdict={}
     if omhe_value[0] == "=":
         omhe_value=omhe_value[1:]
+        
     if omhe_value[-1].isdigit():
-        valdict[omhe_value[:-1]]=omhe_value[-1]
+        valdict[omhe_value[:-1]]=str(omhe_value[-1])
+        freggiename=omhe_value[:-1]
     else:
         valdict[omhe_value[:]]="1"
+        freggiename=omhe_value[:]
     
-    
-    #error_msg="I could not validate the value %s is not a numerical fat mass. " % (valdict['fm_numeric'])
-    #raise InvalidMessageError(error_msg)
+    if freggies.__contains__(freggiename)==False:
+        error_msg="%s is not a valid fruit of veggie." % (freggiename)
+        raise InvalidMessageError(error_msg)
 
     return valdict

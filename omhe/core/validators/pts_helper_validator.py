@@ -8,7 +8,6 @@ def pts_helper_validator(omhe_value):
         omhe_value=omhe_value[1:]
     valdict={}
     negative=False
-    print omhe_value
     if omhe_value.isdigit() or omhe_value[1:].isdigit():
         valdict['points']=omhe_value
     else:
