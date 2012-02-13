@@ -8,6 +8,8 @@ class OMHETestCase(TestCase):
 		"""
 		Asserts that a text is found in str representation of response.
 		"""
+        TESTS_DEBUG=True
+
 
         print "Tests_DEBUG:"
         print TESTS_DEBUG

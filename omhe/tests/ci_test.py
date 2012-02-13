@@ -6,6 +6,9 @@ from omhe.core.validators.validator_errors import *
 from omhe.tests.OMHETestCase import OMHETestCase
 import unittest
 
+TESTS_DEBUG = True
+
+
 class ci_test(OMHETestCase):
     """
     Command: ci
@@ -16,6 +19,9 @@ class ci_test(OMHETestCase):
     Notes: Start using a service
     Examples: ci=Howdy Partner, checkin=Just ate a tofo.#lunch Gross!
     """
+
+    TESTS_DEBUG = True
+
     validValues = ('ci=Howdy OMHE',
                    'check-in=A simple check-in',
                    'checkin=A simple checkin',
@@ -30,6 +36,7 @@ class ci_test(OMHETestCase):
                                'CI=N')
     invalidCommand = ('foo35', 'bar=120',)
 
+
     valid_parse_val_1="ci"
 
     def testValidValuesAlwaysContainsFatMassNumericValue(self):
@@ -37,6 +44,13 @@ class ci_test(OMHETestCase):
         for i in self.validValues:
             p=parseomhe()
             result = p.parse(i)
+            if TESTS_DEBUG==True:
+                print " "
+                print "Testing Value:" + str(i)
+                print "parsed result:"
+                print result
+                print "end of Parsed Result"
+
             self.assertDictContains(result, self.valid_parse_val_1)
 
 
@@ -45,12 +59,23 @@ class ci_test(OMHETestCase):
         for i in self.invalidOutOfRangeValues:
             p=parseomhe()
             d=p.split(i)
+            if TESTS_DEBUG==True:
+                print " "
+                print "Testing Out of Range Value:" + str(i)
+                print "parsed result(d):"
+                print d
+                print "end of Parsed Result"
+
             self.assertRaises(InvalidValueError, p.validate, splitdict=d)
 
     def testInvalidMessageRaisesInvalidMessageError(self):
         """split() of invalidCommand should always raise InvalidMessageError."""
         for i in self.invalidCommand:
             p=parseomhe()
+            if TESTS_DEBUG==True:
+                print "Testing Invalid Command:" + str(i)
+                print p
+                print "End of parsed result"
 
 
             self.assertRaises(InvalidMessageError, p.split, message=i)
