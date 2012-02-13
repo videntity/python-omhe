@@ -401,7 +401,6 @@ class parseomhe:
 	If there is any error, do not raise the exception, but rather
 	add the error to the dict
 	"""
-	
 	#Split the message
 	d={}
 	try:
