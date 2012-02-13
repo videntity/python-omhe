@@ -1,5 +1,6 @@
 .. image::  http://videntity.com/images/omhe.png
 
+
 Open Mobile Health Exchange (OMHE) Parser & Tools for Python
 ============================================================
 Copyright 2011 - Alan Viars (Videntity) -All Rights Reserved.
@@ -32,20 +33,20 @@ OMHE (Open Mobile Health Exchange), pronounced "ooommm" is an open-source
 microsyntax for text messaging (mobile SMS), Twitter®, medical devices, and
 other "short text capable" systems. It is a community work product from many
 interested parties including doctors, hackers, software developers,
-entrpreneurs, quantified-selfers, health IT vendors, wellness vendors,
+entrepreneurs, quantified-selfers, health IT vendors, wellness vendors,
 and health/mobile device manufactures.
 
 Its called OMHE because its the nirvana of health informatics..open, free, and simple.
 OMHE is a microsyntax.org project.  The goal behind OMHE is to help exchange
 data over mobile device such as phones or medical or wellness devices in an
-ultra-companct, human and machine readable format.
+ultra-compact, human and machine readable format.
 
 This package, "python-omhe" was developed by and is maintained by Videntity
 Systems, Inc. It is free to use and 100% open source.  Feel like contributing to
 this project?  Please email us or join the Google Group "omhe-microsyntax".
 
 
-The commands and a lengthly description can be found here_
+The commands and a lengthy description can be found here_
 
 .. _here: http://code.google.com/p/omhe
 
@@ -75,10 +76,10 @@ application requires Cwiid_.
 
 To make things easier you should install:
 
-* python-setuptools (so you can use easy_insall)
+* python-setuptools (so you can use easy_install)
 * pip (so you can use pip)
 * pycurl (So you can use the curl libraries inside Python)
-* pyserial (So you can talk to a seriel port)
+* pyserial (So you can talk to a serial port)
 * git-core (so you can use and download with git)
 * build-essential (Tools to compile C code. You only need this for Cwiid)
 * cwiid (so you can talk to a Wii Balance Board)
@@ -114,18 +115,18 @@ Press y when prompted
 4. How to Use the Parser:
 ==========================
 
-It takes a string as a single argurment and returns parsed data.
+It takes a string as a single argument and returns parsed data.
 ::
     #import the omheparser library
     from omhe.core.parseomhe import parseomhe
     
-    #create a strng to parse
+    #create a string to parse
     omhe_str="bp=120/80p60#dt20101217:083059z"
     
     #Create a new OMHE object
     o = parseomhe()
     
-    # Call the paser method and return a parsed dict
+    # Call the parser method and return a parsed dict
     # If something is malformed, an error value will be
     # in the dictionary raised.
     d=o.parse(omhe_str)
@@ -156,7 +157,7 @@ Now lets convert it to json
     j=o.omhedict2json(d)
     print j
     
-The easist way to try it out is to just run the command line utility.  All of
+The easiest way to try it out is to just run the command line utility.  All of
 these commands will validate.  The pomhe utility outputs JSON.
 ::
     python pomhe bp120/80p60#dt20100701:121212#tx-5
@@ -220,7 +221,7 @@ input raises the errors that it should.
 7. TODOs:
 =========
 
-Validators are still needed for many omhe commands.  Simply add you validator
+Validators are still needed for many omhe commands.  Simply add your validator
 function to the omhe/validators folder and make sure they are 'turned on' in the
 code by having the command and validation function present in the omhe_validators
 dictionary in the __init__ of the parseomhe.py file. Validators must either
@@ -237,6 +238,6 @@ surgery and  to all those who struggle to stay well or get better.
 9. LICENSE & SUPPORT:
 =====================
 
-This is free open source software.  You can however purchase a commerically-supported
+This is free open source software.  You can however purchase a commercially-supported
 license from Videntity Systems, Inc. python-omhe library. http://videntity.com
     
