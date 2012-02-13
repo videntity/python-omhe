@@ -5,6 +5,7 @@ from validator_errors import *
 def bp_validator(omhe_value):
     val_dict={}
     """bp_validator"""
+
     if omhe_value.isdigit() and len(omhe_value)==9:
         bp_systolic=omhe_value[0:3]
         bp_diastolic=omhe_value[3:6]

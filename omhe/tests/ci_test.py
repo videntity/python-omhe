@@ -33,14 +33,25 @@ class ci_test(OMHETestCase):
     invalidOutOfRangeValues = ('checkin=',
                                'checkin',
                                'ci=Y',
-                               'CI=N')
+                               'ci=y',
+                               'checkin=10',
+                               'checkin=11',
+                               'CI=N',)
     invalidCommand = ('foo35', 'bar=120',)
 
 
     valid_parse_val_1="ci"
 
-    def testValidValuesAlwaysContainsFatMassNumericValue(self):
+    def testValidValuesAlwaysContainsCiContent(self):
         """parse() of validValues should always return ci value in dict."""
+
+        if TESTS_DEBUG==True:
+            print " "
+            print "valid Values Set:"
+            print self.validValues
+            print "========== END OF SET =========="
+
+
         for i in self.validValues:
             p=parseomhe()
             result = p.parse(i)
@@ -56,6 +67,13 @@ class ci_test(OMHETestCase):
 
     def testInvalidOutOfRangeValues(self):
         """validate() of invalidOutOfRangeValues should always raise InvalidValueError."""
+
+        if TESTS_DEBUG==True:
+            print " "
+            print "Invalid Out of Range Values Set:"
+            print self.invalidOutOfRangeValues
+            print "========== END OF SET =========="
+
         for i in self.invalidOutOfRangeValues:
             p=parseomhe()
             d=p.split(i)
@@ -70,6 +88,12 @@ class ci_test(OMHETestCase):
 
     def testInvalidMessageRaisesInvalidMessageError(self):
         """split() of invalidCommand should always raise InvalidMessageError."""
+        if TESTS_DEBUG==True:
+            print " "
+            print "Invalid Command Set:"
+            print self.invalidCommand
+            print "========== END OF SET =========="
+
         for i in self.invalidCommand:
             p=parseomhe()
             if TESTS_DEBUG==True:
