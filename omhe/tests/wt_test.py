@@ -12,7 +12,7 @@ class wt_test(OMHETestCase):
     valid_parse_val_1="wt_numeric"
 
     def testValidValuesAlwayscontainsWeightNumericValue(self):
-        """parse() of validValues should always return wt_mumeric in dict."""
+        """parse() of validValues should always return wt_numeric in dict."""
         for i in self.validValues:
             p=parseomhe()
             result = p.parse(i)
@@ -20,7 +20,7 @@ class wt_test(OMHETestCase):
             
             
     def testInvalidOutOfRangeValues(self):
-        """validate() of invalideOutOfRangevlues should always raise InvalidValueError."""
+        """validate() of invalidOutOfRangeValues should always raise InvalidValueError."""
         for i in self.invalidOutOfRangeValues:
             p=parseomhe()
             d=p.split(i)

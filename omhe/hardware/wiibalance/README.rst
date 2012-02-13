@@ -67,13 +67,13 @@ Lets now install the python bindings:
     sudo python setup.py install
 
 If this works, then your computer is now read to connect to the balance board.
-If you have problems please see the cwiid documentaion.  These instructions
+If you have problems please see the cwiid documentation.  These instructions
 were tested on Ubuntu 10.
 
 2. Using the Wii Balance Board Application:
 ===========================================
 
-Run the weightdemo.py application and immedatly press the red button on the
+Run the weightdemo.py application and immediately press the red button on the
 bottom of your balance board to sync the bluetooth connection.  If all goes well
 you will see a GUI display on your computer.
 ::
@@ -106,12 +106,12 @@ ways.
 wiibalance_weight.py will push your information with an HTTP callback at the
 address defined in your settings.py file.
 This means that we will perform an HTTP client POST containing the weight
-information.  You must write and make avalaible your own callback handler
+information.  You must write and make available your own callback handler
 at the URL specified in your settings.py.  
 
 3.2 Pulling (Polling) weight from a Webserver:
 ----------------------------------------------
-Using wiibalance_server.py you can make your weight avalaible via a webserver.
+Using wiibalance_server.py you can make your weight available via a webserver.
 wiibalance_server.py is a simple web server written in pure python that simply
 serves the file containing the weight information.  This file is generated
 by wiibalance_weight.py and its filepath is defined in settings.py.  By default
@@ -127,7 +127,7 @@ You should see the message:
 Make sure you are using a port not used by another process (such as Apache, etc.)
 Change this in settings.py.
 
-Now your serving yout Weight.  Use your browser or Curl to point to the URL.
+Now you're serving your Weight.  Use your browser or Curl to point to the URL.
 By default its serving on port 8002 and will bind to any IP. So the following
 should yield a JSON file result.  
 ::

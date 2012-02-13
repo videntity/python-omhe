@@ -5,6 +5,8 @@ from validator_errors import *
 def bp_validator(omhe_value):
     val_dict={}
     """bp_validator"""
+    print "bp_Validator received:"
+    print omhe_value
     if omhe_value.isdigit() and len(omhe_value)==9:
         bp_systolic=omhe_value[0:3]
         bp_diastolic=omhe_value[3:6]
@@ -26,6 +28,9 @@ def bp_validator(omhe_value):
     if len(splstr1) !=2:
         raise InvalidValueError, "Invalid bp syntax"
     bp_systolic=splstr1[0]
+
+    print "bp_Validator received:"
+    print omhe_value
 
     if bp_systolic.isdigit()==False:
         raise InvalidValueError, "Systolic value is not a number"

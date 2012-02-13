@@ -19,7 +19,7 @@ except:
 try:
     from omhe.settings import USERNAME, PASSWORD, RECEIVER, SENDER, RESTCAT_SERVER
 except:
-    print "Sorry, I can't seem fo import the settings file."
+    print "Sorry, I can't seem to import the settings file."
     sys.exit(1)
 
 wii_weight=""
@@ -92,7 +92,7 @@ class App:
         self.pounds.grid(row=2, column=4, sticky=W)
         self.pounds.select()
         
-        self.kilograms = Radiobutton(frame,  text="Kilgrams", variable=self.units_str, value='k', command=self.say_kg)
+        self.kilograms = Radiobutton(frame,  text="Kilograms", variable=self.units_str, value='k', command=self.say_kg)
         self.kilograms.grid(row=3, column=4, sticky=W)
 
         self.say_one = Button(frame, text="1", command=self.say_one)
@@ -298,12 +298,12 @@ class App:
     #        api = twitter.Api(username=twitterid, password=twitterpass)
     #        result = api.PostDirectMessage(twitterreceiver, dm)
     #        if result:
-    #            print "successfuly sent DM"
+    #            print "successfully sent DM"
     #            self.say_clear()
     #        else:
-    #            print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
+    #            print "There was a problem sending your DM tweet.  Please check user, pass and that the receiver is following you."
     #    except:
-    #            print "There was a problem sending your DM tweet.  Please check user, pass and that the reciever is following you."
+    #            print "There was a problem sending your DM tweet.  Please check user, pass and that the receiver is following you."
     #    
 
 

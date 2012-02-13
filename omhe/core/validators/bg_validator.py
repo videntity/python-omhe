@@ -12,5 +12,5 @@ def bg_validator(omhe_value):
         x=float(valdict['bg_numeric'])
         return valdict
     except:
-        raise InvalidValueError("You didn't suply a numer for blood glucose")
+        raise InvalidValueError("You didn't supply a number for blood glucose")
         

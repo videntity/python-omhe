@@ -11,5 +11,5 @@ def st_validator(omhe_value):
         x=float(valdict['st_numeric'])
         return valdict
     except:
-        raise InvalidValueError("You didn't suply a numer of steps")
+        raise InvalidValueError("You didn't supply a number of steps")
         

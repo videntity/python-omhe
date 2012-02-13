@@ -5,14 +5,14 @@ from omhe.core.validators.validator_errors import *
 
 class fm_test(OMHETestCase):
     validValues = ('fm30', 'fm100', 'fatmass=60#tag','fatmass=60',
-                   'fatmass=30', 'fm=22')
+                   'fatmass=30', 'fm=22', 'fm30l', 'fm=30k', 'fm=30k#tag', 'fm=30l#tag')
     invalidOutOfRangeValues = ('fm0',)
     invalidCommand = ('foo120/80p60#eee', 'bar=120',) 
 
     valid_parse_val_1="fm_numeric"
 
-    def testValidValuesAlwayscontainsFatMassNumericValue(self):
-        """parse() of validValues should always return fm_mumeric in dict."""
+    def testValidValuesAlwaysContainsFatMassNumericValue(self):
+        """parse() of validValues should always return fm_numeric in dict."""
         for i in self.validValues:
             p=parseomhe()
             result = p.parse(i)
@@ -20,7 +20,7 @@ class fm_test(OMHETestCase):
             
             
     def testInvalidOutOfRangeValues(self):
-        """validate() of invalideOutOfRangevlues should always raise InvalidValueError."""
+        """validate() of invalidOutOfRangeValues should always raise InvalidValueError."""
         for i in self.invalidOutOfRangeValues:
             p=parseomhe()
             d=p.split(i)

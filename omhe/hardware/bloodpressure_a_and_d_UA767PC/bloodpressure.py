@@ -111,7 +111,7 @@ class App:
         self.e2 = Entry(frame)
         self.e2.grid(row=4, column=2)
         
-        self.username = Label(frame, text="Subect's Email:")
+        self.username = Label(frame, text="Subject's Email:")
         self.username.grid(row=5, column=1)
         self.e3 = Entry(frame)
         self.e3.grid(row=5, column=2)

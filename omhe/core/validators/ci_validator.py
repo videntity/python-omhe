@@ -7,4 +7,4 @@ def ci_validator(omhe_value):
         valdict['ci_payload']=omhe_value
         return valdict
     else:
-        raise InvalidValueError("You're message must be from 2-120 characters in length.")
+        raise InvalidValueError("Your message must be from 1-120 characters in length.")

@@ -27,7 +27,7 @@ def getFromMeter():
             print "Waiting for device reading..."
             s = ser.readline()
             if len(s)< 10:
-                print "It appears the connection timmed out.  Please start over."
+                print "It appears the connection timed out.  Please start over."
                 ser.close()
                 exit(1)
             print "Successfully Fetched Data! How awesome!"        
@@ -100,7 +100,7 @@ if __name__ == "__main__":
             try:
                 omhe_str="wt=%s#tanita_body_scan" % (r['weight'])
                 d=o.parse(omhe_str)
-                """Send the OMHE dictonary to RESTCat"""
+                """Send the OMHE dictionary to RESTCat"""
             except():
                 print "Failed to parse OMHE string"
                 sys.exit(1)
@@ -122,7 +122,7 @@ if __name__ == "__main__":
             else:
                 print "Weight Upload failed. Error code %s" % (httpcode)
         except():
-            print "An unexpected error occured. Here is the post-mortem:"
+            print "An unexpected error occurred. Here is the post-mortem:"
             print sys.exc_info()
             
         #upload the fat mass
@@ -155,5 +155,5 @@ if __name__ == "__main__":
             else:
                 print "Fatmass Upload failed. Error code %s" % (httpcode)
         except():
-            print "An unexpected error occured. Here is the post-mortem:"
+            print "An unexpected error occurred. Here is the post-mortem:"
             print sys.exc_info()

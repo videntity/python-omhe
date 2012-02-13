@@ -244,10 +244,10 @@ class parseomhe:
 	your message into split().
 	"""
         if type(splitdict).__name__!='dict':
-            raise OMHEError, "The varialbe you passed in was not a valid dict"
+            raise OMHEError, "The variable you passed in was not a valid dict"
 	
 	if (not splitdict.has_key('omhe')) or (not splitdict.has_key('value')) or (not splitdict.has_key('tags')):
-	    raise OMHEError, "The varialbe you passed in was not a valid omhe splitdict"
+	    raise OMHEError, "The variable you passed in was not a valid omhe splitdict"
 
 	validated_dict={}
 	
@@ -311,7 +311,7 @@ class parseomhe:
 	value=None
 	command=None
 	"""
-	Will return a either a dict containing the code and value
+	Will return either a dict containing the code and value
 	or None if nothing was found
 	"""
 	found=False
@@ -389,14 +389,14 @@ class parseomhe:
 	"""Add tags to our dict"""
 	d['tags']=tags
 	
-	"""Add the origional message to our dict"""
+	"""Add the original message to our dict"""
 	d['texti']=str(message)
 	return d
 
 
     def parse(self, message, txdt=datetime.utcnow(), txtz=0):
 	"""
-	Parse an OMHE message and return a dictonary of its subparts
+	Parse an OMHE message and return a dictionary of its subparts
 	If there is any error, do not raise the exception, but rather
 	add the error to the dict
 	"""
@@ -433,11 +433,11 @@ class parseomhe:
 	
 	"""
 	all is well so lets add some additional info to our dict for
-	convienence and easy uploading to RESTCat.
+	convenience and easy uploading to RESTCat.
 	"""
 	d.update(self.omhe_dict)
 	
-	#add transaction datetime and timexzone offset
+	#add transaction datetime and timezone offset
 	txdt=self.pydt2omhedt(txdt)
 	d['txdt']=txdt
 	d['txtz']="0"
@@ -457,7 +457,7 @@ class parseomhe:
 
 	"""Convert an omhe dict to a JSON formatted string"""
 	if type(omhedict).__name__!='dict':
-            raise OMHEError, "The varialbe you passed in was not a valid dict"
+            raise OMHEError, "The variable you passed in was not a valid dict"
 	jsonstr=json.dumps(omhedict, indent=4)
 	return jsonstr
 
