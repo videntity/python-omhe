@@ -305,7 +305,7 @@ class parseomhe:
 	Split the command, value and tags into 3 parts.  Return a dict. Pass
 	the result of this method to validate the data.
 	"""
-	
+	#message=message.lower()
 	d={}
 	tags=[]
 	value=None
@@ -326,22 +326,23 @@ class parseomhe:
 	
 	for i,j in self.command_dict.items():
 	    #print i,j
-	    if message.startswith(i)==True:
+	    lmessage=message.lower()
+	    if lmessage.startswith(i)==True:
 		command=i
-		response = message.split(i)
-		#if response[1].startswith("="):
-		#    response[1]=response[1:]
+		response = lmessage.split(i)
 		value=response[1]
 		if value.startswith("="):
 		    value=value[1:]
 		found=True
 	    for x in j:
 		
-		if message.startswith(x):
+		if lmessage.startswith(x):
 			found=True
-			response = message.split(x)
-			command=i
+			response = lmessage.split(x)
+			command=i.lower()
 			value=response[1]
+			if value.startswith("="):
+			    value=value[1:]
 			break
 	    if found:
 		break
@@ -350,15 +351,15 @@ class parseomhe:
 	    found2=False
 	    #See if its an omhe value that does not have a value.
 	    for i,j in self.no_value_command_dict.items():
-		if message.startswith(i)==True:
+		if lmessage.startswith(i)==True:
 		    found2=True
 		    command=i
 		    value=message
 		    break
 		for x in j:
-		    if message.startswith(x):
+		    if lmessage.startswith(x):
 			    found2=True
-			    response = message.split(x)
+			    response = lmessage.split(x)
 			    command=i
 			    value=message
 			    break
