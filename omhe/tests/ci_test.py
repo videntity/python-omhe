@@ -33,10 +33,10 @@ class ci_test(OMHETestCase):
     invalidOutOfRangeValues = ('checkin=',
                                'checkin',
                                'ci=Y',
-                               'ci=y',
                                'checkin=10',
                                'checkin=11',
-                               'CI=N',)
+                               'CI=N',
+                               'ci=y',)
     invalidCommand = ('foo35', 'bar=120',)
 
 
