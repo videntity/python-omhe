@@ -405,8 +405,10 @@ class parseomhe:
 	try:
 	    s = self.split(message)
 	except:
-	    error = str(sys.exc_info())
-	    d['error'] = error
+	    d['error'] = str(sys.exc_value)
+	    for k in d.keys:
+		if k != "text" and k != "error":
+		    del d[k]
 	    return d
 	
 	#Run the value validators on the commands
@@ -417,8 +419,10 @@ class parseomhe:
 	    else:
 		d.update(s)
 	except:
-	    error= str(sys.exc_info())
-	    d['error']=error
+	    d['error']=str(sys.exc_value)
+	    for k in d.keys:
+		if k != "text" and k != "error":
+		    del d[k]
 	    return d
 	
 	#validate the helpers
@@ -426,7 +430,12 @@ class parseomhe:
 	    d=self.validate_helpers(s)
 	except:
 	    error= str(sys.exc_info())
-	    d['error']=error
+	    
+	    d['error']=str(sys.exc_value)
+	    for k in d.keys():
+		if k != "text" and k != "error":
+		    del d[k]
+	    
 	    return d
 	
 	
