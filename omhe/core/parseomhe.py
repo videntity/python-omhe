@@ -37,8 +37,8 @@ class parseomhe:
     validator_dict =         	None
     helper_validator_dict =  	None
     omhe_dict =              	None
-    evtz =                 	0
-    txtz =                 	0
+    event_timezone =            0
+    transaction_timezone =      0
 
     
     def __init__(self,**kwargs):
@@ -132,13 +132,13 @@ class parseomhe:
                    }
         self.uu=str(uuid.uuid4())
         self.transaction_datetime=datetime.utcnow()
-        self.txdt = self.pydt2omhedt(self.transaction_datetime)
+        self.transaction_datetime = self.pydt2omhedt(self.transaction_datetime)
         
 	""" Create a base OMHE dict w/ default values"""
 	self.omhe_dict={
-		    'ttype':'omhe',
-                    'txid':self.uu,
-                    'txdt':self.txdt,
+		    'transaction_type':'omhe',
+                    'transaction_id':self.uu,
+                    'transaction_datetime':self.transaction_datetime,
 		    }
     message = None
     command = None
@@ -152,7 +152,7 @@ class parseomhe:
             error_string= "The object is type %s not a Datetime object" % (thetype)
             raise NotADatetimeObjectError, error_string
         
-        omhedt=dt_object.strftime("%Y%m%d:%H%M%Sz")
+        omhedt=dt_object.strftime("%Y-%m-%d %H:%M:%S")
         return omhedt
     
     
@@ -305,7 +305,6 @@ class parseomhe:
 	Split the command, value and tags into 3 parts.  Return a dict. Pass
 	the result of this method to validate the data.
 	"""
-	#message=message.lower()
 	d={}
 	tags=[]
 	value=None
@@ -391,23 +390,23 @@ class parseomhe:
 	d['tags']=tags
 	
 	"""Add the original message to our dict"""
-	d['texti']=str(message)
+	d['text']=str(message)
 	return d
 
 
-    def parse(self, message, txdt=datetime.utcnow(), txtz=0):
+    def parse(self, message, transaction_datetime=datetime.utcnow(), transaction_timezone=0):
 	"""
 	Parse an OMHE message and return a dictionary of its subparts
 	If there is any error, do not raise the exception, but rather
 	add the error to the dict
 	"""
 	#Split the message
-	d={}
+	d = {}
 	try:
-	    s=self.split(message)
+	    s = self.split(message)
 	except:
-	    error= str(sys.exc_info())
-	    d['error']=error
+	    error = str(sys.exc_info())
+	    d['error'] = error
 	    return d
 	
 	#Run the value validators on the commands
@@ -438,16 +437,14 @@ class parseomhe:
 	d.update(self.omhe_dict)
 	
 	#add transaction datetime and timezone offset
-	txdt=self.pydt2omhedt(txdt)
-	d['txdt']=txdt
-	d['txtz']="0"
+	transaction_datetime=self.pydt2omhedt(transaction_datetime)
 	
 	#Add the event datetime and timezone if not already present
-	if not d.has_key("evdt"):
-	    d['evdt']=txdt
+	if not d.has_key("event_datetime"):
+	    d['event_datetime']=transaction_datetime
 	    
-	if not d.has_key("evtz"):
-	    d['evtz']="0"
+	if not d.has_key("event_timezone"):
+	    d['event_timezone']="0"
 
 	#all is well, return the dict without errors
 	return d

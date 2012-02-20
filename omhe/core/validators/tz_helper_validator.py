@@ -30,6 +30,6 @@ def tz_helper_validator(helper_value):
     
     helper_value=helper_value.replace(".",":")
     
-    return {'evtz':helper_value}
+    return {'event_timezone':helper_value}
     
     
