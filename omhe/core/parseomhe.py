@@ -406,7 +406,7 @@ class parseomhe:
 	    s = self.split(message)
 	except:
 	    d['error'] = str(sys.exc_value)
-	    for k in d.keys:
+	    for k in d.keys():
 		if k != "text" and k != "error":
 		    del d[k]
 	    return d
@@ -420,7 +420,7 @@ class parseomhe:
 		d.update(s)
 	except:
 	    d['error']=str(sys.exc_value)
-	    for k in d.keys:
+	    for k in d.keys():
 		if k != "text" and k != "error":
 		    del d[k]
 	    return d
