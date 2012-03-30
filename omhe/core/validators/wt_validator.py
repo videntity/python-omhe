@@ -14,8 +14,8 @@ def wt_validator(omhe_value):
         
     try:
         f=float(valdict['wt_numeric'])
-        if f < 15.0:
-            error_msg="Weight may not be less than 15."
+        if f < 0:
+            error_msg="Weight may not be less than 0"
             raise InvalidValueError(error_msg)
         
     except ValueError:
