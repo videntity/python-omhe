@@ -56,7 +56,7 @@ The home base for this code can be found on github_.
 
 
 
-The library also includes tools to capture and upload bloodpressure information
+The library also includes tools to capture and upload blood pressure information
 from an A&D monitor, capture and upload weight from a Wii Balance board.
 The upload utilities are configured to upload information to a RESTCat server.
 See http://github.com/aviars/RESTCat for more information
@@ -211,7 +211,7 @@ will be created in the near future.
 To run the tests for blood pressure just run the following command inside the
 "omhe/tests/" folder:
 ::
-    python test_bp.py
+    python bp_test.py
     
 That's it.  You should not receive any errors unless you've changed something in
 the code base.  This validates that correct input returns parsed data, incorrect

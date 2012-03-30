@@ -4,7 +4,10 @@ __author__ = 'mark'
 from omhe.core.parseomhe import parseomhe
 from omhe.core.validators.validator_errors import *
 from omhe.tests.OMHETestCase import OMHETestCase
+from test_utils import *
+
 import unittest
+# OMHE Test Utilities
 
 TESTS_DEBUG = True
 
@@ -29,7 +32,8 @@ class ci_test(OMHETestCase):
                    'CI=Checkin in capitals',
                    'CHECKIN=All Capitals for Checkin',
                    'Check-In=First Capital Check-In',
-                   'check-IN=weird checkin capitalization')
+                   'check-IN=weird checkin capitalization',
+                   'CI=testing text handling for checkin to see if truncation is limted to matched terms in payload')
     validBlankValues = ('checkin=',
                                'checkin',
                                'ci=Y',
@@ -42,69 +46,56 @@ class ci_test(OMHETestCase):
 
     valid_parse_val_1="ci"
 
-    def testValidValuesAlwaysContainsCiContent(self):
+    def test_ValidValues_AlwaysContains_CiContent(self):
         """parse() of validValues should always return ci value in dict."""
     
         if TESTS_DEBUG==True:
-            print " "
-            print "valid Values Set:"
-            print self.validValues
-            print "========== END OF SET =========="
-    
+            display_function_info()
+            display_data_set("Valid Values Set:",self.validValues)
+
     
         for i in self.validValues:
             p=parseomhe()
             result = p.parse(i)
     
             if TESTS_DEBUG==True:
-                print " "
-                print "Testing Value:" + str(i)
-                print "parsed result:"
-                print result
-                print "end of Parsed Result"
-    
+                display_test_result(i,result)
+
             self.assertDictContains(result, self.valid_parse_val_1)
 
 
-    def testValidBlankValues(self):
+    def test_ValidBlankValues(self):
         """validate that blank values are also accepted. should return a dict."""
        
         if TESTS_DEBUG==True:
-            print " "
-            print "Invalid Out of Range Values Set:"
-            print self.validBlankValues
-            print "========== END OF SET =========="
+            display_function_info()
+            display_data_set("Invalid Out of Range Values Set:",self.validBlankValues)
 
         for i in self.validBlankValues:
             p=parseomhe()
             d=p.split(i)
-            print d
+            print "output of split: [" + str(d) +"]"
+            # print d
             
             if TESTS_DEBUG==True:
-                print " "
-                print "Testing Checkin with no Value:" + str(i)
-                print "parsed result(d):"
-                print d
-                print "end of Parsed Result"
+                display_test_result(i,d)
+
+
             self.assertDictContains(d, self.valid_parse_val_1)
 
 
-    def testInvalidMessageRaisesInvalidMessageError(self):
+    def test_InvalidMessage_Raises_InvalidMessageError(self):
         """split() of invalidCommand should always raise InvalidMessageError."""
        
         if TESTS_DEBUG==True:
-            print " "
-            print "Invalid Command Set:"
-            print self.invalidCommand
-            print "========== END OF SET =========="
-    
+            display_function_info()
+            display_data_set("Invalid Command Set:",self.invalidCommand)
+
         for i in self.invalidCommand:
             p=parseomhe()
             if TESTS_DEBUG==True:
-                print "Testing Invalid Command:" + str(i)
-                print p
-                print "End of parsed result"
-    
+                display_test_result(i,p)
+
     
             self.assertRaises(InvalidMessageError, p.split, message=i)
 
