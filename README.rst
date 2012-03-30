@@ -52,7 +52,7 @@ The commands and a lengthy description can be found here_
 
 The home base for this code can be found on github_.
 
-.. _github: http://github.com/aviars/python-omhe
+.. _github: http://github.com/videntity/python-omhe
 
 
 
@@ -101,7 +101,7 @@ Install python-omhe:
 Make sure you are root or working in a virtual python environment to issue the
 'python setup.py install' or the uninstall command
 ::
-    git clone git://github.com/aviars/python-omhe.git
+    git clone git://github.com/videntity/python-omhe.git
     cd python-omhe
     python setup.py install
     
