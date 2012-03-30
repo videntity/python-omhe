@@ -75,8 +75,7 @@ class ci_test(OMHETestCase):
             p=parseomhe()
             d=p.split(i)
             print "output of split: [" + str(d) +"]"
-            # print d
-            
+
             if TESTS_DEBUG==True:
                 display_test_result(i,d)
 
