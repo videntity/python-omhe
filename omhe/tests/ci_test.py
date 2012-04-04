@@ -9,6 +9,19 @@ from test_utils import *
 import unittest
 # OMHE Test Utilities
 
+"""
+
+_ci_
+*Check In*
+ci, checkin, check-in
+BETA
+# tags are allowed.	Check in to an OMHE service.
+ci=Howdy Partner, checkin=Just ate a tofo.#lunch Gross!t
+
+
+"""
+
+
 TESTS_DEBUG = True
 
 
@@ -33,6 +46,7 @@ class ci_test(OMHETestCase):
                    'CHECKIN=All Capitals for Checkin',
                    'Check-In=First Capital Check-In',
                    'check-IN=weird checkin capitalization',
+                   'checkin=#just a tag',
                    'CI=testing text handling for checkin to see if truncation is limted to matched terms in payload')
     validBlankValues = ('checkin=',
                                'checkin',
@@ -45,6 +59,10 @@ class ci_test(OMHETestCase):
 
 
     valid_parse_val_1="ci"
+
+    if TESTS_DEBUG==True:
+        print "================== START of CI TEST ================"
+
 
     def test_ValidValues_AlwaysContains_CiContent(self):
         """parse() of validValues should always return ci value in dict."""

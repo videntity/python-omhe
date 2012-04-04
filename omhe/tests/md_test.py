@@ -1,39 +1,42 @@
-__author__ = 'mark [AT] ekivemark [dot] com'
-
 from omhe.tests.OMHETestCase import OMHETestCase
 import unittest
 from omhe.core.parseomhe import parseomhe
 from omhe.core.validators.validator_errors import *
 from test_utils import *
 
+"""
+
+_md_
+*Mood*
+mood
+BETA
+No # tags allowed.
+Level of happiness, mood,
+or general feeling of well being on a scale of 0-10.
+Range:0=none, 10=max
+mood9, mood=1, md1, md=10
+
+"""
+
 TESTS_DEBUG = True
 
-"""
-_fm_
-*Fat Mass*
-fatmass
-BETA
-'k' suffix indicates kilograms. 'l' suffix indicates lbs. lbs is assumed if no weight provided.
-# tags are allowed	Used to express a body fat mass.
-fm12 fm=20, fm=20k, fatmass=20l#foo
 
-"""
+class md_test(OMHETestCase):
+    validValues = ('md0', 'md=1', 'mood=2','mood3','md=4'
+                   'md=5', 'md6','mood7','mood=8','md=9', 'mood=10' )
+    invalidOutOfRangeValues = ('md-1','mood11' 'md=5#tags not accepted', 'md=5.5','mood=6p4')
+    invalidCommand = ('foo120/80p60#eee', 'bar=120','mod=5', 'moods=9')
 
+    valid_parse_val_1="md_numeric"
 
-class fm_test(OMHETestCase):
-    validValues = ('fm30', 'fm100', 'fatmass=60#tag','fatmass=60', 'fm30.1',
-                   'fatmass=30', 'fm=22', 'fm30l', 'fm=30k', 'fm=30k#tag', 'fm=30l#tag')
-    invalidOutOfRangeValues = ('fm0','fm0.1','fatmass#bad message')
-    invalidCommand = ('foo120/80p60#eee', 'bar=120',) 
-
-    valid_parse_val_1="fm_numeric"
 
     if TESTS_DEBUG==True:
-        print "================== START of FM TEST ================"
+        print "================== START of MD TEST ================"
 
 
-    def test_ValidValues_AlwaysContains_FatMass_NumericValue(self):
-        """parse() of validValues should always return fm_numeric in dict."""
+    def test_ValidValues_AlwaysContains_Mood_NumericValue(self):
+        """parse() of validValues should always return md_numeric in dict."""
+
         if TESTS_DEBUG==True:
             display_function_info()
             display_data_set("Valid Values Set:",self.validValues)
@@ -41,7 +44,6 @@ class fm_test(OMHETestCase):
         for i in self.validValues:
             p=parseomhe()
             result = p.parse(i)
-
             if TESTS_DEBUG==True:
                 display_test_result(i,result)
 
@@ -58,21 +60,11 @@ class fm_test(OMHETestCase):
 
         for i in self.invalidOutOfRangeValues:
             p=parseomhe()
-            if TESTS_DEBUG==True:
-                print "parseomhe result:"
-                print p
-                print "p.validate:"
-                print p.validate
-
             d=p.split(i)
-            if TESTS_DEBUG==True:
-                print "output of split: [" + str(d) +"]"
 
             if TESTS_DEBUG==True:
                 display_test_result(i,d)
 
-                print "Error:"
-                print InvalidValueError
 
             self.assertRaises(InvalidValueError, p.validate, splitdict=d)
     
@@ -83,9 +75,9 @@ class fm_test(OMHETestCase):
             display_function_info()
             display_data_set("Invalid Command Set:",self.invalidCommand)
 
-
         for i in self.invalidCommand:
             p=parseomhe()
+
             if TESTS_DEBUG==True:
                 display_test_result(i,p)
 

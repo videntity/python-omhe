@@ -20,11 +20,11 @@ ffm12 ffm=20, ffm=20k, freefatmass=20l#foo
 """
 
 
-class fm_test(OMHETestCase):
+class ffm_test(OMHETestCase):
     validValues = ('ffm30', 'ffm100', 'freefatmass=60#tag','freefatmass=60','freefatmass30',
                    'freefatmass=30', 'ffm=22', 'ffm30l', 'ffm=30k', 'ffm=30k#tag', 'ffm=30l#tag',
                    'freefatmass=0','freefatmass0')
-    invalidOutOfRangeValues = ('ffm#message','ffm')
+    invalidOutOfRangeValues = ('ffm#message','ffm','ffm=#no value just hash')
     invalidCommand = ('foo120/80p60#eee', 'bar=120','freefat=100')
 
     valid_parse_val_1="ffm_numeric"

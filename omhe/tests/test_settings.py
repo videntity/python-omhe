@@ -11,12 +11,14 @@ check https://code.google.com/p/omhe for documentation
 Current Tests Implemented:
 ###########################
 
-_ci_
-*Check In*
-ci, checkin, check-in
+_bg_
+*Blood Glucose Level*
+bloodglucose
 BETA
-# tags are allowed.	Check in to an OMHE service.
-ci=Howdy Partner, checkin=Just ate a tofo.#lunch Gross!t
+Only # tags are allowed.	Used to express a blood glucose level.
+Range:0-400
+bg120, bg135, bg=124, bg120#off the charts today
+
 
 _bp_
 *Blood Pressure*
@@ -34,26 +36,12 @@ Diastolic acceptable range:20-200.
 Pulse acceptable Range: 30-200.
 bp90d123p70, bp=102d80p70, bp140d80p60, bp=140/80p60, bp=120080060
 
-_wt_
-*Weight*
-weight
+_ci_
+*Check In*
+ci, checkin, check-in
 BETA
-Use the 'k' suffix to denote kilograms.
-Use the 'l' suffix to denote pounds(lbs).
-Use '.' or 'p' to indicate 1/10ths of the weight unit.
-# tags are allowed.
-If the 'l' or 'k' is not supplied then the weight unit is inferred based on geography.
-For example, pounds as a weight unit is implied in the United states.
-wt125, wt=125l, wt85k, wt=155.5l, weight=134p7 wt170l#feel heavy
-
-_bg_
-*Blood Glucose Level*
-bloodglucose
-BETA
-Only # tags are allowed.	Used to express a blood glucose level.
-Range:0-400
-bg120, bg135, bg=124, bg120#off the charts today
-
+# tags are allowed.	Check in to an OMHE service.
+ci=Howdy Partner, checkin=Just ate a tofo.#lunch Gross!t
 
 _fm_
 *Fat Mass*
@@ -70,6 +58,37 @@ BETA
 # tags are allowed	Used to express a body's free fat mass.
 ffm12 ffm=20, ffm=20k, freefatmass=20l#foo
 
+_frv_
+*freggies*
+frv, freggie
+BETA
+No # tags allowed.
+Record a fruit or vegetable eaten. One fruit or vegetable per message.
+frv=strawberry, freggie=Passionfruit
+
+_md_
+*Mood*
+mood
+BETA
+No # tags allowed.
+Level of happiness, mood,
+or general feeling of well being on a scale of 0-10.
+Range:0=none, 10=max
+mood9, mood=1
+
+
+_wt_
+*Weight*
+weight
+BETA
+Use the 'k' suffix to denote kilograms.
+Use the 'l' suffix to denote pounds(lbs).
+Use '.' or 'p' to indicate 1/10ths of the weight unit.
+# tags are allowed.
+If the 'l' or 'k' is not supplied then the weight unit is inferred based on geography.
+For example, pounds as a weight unit is implied in the United states.
+wt125, wt=125l, wt85k, wt=155.5l, weight=134p7 wt170l#feel heavy
+
 
 #########################
 Tests to be Implemented:
@@ -82,13 +101,6 @@ Only # tags are allowed	Used to express a body mass index value.
 Range:0-100
 bmi20, bmi20p5, bmi19.7, bmi=15.2 bmi=12.3#foo
 
-
-ffm
-Free Fat Mass
-freefatmass
-BETA
-'k' suffix indicates kilograms. 'l' suffix indicates lbs. lbs is assumed if no weight provided. # tags are allowed	Used to express a body's free fat mass.
-ffm12 ffm=20, ffm=20k, freefatmass=20l#foo
 
 pbf
 Percent Body Fat
@@ -119,14 +131,6 @@ BETA
 Only # tags are allowed	Pain (general) on a scale of 0-10.
 Range:0=none, 10=max
 pain=0, pain9#back, pain=5#neck
-
-md
-Mood
-mood
-BETA
-Only # tags are allowed	Level of happiness, mood, or general feeling of well being on a scale of 0-10.
-Range:0=none, 10=max
-mood9, mood=1
 
 hr
 Personal Health Record

@@ -3,19 +3,40 @@ import unittest
 from omhe.core.parseomhe import parseomhe
 from omhe.core.validators.validator_errors import *
 
+"""
+_bp_
+*Blood Pressure*
+bloodpressure
+BETA
+Use either a 'd' or a front slash '/' to delineate between systolic and diastolic readings.
+Either 'd' or '/' is required for a valid message.
+Use 'p' to denote pulse. # tags are allowed.
+The first number always represents systolic pressure.
+The second number is always the diastolic pressure.
+The third number is always pulse (if given).
+# tags are allowed.
+Range:
+Systolic acceptable range: 50-400.
+Diastolic acceptable range:20-200.
+Pulse acceptable Range: 30-200.
+bp90d123p70, bp=102d80p70, bp140d80p60, bp=140/80p60, bp=120080060
+
+"""
+
+
 TESTS_DEBUG = True
 
 class bp_test(OMHETestCase):
     validValues = ('bp120/80', 'bp120/80p60', 'bp120/90p60#tag','bp=090090060',
                    'bloodpressure=140/90p70', 'bloodpressure100100090')
-    invalidOutOfRangeValues = ('bp1200/80p60',)
+    invalidOutOfRangeValues = ('bp1200/80p60','bp#no values just a tag')
     invalidCommand = ('foo120/80p60', 'bar=120000p60',) 
 
     valid_parse_val_1="bp_sys"
     valid_parse_val_2="bp_dia"
 
     if TESTS_DEBUG==True:
-        print "================== START of TEST ================"
+        print "================== START of BP TEST ================"
 
     def testValidValuesAlwayscontainsSystolicValue(self):
         """parse() of validValues should always return bp_sys in dict."""

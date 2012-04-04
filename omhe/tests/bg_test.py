@@ -25,7 +25,7 @@ Examples=bg120, bg135, bg=124, bg200#off the charts today
 class bg_test(OMHETestCase):
     validValues = ('bg120', 'bg100#note', 'bg=399#Almost at limit','bg=80',
                    'bloodglucose=140', 'bloodglucose200')
-    invalidOutOfRangeValues = ('bg501','bg=-01','bg=501','bloodglucose=-1','bloodglucose-1','bg-1','bg=-10')
+    invalidOutOfRangeValues = ('bg501', 'bg=#nothing just a tag','bg=', 'bg=-01','bg=501','bloodglucose=-1','bloodglucose-1','bg-1','bg=-10')
     invalidCommand = ('foo120/80p60', 'bar=120000p60','blood=20')
 
     valid_parse_val_1="bg"
