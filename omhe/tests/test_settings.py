@@ -64,7 +64,7 @@ frv, freggie
 BETA
 No # tags allowed.
 Record a fruit or vegetable eaten. One fruit or vegetable per message.
-frv=strawberry, freggie=Passionfruit
+frv=strawberry, freggie=passionfruit
 
 _md_
 *Mood*
@@ -76,6 +76,14 @@ or general feeling of well being on a scale of 0-10.
 Range:0=none, 10=max
 mood9, mood=1
 
+_pbf_
+*Percent Body Fat*
+percentbodyfat
+BETA
+# tags are allowed
+Used to record the percent of weight that is made up of body fat.
+Valid range is 1-95.
+pbf12.6 pbf=20, percentbodyfat=41#foo
 
 _wt_
 *Weight*
@@ -101,14 +109,6 @@ Only # tags are allowed	Used to express a body mass index value.
 Range:0-100
 bmi20, bmi20p5, bmi19.7, bmi=15.2 bmi=12.3#foo
 
-
-pbf
-Percent Body Fat
-percentbodyfat
-BETA
-# tags are allowed	Used to the percent of weight that is made up of body fat.
-Valid range is 5-80.
-pbf12.6 pbf=20, percentbodyfat=41#foo
 
 lip
 Lipid Profile (including total cholesterol, HDL, LDL and triglycerides)
