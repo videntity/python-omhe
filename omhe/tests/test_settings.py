@@ -94,6 +94,24 @@ Pain (general) on a scale of 0-10.
 Range:0=none, 10=max
 pain=0, pain9#back, pain=5#neck
 
+_pts_
+*Points*
+points, gems
+# tags are allowed
+Points or rewards
+Range: negative or positive integer
+pts=-50, points=100 points
+
+_st_
+*steps*
+steps, spd, fitbit
+PROPOSAL
+# tags are allowed
+Records the number of steps taken in a day.
+Optionally indicate time in minutes.
+(This is normally a reading from a pedometer).
+st=7540, st=1200, st=5050m480#hike
+
 _wt_
 *Weight*
 weight

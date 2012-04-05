@@ -1,9 +1,17 @@
 import re,sys
 from validator_errors import *
 
+"""
+
+"points" not getting set in output.
+
+"""
+
+
 def pts_helper_validator(omhe_value):
     """validate positive or negative integer"""
-    
+
+    print omhe_value
     if omhe_value.startswith("="):
         omhe_value=omhe_value[1:]
     valdict={}

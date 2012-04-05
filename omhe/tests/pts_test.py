@@ -8,36 +8,35 @@ from test_utils import *
 
 """
 
-_md_
-*Mood*
-mood
-BETA
-No # tags allowed.
-Level of happiness, mood,
-or general feeling of well being on a scale of 0-10.
-Range:0=none, 10=max
-mood9, mood=1, md1, md=10
+_pts_
+*Points*
+points, gems
+# tags are allowed
+Points or rewards
+Range: negative or positive integer
+pts=-50, points=100 points
 
 """
+
 
 TESTS_DEBUG = True
 
 
-class md_test(OMHETestCase):
-    validValues = ('md0', 'md=1', 'mood=2','mood3','md=4'
-                   'md=5', 'md6','mood7','mood=8','md=9', 'mood=10' )
-    invalidOutOfRangeValues = ('md-1','mood11' 'md=5#tags not accepted', 'md=5.5','mood=6p4')
-    invalidCommand = ('foo120/80p60#eee', 'bar=120','mod=5', 'moods=9')
+class pts_test(OMHETestCase):
+    validValues = ('pts10', 'pts=1005', 'pts=-50', 'pts=2000','gems=500',
+                   'points=200', 'points250','gems-100','points=-90', 'pts=0')
+    invalidOutOfRangeValues = ('pts=400.35','points=150.6#tags','pts=200#no tags')
+    invalidCommand = ('foo120/80p60#eee', 'bar=120','gem=50','point=35')
 
-    valid_parse_val_1="md_numeric"
+    valid_parse_val_1="points"
 
 
     if TESTS_DEBUG==True:
-        print "================== START of MD TEST ================"
+        print "================== START of PTS TEST ================"
 
 
-    def test_ValidValues_AlwaysContains_Mood_NumericValue(self):
-        """parse() of validValues should always return md_numeric in dict."""
+    def test_ValidValues_AlwaysContains_Points_NumericValue(self):
+        """parse() of validValues should always return points in dict."""
 
         if TESTS_DEBUG==True:
             display_function_info()

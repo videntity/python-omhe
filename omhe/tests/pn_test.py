@@ -1,3 +1,5 @@
+__author__ = 'mark'
+
 from omhe.tests.OMHETestCase import OMHETestCase
 import unittest
 from omhe.core.parseomhe import parseomhe
