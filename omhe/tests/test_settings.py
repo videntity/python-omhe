@@ -85,6 +85,15 @@ Used to record the percent of weight that is made up of body fat.
 Valid range is 1-95.
 pbf12.6 pbf=20, percentbodyfat=41#foo
 
+_pn_
+*Pain*
+pain
+BETA
+# tags are allowed
+Pain (general) on a scale of 0-10.
+Range:0=none, 10=max
+pain=0, pain9#back, pain=5#neck
+
 _wt_
 *Weight*
 weight
@@ -123,14 +132,6 @@ mooncycle, mcycle, cyclebeads
 BETA
 Only # tags are allowed	First day of period.
 mcycle, mcycle#start
-
-pn
-Pain
-pain
-BETA
-Only # tags are allowed	Pain (general) on a scale of 0-10.
-Range:0=none, 10=max
-pain=0, pain9#back, pain=5#neck
 
 hr
 Personal Health Record
