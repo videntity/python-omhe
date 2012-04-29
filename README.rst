@@ -9,16 +9,8 @@ Copyright 2011 - Alan Viars (Videntity) -All Rights Reserved.
 Release 0.6.0
 
 
-LICENSE: This code is open source and available under a dual license model; Apache2 license or a commercial license.
-Please read LICENSE.txt for more information.  If you need a commercial license or support please email us at:
-
-        sales [at] videntity [dot] com
 
 
-Table of Contents:
-==================
-.. toctree::
-   :maxdepth: 3
 
 
 1. Background:
@@ -115,70 +107,81 @@ Press y when prompted
 4. How to Use the Parser:
 ==========================
 
-It takes a string as a single argument and returns parsed data.
-::
-    #import the omheparser library
-    from omhe.core.parseomhe import parseomhe
-    
-    #create a string to parse
-    omhe_str="bp=120/80p60#dt20101217:083059z"
-    
-    #Create a new OMHE object
-    o = parseomhe()
-    
-    # Call the parser method and return a parsed dict
-    # If something is malformed, an error value will be
-    # in the dictionary raised.
-    d=o.parse(omhe_str)
-    
-    #print the dictionary
-    print d
 
-The output of the previous code might look like this:
+The easiest way to try it out is to just run the command line utility.  All of
+these commands will validate.  The pomhe utility outputs JSON so you can just
+script using this command line tool.
+::
+    pomhe bp120/80p60#dt20100701:121212#tx-5
+    
+    pomhe bp120/80p60
+    
+
+If you want to use the functions within you paython application, then user the
+API.  Consider the following simple example.
+::
+    # import the omheparser library
+    >>> from omhe.core.parseomhe import parseomhe
+    
+    # Create an OMHE string to parse
+    # Note that this string includes the 'dt' and 'tz' helper tags so we can
+    # set the event's datetime and timezone.
+    >>> omhe_str="bp=120/80p60#dt20120501:083059z#tz-5"
+
+    #Create a new OMHE object
+    >>> o = parseomhe()
+    
+    # Parse the OMHE string, return a dict, and convert to JSON. method and
+    # return a parsed dict
+    >>> omhe_json=o.omhedict2json(o.parse(omhe_str))
+    >>> print omhe_json
+
+The output will look like this:
 ::
     {
-    'tx_dt': '201071:16438z',
-    'bp_pul': '60',
-    'tz': '12',
-    'tags': ['dt20101217:083059z', 'tz12'],
-    'id': '266a7b2f-64eb-4e7b-9abf-a25dfd1db890',
-    'bp_syst': '120',
-    'bp_dia': '80',
-    'value': '120/80p60',
-    'ev_dt': 20101217:164208z
-    'ev_tz': 0,
-    'omhe': 'bp',
-    'tx_dt': '20101217:093100z'
-    'tx_tz': 0,
+        "bp_systolic": "120", 
+        "tags": [
+            "dt20120501:083059z", 
+            "tz-5"
+        ], 
+        "bp_pulse": "60", 
+        "text": "bp=120/80p60#dt20120501:083059z#tz-5", 
+        "bp_diastolic": "80", 
+        "value": "120/80p60", 
+        "transaction_type": "omhe", 
+        "transaction_datetime": "2012-04-29 00:10:56", 
+        "transaction_id": "25bd039c-e5c0-4eeb-be55-c03dbac400bf", 
+        "event_timezone": "-5", 
+        "omhe": "bp", 
+        "event_datetime": "2012-05-01 08:30:59"
     }
-    
-Now lets convert it to json
+
+okay lets do another.
 ::
-    j=o.omhedict2json(d)
-    print j
-    
-The easiest way to try it out is to just run the command line utility.  All of
-these commands will validate.  The pomhe utility outputs JSON.
+    >>> omhe_str="wt=153l"
+    >>> omhe_json=o.omhedict2json(o.parse(omhe_str))
+
+The output will look like this:
 ::
-    python pomhe bp120/80p60#dt20100701:121212#tx-5
-    
-    python pomhe bp120/80p60
-    
-    python pomhe bp120/80p60#afteryoga
+    {
+        "wt_numeric": "153", 
+        "text": "wt=153l", 
+        "event_timezone": "0", 
+        "event_datetime": "2012-04-29 00:10:22", 
+        "tags": [], 
+        "value": "153l", 
+        "transaction_type": "omhe", 
+        "transaction_datetime": "2012-04-29 00:10:56", 
+        "transaction_id": "25bd039c-e5c0-4eeb-be55-c03dbac400bf", 
+        "omhe": "wt", 
+        "wt_measure_unit": "l"
+    }
 
 5. Using the GUI Applications.
+===============================
 
-To run the bloodpressure GUI:
-::
-    python bloodpressure.py
-    
+These are not longer supported and will be released as a seperate package.
 
-Run the WiiBalance Sample GUI:
-::
-    python wiibal-weightdemo.py
-    
-See wiibalance_ for more information.
-.. _wiibalance: ./omhehardware/wiibalance/README.rst
 
 6. OMHE TESTING FRAMEWORK:
 ==========================
@@ -193,10 +196,6 @@ The long term goal of the testing system is to provide
 quantifiable results to validation of correct input, output, and to ensure the
 tools throw the right exception when errant input is given.
 
-We foresee some "omhe-powered" projects being part of systems that fall under
-FDA and FCC regulation.
-This package addition is the beginning of a larger test framework
-designed to appease regulators (from a quantifiable and verifiable perspective).
 Also, automated testing is just a good idea and "test-driven-development" makes
 for cleaner, more modular code.  It also makes developing OMHE-powered
 applications easier and more reliable.
@@ -214,8 +213,8 @@ To run the tests for blood pressure just run the following command inside the
     python bp_test.py
     
 That's it.  You should not receive any errors unless you've changed something in
-the code base.  This validates that correct input returns parsed data, incorrect
-input raises the errors that it should.
+the code base.  This validates that correct input returns parsed data and that
+incorrect input raises the errors that it should.  Look over the other tests.
 
 
 7. TODOs:
@@ -237,7 +236,10 @@ surgery and  to all those who struggle to stay well or get better.
 
 9. LICENSE & SUPPORT:
 =====================
+This code is open source and available under a dual license model; GPL 2 license
+or a commercial license. Please read LICENSE.txt for more information.
+If you need a commercial license or support please call us at 410-246-2158,
+email us at: sales [at] videntity [dot] com or visit us online at http://www.videntity.com.
 
-This is free open source software.  You can however purchase a commercially-supported
-license from Videntity Systems, Inc. python-omhe library. http://videntity.com
-    
+
+

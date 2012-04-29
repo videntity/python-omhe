@@ -429,8 +429,6 @@ class parseomhe:
 	try:    
 	    d=self.validate_helpers(s)
 	except:
-	    error= str(sys.exc_info())
-	    
 	    d['error']=str(sys.exc_value)
 	    for k in d.keys():
 		if k != "text" and k != "error":
