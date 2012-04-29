@@ -41,7 +41,7 @@ The commands and a lengthy description can be found here_
 ===============
 
 python-omhe is in the Python Package Index (PyPi). You can use pip to install.
-
+::
     pip install python-omhe
     
 To uninstall python-omhe
