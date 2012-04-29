@@ -67,7 +67,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'bdist_wininst':
 
 
 setup(name="python-omhe",
-      version="0.3.0",
+      version="0.6.1",
       description="OMHE: Open Mobile Health Exchange: Tools, Parser, & Utilities",
       long_description="""\
 Open Mobile Health Exchange Parser provides libraries to parse OMHE strings.
