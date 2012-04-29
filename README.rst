@@ -1,20 +1,14 @@
-.. image::  http://videntity.com/images/omhe.png
+Open Mobile Health Exchange (OMHE) Python Parser and Utilities
+==============================================================
 
+Copyright 2011 - Alan Viars (Videntity) - All Rights Reserved.
 
-Open Mobile Health Exchange (OMHE) Parser & Tools for Python
-============================================================
-Copyright 2011 - Alan Viars (Videntity) -All Rights Reserved.
+Release 0.6.1
 
+.. image::  http://videntitystatic.s3.amazonaws.com/logo/omhe.png
 
-Release 0.6.0
-
-
-
-
-
-
-1. Background:
-==============
+1. Background
+=============
 
 OMHE (Open Mobile Health Exchange) is a  a Microsyntax for Devices, Machines,
 & Humans.  This is a python package which implements the OMHE microsyntax format
@@ -55,8 +49,8 @@ See http://github.com/aviars/RESTCat for more information
 
 
 
-2. Dependencies:
-================
+2. Dependencies
+===============
 
 We assume you are already running 2.5, or 2.6. If you are on Linux
 or MacOS, chances are Python is already installed.  The upload tools require
@@ -76,7 +70,7 @@ To make things easier you should install:
 * build-essential (Tools to compile C code. You only need this for Cwiid)
 * cwiid (so you can talk to a Wii Balance Board)
 
-3. Installation:
+3. Installation
 ===============
 There are many ways to install python-omhe on Linux, Mac or Windows.
 The following instructions outline the process on Ubuntu.  Adjust these
@@ -104,8 +98,8 @@ To uninstall python-omhe
 Press y when prompted
 
 
-4. How to Use the Parser:
-==========================
+4. How to Use the Parser
+========================
 
 
 The easiest way to try it out is to just run the command line utility.  All of
@@ -217,29 +211,22 @@ the code base.  This validates that correct input returns parsed data and that
 incorrect input raises the errors that it should.  Look over the other tests.
 
 
-7. TODOs:
-=========
+7. TODOs
+========
 
-Validators are still needed for many omhe commands.  Simply add your validator
-function to the omhe/validators folder and make sure they are 'turned on' in the
-code by having the command and validation function present in the omhe_validators
-dictionary in the __init__ of the parseomhe.py file. Validators must either
-return a dict of correctly parsed contents or raise an OMHE Error.  Errors are
-defined in the 'omhe/validators/validator_errors.py' file.
+* Validators are still needed for some omhe commands.
 
-8. DEDICATIONS:
-===============
-This code is dedicated to my Grandmother, Rachel Bradshaw, who is in her 90's
-and has Congestive Heart Failure, to my father who recently had open heart
-surgery and  to all those who struggle to stay well or get better.
+* Migrate GUI tools out of this package and into a sperate github repository.
 
 
-9. LICENSE & SUPPORT:
-=====================
+
+8. LICENSE & SUPPORT
+====================
 This code is open source and available under a dual license model; GPL 2 license
 or a commercial license. Please read LICENSE.txt for more information.
 If you need a commercial license or support please call us at 410-246-2158,
-email us at: sales [at] videntity [dot] com or visit us online at http://www.videntity.com.
+email us at: sales [at] videntity [dot] com or visit us online at
+http://www.videntity.com.
 
 
 
