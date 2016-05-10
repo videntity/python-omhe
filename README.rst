@@ -62,7 +62,7 @@ script using this command line tool.
     pomhe bp120/80p60
     
 
-If you want to use the functions within you paython application, then user the
+If you want to use the functions within your python application, then use the
 API.  Consider the following simple example.
 ::
     # import the omheparser library
@@ -132,7 +132,7 @@ These are not longer supported and will be released as a seperate package.
 ==========================
 
 This section describes python-omhe's testing framework. Python-omhe package has
-its own special testing harness based on unittest. 
+it's own special testing harness based on unittest. 
 
 5.1 Why Build a Test Framework?:
 --------------------------------
